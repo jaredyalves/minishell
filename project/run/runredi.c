@@ -1,0 +1,20 @@
+#include "../lexer/lexer.h"
+#include "run.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+// FIXME: Can't use fprintf(), replace with a ft function
+void	runredi(t_redicmd *rcmd)
+{
+	close(rcmd->fd);
+	if (open(rcmd->file, rcmd->mode) < 0)
+	{
+		fprintf(stderr, "minishell: %s: file not found\n", rcmd->file);
+		exit(EXIT_FAILURE);
+	}
+	runcmd(rcmd->cmd);
+}
+
+// vim: ts=4 sts=4 sw=4 noet
