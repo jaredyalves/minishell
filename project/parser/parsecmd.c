@@ -1,6 +1,7 @@
 #include "../lexer/lexer.h"
 #include "../nulterminate/nulterminate.h"
 #include "parser.h"
+#include "run/run.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +19,7 @@ t_cmd	*parsecmd(char *s)
 	if (s != es)
 	{
 		fprintf(stderr, "minishell: leftovers: %s\n", s);
+		freecmd(cmd);
 		exit(EXIT_FAILURE);
 	}
 	nulterminate(cmd);

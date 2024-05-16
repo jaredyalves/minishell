@@ -17,8 +17,7 @@ void	runcmd(t_cmd *cmd)
 		runlist((t_listcmd *)cmd);
 	else if (cmd->type == BACK)
 		runback((t_backcmd *)cmd);
-	else
-		panic("minishell: runcmd type error");
+	freecmd(cmd);
 	exit(EXIT_SUCCESS);
 }
 

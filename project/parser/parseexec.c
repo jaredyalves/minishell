@@ -1,11 +1,13 @@
 #include "../lexer/lexer.h"
 #include "../minishell.h"
 #include "parser.h"
+#include "run/run.h"
 
 t_cmd	*parseexec(char **ps, char *es)
 {
 	char		*q;
 	char		*eq;
+	int			tok;
 	int			argc;
 	t_execcmd	*cmd;
 	t_cmd		*ret;
@@ -18,13 +20,22 @@ t_cmd	*parseexec(char **ps, char *es)
 	ret = parseredir(ret, ps, es);
 	while (!peek(ps, es, "|)&;"))
 	{
-		if (get_token(ps, es, &q, &eq) == 0)
+		tok = get_token(ps, es, &q, &eq);
+		if (tok == 0)
 			break ;
+		if (tok != 'a')
+		{
+			freecmd(ret);
+			panic("minishell: syntax error");
+		}
 		cmd->argv[argc] = q;
 		cmd->eargv[argc] = eq;
 		argc++;
 		if (argc >= MAXARGS)
+		{
+			freecmd(ret);
 			panic("minishell: too many args");
+		}
 		ret = parseredir(ret, ps, es);
 	}
 	return (ret);

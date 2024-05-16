@@ -11,7 +11,8 @@ void	runredi(t_redicmd *rcmd)
 	close(rcmd->fd);
 	if (open(rcmd->file, rcmd->mode) < 0)
 	{
-		fprintf(stderr, "minishell: %s: file not found\n", rcmd->file);
+		fprintf(stderr, "minishell: %s: no such file\n", rcmd->file);
+		freecmd((t_cmd *)rcmd);
 		exit(EXIT_FAILURE);
 	}
 	runcmd(rcmd->cmd);

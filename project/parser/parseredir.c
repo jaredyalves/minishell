@@ -1,6 +1,7 @@
 #include "../lexer/lexer.h"
 #include "../minishell.h"
 #include "parser.h"
+#include "run/run.h"
 #include <fcntl.h>
 
 t_cmd	*parseredir(t_cmd *cmd, char **ps, char *es)
@@ -13,7 +14,10 @@ t_cmd	*parseredir(t_cmd *cmd, char **ps, char *es)
 	{
 		tok = get_token(ps, es, 0, 0);
 		if (get_token(ps, es, &q, &eq) != 'a')
-			panic("minishell: missing file for redirection");
+		{
+			freecmd(cmd);
+			panic("minishell: no file for redirection");
+		}
 		if (tok == '<')
 			cmd = redicmd(cmd, q, eq, O_RDONLY);
 		else if (tok == '>')

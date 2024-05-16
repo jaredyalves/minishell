@@ -9,6 +9,7 @@ void	runpipe(t_pipecmd *pcmd);
 void	runlist(t_listcmd *lcmd);
 void	runback(t_backcmd *bcmd);
 
+void	freecmd(t_cmd *cmd);
 void	runcmd(t_cmd *cmd);
 
 #endif
