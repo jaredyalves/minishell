@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void	runpipe(t_pipecmd *pcmd)
+void	runpipe(t_pipecmd *pcmd, char **envp)
 {
 	int	p[2];
 
@@ -16,7 +16,7 @@ void	runpipe(t_pipecmd *pcmd)
 		dup(p[1]);
 		close(p[0]);
 		close(p[1]);
-		runcmd(pcmd->left);
+		runcmd(pcmd->left, envp);
 	}
 	if (fork() == 0)
 	{
@@ -24,7 +24,7 @@ void	runpipe(t_pipecmd *pcmd)
 		dup(p[0]);
 		close(p[0]);
 		close(p[1]);
-		runcmd(pcmd->right);
+		runcmd(pcmd->right, envp);
 	}
 	close(p[0]);
 	close(p[1]);

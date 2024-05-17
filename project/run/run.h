@@ -3,14 +3,14 @@
 
 # include "../lexer/lexer.h"
 
-void	runexec(t_execcmd *ecmd);
-void	runredi(t_redicmd *rcmd);
-void	runpipe(t_pipecmd *pcmd);
-void	runlist(t_listcmd *lcmd);
-void	runback(t_backcmd *bcmd);
+void	runexec(t_execcmd *ecmd, char **envp);
+void	runredi(t_redicmd *rcmd, char **envp);
+void	runpipe(t_pipecmd *pcmd, char **envp);
+void	runlist(t_listcmd *lcmd, char **envp);
+void	runback(t_backcmd *bcmd, char **envp);
 
 void	freecmd(t_cmd *cmd);
-void	runcmd(t_cmd *cmd);
+void	runcmd(t_cmd *cmd, char **envp);
 
 #endif
 

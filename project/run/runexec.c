@@ -27,15 +27,15 @@ void	search_in_path(char *program, char **argv, char **envp)
 }
 
 // FIXME: Can't use fprintf(), replace with a ft function
-void	runexec(t_execcmd *ecmd)
+void	runexec(t_execcmd *ecmd, char **envp)
 {
 	if (ecmd->argv[0] == 0)
 		return ;
 	if (ecmd->argv[0][0] == '/' || (ecmd->argv[0][0] == '.'
 			&& ecmd->argv[0][1] == '/'))
-		execve(ecmd->argv[0], ecmd->argv, 0);
+		execve(ecmd->argv[0], ecmd->argv, envp);
 	else
-		search_in_path(ecmd->argv[0], ecmd->argv, 0);
+		search_in_path(ecmd->argv[0], ecmd->argv, envp);
 	fprintf(stderr, "minishell: %s: command not found\n", ecmd->argv[0]);
 }
 
