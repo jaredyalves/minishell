@@ -1,3 +1,4 @@
+#include "../ft/ft.h"
 #include "../lexer/lexer.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,24 +7,27 @@
 
 // FIXME: Can't use strcpy(), replace with a ft function
 // FIXME: Can't use strcat(), replace with a ft function
-// FIXME: Can't use strtok(), replace with a ft function
 void	search_in_path(char *program, char **argv, char **envp)
 {
+	int		i;
 	char	*path;
-	char	*token;
+	char	**tokens;
 	char	executable[1024];
 
+	i = 0;
 	path = getenv("PATH");
-	token = strtok(path, ":");
-	while (token)
+	tokens = ft_split(path, ':');
+	while (tokens[i] != 0)
 	{
-		strcpy(executable, token);
+		strcpy(executable, tokens[i]);
 		strcat(executable, "/");
 		strcat(executable, program);
 		if (access(executable, X_OK) == 0)
 			execve(executable, argv, envp);
-		token = strtok(0, ":");
+		free(tokens[i]);
+		i++;
 	}
+	free(tokens);
 }
 
 // FIXME: Can't use fprintf(), replace with a ft function
