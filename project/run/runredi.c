@@ -9,7 +9,7 @@
 void	runredi(t_redicmd *rcmd)
 {
 	close(rcmd->fd);
-	if (open(rcmd->file, rcmd->mode) < 0)
+	if (open(rcmd->file, rcmd->mode, 0664) < 0)
 	{
 		fprintf(stderr, "minishell: %s: no such file\n", rcmd->file);
 		freecmd((t_cmd *)rcmd);
