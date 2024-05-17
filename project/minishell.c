@@ -18,16 +18,18 @@ int	getcmd(char *buf, int nbuf)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	buf[1000];
 
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		if (getcmd(buf, sizeof(buf)) < 0)
 			break ;
 		if (fork1() == 0)
-			runcmd(parsecmd(buf));
+			runcmd(parsecmd(buf), envp);
 		wait(0);
 	}
 	exit(EXIT_SUCCESS);

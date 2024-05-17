@@ -3,20 +3,20 @@
 #include "run.h"
 #include <stdlib.h>
 
-void	runcmd(t_cmd *cmd)
+void	runcmd(t_cmd *cmd, char **envp)
 {
 	if (cmd == 0)
 		panic("minishell: runcmd error");
 	if (cmd->type == EXEC)
-		runexec((t_execcmd *)cmd);
+		runexec((t_execcmd *)cmd, envp);
 	else if (cmd->type == REDI)
-		runredi((t_redicmd *)cmd);
+		runredi((t_redicmd *)cmd, envp);
 	else if (cmd->type == PIPE)
-		runpipe((t_pipecmd *)cmd);
+		runpipe((t_pipecmd *)cmd, envp);
 	else if (cmd->type == LIST)
-		runlist((t_listcmd *)cmd);
+		runlist((t_listcmd *)cmd, envp);
 	else if (cmd->type == BACK)
-		runback((t_backcmd *)cmd);
+		runback((t_backcmd *)cmd, envp);
 	freecmd(cmd);
 	exit(EXIT_SUCCESS);
 }
