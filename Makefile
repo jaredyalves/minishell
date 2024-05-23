@@ -1,8 +1,5 @@
-CC = cc
-CFLAGS = -Wall -Werror -Wextra
-INCLUDE = -I./include
-
 NAME = minishell
+
 SRCS = \
 	src/ft/ft_split.c \
 	src/lexer/backcmd.c \
@@ -32,17 +29,32 @@ SRCS = \
 	src/run/runredi.c \
 	src/utils.c \
 	src/minishell.c
+HEADS = \
+	include/ft.h \
+	include/lexer.h \
+	include/nulterminate.h \
+	include/parser.h \
+	include/run.h \
+	include/minishell.h
 OBJS = $(SRCS:.c=.o)
 
-.PHONY: all clean fclean re valgrind sanitize
+CC = cc
+INCLUDES = -I./include
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g $(INCLUDES)
+LDFLAGS = -lreadline -fsanitize=address
+
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+$(NAME): $(OBJS) $(HEADS)
+	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+run: all
+	@./$(NAME)
 
 clean:
 	rm -rf $(OBJS)
@@ -51,19 +63,5 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-valgrind: CFLAGS += -g3
-valgrind: re
-	valgrind\
-		--leak-check=full\
-		--show-leak-kinds=all\
-		--track-origins=yes\
-		--track-fds=yes\
-		--trace-children=yes\
-		./$(NAME)
-
-sanitize: CFLAGS += -g -fsanitize=address
-sanitize: re
-	./$(NAME)
 
 # vim: ts=4 sts=4 sw=4 noet
