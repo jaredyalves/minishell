@@ -17,8 +17,7 @@ t_cmd	*parseexec(char **ps, char *es)
 	ret = execcmd();
 	cmd = (t_execcmd *)ret;
 	argc = 0;
-	ret = parseredir(ret, ps, es);
-	while (!peek(ps, es, "|)&;"))
+	while (!peek(ps, es, SYMBOLS))
 	{
 		tok = get_token(ps, es, &q, &eq);
 		if (tok == 0)
