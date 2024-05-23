@@ -1,6 +1,7 @@
 NAME = minishell
 
 SRCS = \
+	src/ft/ft_memset.c \
 	src/ft/ft_split.c \
 	src/lexer/backcmd.c \
 	src/lexer/execcmd.c \

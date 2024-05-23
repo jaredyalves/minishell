@@ -1,15 +1,14 @@
+#include "ft.h"
 #include "lexer.h"
 #include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
 
-// FIXME: Can't use memset(), replace with a ft function
 t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 {
 	t_redicmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	memset(cmd, 0, sizeof(*cmd));
+	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = REDI;
 	cmd->cmd = subcmd;
 	cmd->file = file;

@@ -1,7 +1,10 @@
 #ifndef FT_H
 # define FT_H
 
+#include <stddef.h>
+
 char	**ft_split(char *str, char chr);
+void	 *ft_memset(void *s, int c, size_t n);
 
 #endif
 
