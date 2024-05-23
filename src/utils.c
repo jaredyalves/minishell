@@ -2,24 +2,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char	*gets(char *buf, int max)
-{
-	int		i;
-	int		r;
-	char	c;
+#include <readline/history.h>
+#include <readline/readline.h>
 
-	i = 0;
-	while (i + 1 < max)
+char *get_line(char *line)
+{
+	if (line)
 	{
-		r = read(STDIN_FILENO, &c, 1);
-		if (r < 1)
-			break ;
-		buf[i++] = c;
-		if (c == '\n' || c == '\r')
-			break ;
+		free(line);
+		line = NULL;
 	}
-	buf[i] = '\0';
-	return (buf);
+	line = readline("> ");
+	if (line && *line)
+		add_history(line);
+	return (line);
 }
 
 // FIXME: Can't use fprintf(), replace with a ft function

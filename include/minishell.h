@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-char	*gets(char *buf, int max);
+char   *get_line(char *line);
 void	panic(char *s);
 int		fork1(void);
 
