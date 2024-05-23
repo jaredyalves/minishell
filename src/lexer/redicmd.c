@@ -14,10 +14,12 @@ t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 	cmd->file = file;
 	cmd->efile = efile;
 	cmd->mode = mode;
-	if (mode & O_RDONLY)
+	if ((mode & O_ACCMODE) == O_RDONLY)
 		cmd->fd = 0;
-	else if (mode & O_WRONLY)
+	else if ((mode & O_ACCMODE) == O_WRONLY)
 		cmd->fd = 1;
+	else
+		cmd->fd = -1;
 	return ((t_cmd *)cmd);
 }
 
