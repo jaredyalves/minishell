@@ -8,7 +8,6 @@ t_cmd	*parseexec(char **ps, char *es)
 	char		*q;
 	char		*eq;
 	int			tok;
-	int			argc;
 	t_execcmd	*cmd;
 	t_cmd		*ret;
 
@@ -16,7 +15,6 @@ t_cmd	*parseexec(char **ps, char *es)
 		return (parseblock(ps, es));
 	ret = execcmd();
 	cmd = (t_execcmd *)ret;
-	argc = 0;
 	while (!peek(ps, es, SYMBOLS))
 	{
 		tok = get_token(ps, es, &q, &eq);
@@ -27,14 +25,14 @@ t_cmd	*parseexec(char **ps, char *es)
 			freecmd(ret);
 			panic("minishell: syntax error");
 		}
-		if (argc >= ARG_MAX)
+		if (cmd->argc >= ARG_MAX)
 		{
 			freecmd(ret);
 			panic("minishell: too many args");
 		}
-		cmd->argv[argc] = q;
-		cmd->eargv[argc] = eq;
-		argc++;
+		cmd->argv[cmd->argc] = q;
+		cmd->eargv[cmd->argc] = eq;
+		cmd->argc++;
 		ret = parseredir(ret, ps, es);
 	}
 	return (ret);

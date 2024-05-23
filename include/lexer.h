@@ -20,6 +20,7 @@ typedef struct s_cmd
 typedef struct s_execcmd
 {
 	t_type	 type;
+	int		 argc;
 	char	*argv[ARG_MAX];
 	char	*eargv[ARG_MAX];
 }			t_execcmd;
