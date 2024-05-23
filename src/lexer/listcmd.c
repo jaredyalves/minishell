@@ -8,7 +8,7 @@ t_cmd	*listcmd(t_cmd *left, t_cmd *right)
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = LIST;
+	cmd->type = TYPE_SEQUENCE;
 	cmd->left = left;
 	cmd->right = right;
 	return ((t_cmd *)cmd);

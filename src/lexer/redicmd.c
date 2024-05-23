@@ -9,7 +9,7 @@ t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = REDI;
+	cmd->type = TYPE_REDIRECT;
 	cmd->cmd = subcmd;
 	cmd->file = file;
 	cmd->efile = efile;

@@ -1,29 +1,32 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# define EXEC 1
-# define REDI 2
-# define PIPE 3
-# define LIST 4
-# define BACK 5
-
 # define MAXARGS 100
+
+typedef enum e_type
+{
+	TYPE_EXECUTE,
+	TYPE_REDIRECT,
+	TYPE_PIPE,
+	TYPE_SEQUENCE,
+	TYPE_BACKGROUND,
+} t_type;
 
 typedef struct s_cmd
 {
-	int		type;
+	t_type type;
 }			t_cmd;
 
 typedef struct s_execcmd
 {
-	int		type;
+	t_type	 type;
 	char	*argv[MAXARGS];
 	char	*eargv[MAXARGS];
 }			t_execcmd;
 
 typedef struct s_redicmd
 {
-	int		type;
+	t_type	 type;
 	t_cmd	*cmd;
 	char	*file;
 	char	*efile;
@@ -33,21 +36,21 @@ typedef struct s_redicmd
 
 typedef struct s_pipecmd
 {
-	int		type;
+	t_type	 type;
 	t_cmd	*left;
 	t_cmd	*right;
 }			t_pipecmd;
 
 typedef struct s_listcmd
 {
-	int		type;
+	t_type	 type;
 	t_cmd	*left;
 	t_cmd	*right;
 }			t_listcmd;
 
 typedef struct s_backcmd
 {
-	int		type;
+	t_type type;
 	t_cmd	*cmd;
 }			t_backcmd;
 

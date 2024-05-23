@@ -9,7 +9,7 @@ t_cmd	*backcmd(t_cmd *subcmd)
 
 	cmd = malloc(sizeof(*cmd));
 	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = BACK;
+	cmd->type = TYPE_BACKGROUND;
 	cmd->cmd = subcmd;
 	return ((t_cmd *)cmd);
 }
