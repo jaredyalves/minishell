@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# define MAXARGS 100
+#include <linux/limits.h>
 
 typedef enum e_type
 {
@@ -20,8 +20,8 @@ typedef struct s_cmd
 typedef struct s_execcmd
 {
 	t_type	 type;
-	char	*argv[MAXARGS];
-	char	*eargv[MAXARGS];
+	char	*argv[ARG_MAX];
+	char	*eargv[ARG_MAX];
 }			t_execcmd;
 
 typedef struct s_redicmd

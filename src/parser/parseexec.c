@@ -27,7 +27,7 @@ t_cmd	*parseexec(char **ps, char *es)
 			freecmd(ret);
 			panic("minishell: syntax error");
 		}
-		if (argc >= MAXARGS)
+		if (argc >= ARG_MAX)
 		{
 			freecmd(ret);
 			panic("minishell: too many args");
