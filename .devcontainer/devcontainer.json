@@ -1,0 +1,6 @@
+{
+  "name": "minishell",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+}
