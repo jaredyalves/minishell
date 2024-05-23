@@ -10,8 +10,8 @@ void	runredi(t_redicmd *rcmd, char **envp)
 	close(rcmd->fd);
 	if (open(rcmd->file, rcmd->mode, 0664) < 0)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: %s: no such file\n", rcmd->file);
 		freecmd((t_cmd *)rcmd);
+		ft_dprintf(STDERR_FILENO, "minishell: %s: no file\n", rcmd->file);
 		exit(EXIT_FAILURE);
 	}
 	runcmd(rcmd->cmd, envp);

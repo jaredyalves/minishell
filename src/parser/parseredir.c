@@ -16,7 +16,7 @@ t_cmd	*parseredir(t_cmd *cmd, char **ps, char *es)
 		if (get_token(ps, es, &q, &eq) != 'a')
 		{
 			freecmd(cmd);
-			panic("minishell: no file for redirection");
+			panic("no file");
 		}
 		if (tok == '<')
 			cmd = redicmd(cmd, q, eq, O_RDONLY);

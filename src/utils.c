@@ -1,10 +1,9 @@
-#include <stdlib.h>
-#include <unistd.h>
-
+#include "ft.h"
+#include <errno.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-
-#include "ft.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 char *get_line(char *line)
 {
@@ -19,9 +18,16 @@ char *get_line(char *line)
 	return (line);
 }
 
-void	panic(char *s)
+void panic(const char *s)
 {
-	ft_dprintf(STDERR_FILENO, "%s\n", s);
+	if (s != NULL && errno != 0)
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", s, strerror(errno));
+	else if (s != NULL && errno == 0)
+		ft_dprintf(STDERR_FILENO, "minishell: %s\n", s);
+	else if (s == NULL && errno != 0)
+		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
+	else
+		ft_dprintf(STDERR_FILENO, "minishell: unexpected error\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -31,7 +37,7 @@ int	fork1(void)
 
 	pid = fork();
 	if (pid == -1)
-		panic("minishell: fork error");
+		panic("fork");
 	return (pid);
 }
 

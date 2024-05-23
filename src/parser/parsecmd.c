@@ -17,8 +17,8 @@ t_cmd	*parsecmd(char *s)
 	peek(&s, es, "");
 	if (s != es)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", s);
 		freecmd(cmd);
+		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", s);
 		exit(EXIT_FAILURE);
 	}
 	terminate_line(cmd);

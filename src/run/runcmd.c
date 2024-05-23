@@ -6,7 +6,7 @@
 void	runcmd(t_cmd *cmd, char **envp)
 {
 	if (cmd == 0)
-		panic("minishell: runcmd error");
+		panic("runcmd");
 	if (cmd->type == TYPE_EXECUTE)
 		runexec((t_execcmd *)cmd, envp);
 	else if (cmd->type == TYPE_REDIRECT)

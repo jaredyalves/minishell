@@ -23,12 +23,12 @@ t_cmd	*parseexec(char **ps, char *es)
 		if (tok != 'a')
 		{
 			freecmd(ret);
-			panic("minishell: syntax error");
+			panic("syntax");
 		}
 		if (cmd->argc >= ARG_MAX)
 		{
 			freecmd(ret);
-			panic("minishell: too many args");
+			panic("too many args");
 		}
 		cmd->argv[cmd->argc] = q;
 		cmd->eargv[cmd->argc] = eq;

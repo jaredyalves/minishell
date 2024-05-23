@@ -9,7 +9,7 @@ void	runpipe(t_pipecmd *pcmd, char **envp)
 	int	p[2];
 
 	if (pipe(p) < 0)
-		panic("minishell: pipe error");
+		panic("pipe");
 	if (fork1() == 0)
 	{
 		close(1);

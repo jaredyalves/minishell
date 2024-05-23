@@ -8,13 +8,13 @@ t_cmd	*parseblock(char **ps, char *es)
 	t_cmd	*cmd;
 
 	if (!peek(ps, es, "("))
-		panic("minishell: missing (");
+		panic("missing `('");
 	get_token(ps, es, 0, 0);
 	cmd = parseline(ps, es);
 	if (!peek(ps, es, ")"))
 	{
 		freecmd(cmd);
-		panic("minishell: missing )");
+		panic("missing `)'");
 	}
 	get_token(ps, es, 0, 0);
 	cmd = parseredir(cmd, ps, es);
