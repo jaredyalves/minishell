@@ -1,4 +1,4 @@
-#include "../lexer/lexer.h"
+#include "lexer.h"
 #include "nulterminate.h"
 
 t_cmd	*nulterminate(t_cmd *cmd)

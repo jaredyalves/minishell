@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "../lexer/lexer.h"
+# include "lexer.h"
 
 # define WHITESPACE " \t\r\n\v"
 # define SYMBOLS "<|>&;()"

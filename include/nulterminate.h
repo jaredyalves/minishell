@@ -1,7 +1,7 @@
 #ifndef NULTERMINATE_H
 # define NULTERMINATE_H
 
-# include "../lexer/lexer.h"
+# include "lexer.h"
 
 void	nulexec(t_execcmd *ecmd);
 void	nulredi(t_redicmd *rcmd);

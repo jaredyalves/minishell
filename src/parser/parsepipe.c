@@ -1,4 +1,4 @@
-#include "../lexer/lexer.h"
+#include "lexer.h"
 #include "parser.h"
 
 t_cmd	*parsepipe(char **ps, char *es)

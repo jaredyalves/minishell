@@ -1,7 +1,7 @@
-#include "../lexer/lexer.h"
-#include "../minishell.h"
+#include "lexer.h"
+#include "minishell.h"
 #include "parser.h"
-#include "run/run.h"
+#include "run.h"
 
 t_cmd	*parseblock(char **ps, char *es)
 {

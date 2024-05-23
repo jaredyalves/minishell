@@ -1,7 +1,7 @@
 #ifndef RUN_H
 # define RUN_H
 
-# include "../lexer/lexer.h"
+# include "lexer.h"
 
 void	runexec(t_execcmd *ecmd, char **envp);
 void	runredi(t_redicmd *rcmd, char **envp);

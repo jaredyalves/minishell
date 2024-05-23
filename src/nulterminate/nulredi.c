@@ -1,4 +1,4 @@
-#include "../lexer/lexer.h"
+#include "lexer.h"
 #include "nulterminate.h"
 
 void	nulredi(t_redicmd *rcmd)

@@ -1,7 +1,7 @@
-#include "../lexer/lexer.h"
-#include "../minishell.h"
+#include "lexer.h"
+#include "minishell.h"
 #include "parser.h"
-#include "run/run.h"
+#include "run.h"
 #include <fcntl.h>
 
 t_cmd	*parseredir(t_cmd *cmd, char **ps, char *es)

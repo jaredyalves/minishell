@@ -1,6 +1,6 @@
 #include "minishell.h"
-#include "parser/parser.h"
-#include "run/run.h"
+#include "parser.h"
+#include "run.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

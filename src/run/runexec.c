@@ -1,5 +1,5 @@
-#include "../ft/ft.h"
-#include "../lexer/lexer.h"
+#include "ft.h"
+#include "lexer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

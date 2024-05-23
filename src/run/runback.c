@@ -1,5 +1,5 @@
-#include "../lexer/lexer.h"
-#include "../minishell.h"
+#include "lexer.h"
+#include "minishell.h"
 #include "run.h"
 
 void	runback(t_backcmd *bcmd, char **envp)

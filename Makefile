@@ -1,9 +1,37 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-INCLUDE = -I.
+INCLUDE = -I./include
 
 NAME = minishell
-SRCS = ft/ft_split.c lexer/backcmd.c lexer/execcmd.c lexer/listcmd.c lexer/pipecmd.c lexer/redicmd.c minishell.c nulterminate/nulback.c nulterminate/nulexec.c nulterminate/nullist.c nulterminate/nulpipe.c nulterminate/nulredi.c nulterminate/nulterminate.c parser/parseblock.c parser/parsecmd.c parser/parseexec.c parser/parseline.c parser/parsepipe.c parser/parseredir.c parser/utils.c run/freecmd.c run/runback.c run/runcmd.c run/runexec.c run/runlist.c run/runpipe.c run/runredi.c utils.c
+SRCS = \
+	src/ft/ft_split.c \
+	src/lexer/backcmd.c \
+	src/lexer/execcmd.c \
+	src/lexer/listcmd.c \
+	src/lexer/pipecmd.c \
+	src/lexer/redicmd.c \
+	src/nulterminate/nulback.c \
+	src/nulterminate/nulexec.c \
+	src/nulterminate/nullist.c \
+	src/nulterminate/nulpipe.c \
+	src/nulterminate/nulredi.c \
+	src/nulterminate/nulterminate.c \
+	src/parser/parseblock.c \
+	src/parser/parsecmd.c \
+	src/parser/parseexec.c \
+	src/parser/parseline.c \
+	src/parser/parsepipe.c \
+	src/parser/parseredir.c \
+	src/parser/utils.c \
+	src/run/freecmd.c \
+	src/run/runback.c \
+	src/run/runcmd.c \
+	src/run/runexec.c \
+	src/run/runlist.c \
+	src/run/runpipe.c \
+	src/run/runredi.c \
+	src/utils.c \
+	src/minishell.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean fclean re valgrind sanitize

@@ -1,4 +1,4 @@
-#include "../lexer/lexer.h"
+#include "lexer.h"
 #include "nulterminate.h"
 
 void	nulpipe(t_pipecmd *pcmd)

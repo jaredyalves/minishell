@@ -1,4 +1,4 @@
-#include "../lexer/lexer.h"
+#include "lexer.h"
 #include <stdlib.h>
 
 void	freecmd(t_cmd *cmd)
