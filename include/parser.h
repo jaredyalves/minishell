@@ -17,6 +17,13 @@ t_cmd	*parseexec(char **ps, char *es);
 t_cmd	*parseredir(t_cmd *cmd, char **ps, char *es);
 t_cmd	*parseblock(char **ps, char *es);
 
+void   terminate_execute(t_execcmd *ecmd);
+void   terminate_redirect(t_redicmd *rcmd);
+void   terminate_pipe(t_pipecmd *pcmd);
+void   terminate_sequence(t_listcmd *lcmd);
+void   terminate_background(t_backcmd *bcmd);
+t_cmd *terminate_line(t_cmd *cmd);
+
 t_cmd	*parsecmd(char *s);
 
 #endif

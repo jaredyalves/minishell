@@ -1,6 +1,5 @@
 #include "ft.h"
 #include "lexer.h"
-#include "nulterminate.h"
 #include "parser.h"
 #include "run.h"
 #include <stdlib.h>
@@ -22,7 +21,7 @@ t_cmd	*parsecmd(char *s)
 		freecmd(cmd);
 		exit(EXIT_FAILURE);
 	}
-	nulterminate(cmd);
+	terminate_line(cmd);
 	return (cmd);
 }
 

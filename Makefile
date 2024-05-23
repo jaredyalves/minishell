@@ -1,20 +1,14 @@
 NAME = minishell
 
 SRCS = \
-	src/ft/ft_memset.c \
 	src/ft/ft_dprintf.c \
+	src/ft/ft_memset.c \
 	src/ft/ft_split.c \
 	src/lexer/backcmd.c \
 	src/lexer/execcmd.c \
 	src/lexer/listcmd.c \
 	src/lexer/pipecmd.c \
 	src/lexer/redicmd.c \
-	src/nulterminate/nulback.c \
-	src/nulterminate/nulexec.c \
-	src/nulterminate/nullist.c \
-	src/nulterminate/nulpipe.c \
-	src/nulterminate/nulredi.c \
-	src/nulterminate/nulterminate.c \
 	src/parser/parseblock.c \
 	src/parser/parsecmd.c \
 	src/parser/parseexec.c \
@@ -29,12 +23,17 @@ SRCS = \
 	src/run/runlist.c \
 	src/run/runpipe.c \
 	src/run/runredi.c \
+	src/terminate/terminate_background.c \
+	src/terminate/terminate_execute.c \
+	src/terminate/terminate_line.c \
+	src/terminate/terminate_pipe.c \
+	src/terminate/terminate_redirect.c \
+	src/terminate/terminate_sequence.c \
 	src/utils.c \
 	src/minishell.c
 HEADS = \
 	include/ft.h \
 	include/lexer.h \
-	include/nulterminate.h \
 	include/parser.h \
 	include/run.h \
 	include/minishell.h

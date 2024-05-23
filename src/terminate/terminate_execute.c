@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-void	nulexec(t_execcmd *ecmd)
+void terminate_execute(t_execcmd *ecmd)
 {
 	int	i;
 
