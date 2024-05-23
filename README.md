@@ -1,44 +1,18 @@
 # Minishell
 
-*As beautiful as a shell*.
+*As beautiful as a shell*
 
 This project is about creating a simple shell.
 Yes, your own little bash.
 You will learn a lot about processes and file descriptors.
 
-## Requirements
-
-Make sure you have the essentials to build C language.
-
-* Ubuntu/Debian
-
-```bash
-sudo apt install -y build-essential
-```
-
-* Fedora/RHEL
-
-```bash
-sudo dnf groupinstall -y "C Development Tools and Libraries"
-```
-
-* Arch Linux
-
-```bash
-sudo pacman -S --noconfirm base-devel
-```
-
-* Void Linux
-
-```bash
-sudo xbps-install -Sy base-devel
-```
-
 ## Build
+
+Clone the repository then run `make`.
 
 ```bash
 git clone https://github.com/jaredyalves/minishell.git
-cd minishell/project/
+cd minishell
 make
 ```
 
