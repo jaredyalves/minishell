@@ -28,14 +28,14 @@ t_cmd	*parseexec(char **ps, char *es)
 			freecmd(ret);
 			panic("minishell: syntax error");
 		}
-		cmd->argv[argc] = q;
-		cmd->eargv[argc] = eq;
-		argc++;
 		if (argc >= MAXARGS)
 		{
 			freecmd(ret);
 			panic("minishell: too many args");
 		}
+		cmd->argv[argc] = q;
+		cmd->eargv[argc] = eq;
+		argc++;
 		ret = parseredir(ret, ps, es);
 	}
 	return (ret);
