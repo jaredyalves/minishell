@@ -1,9 +1,10 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 #include <readline/history.h>
 #include <readline/readline.h>
+
+#include "ft.h"
 
 char *get_line(char *line)
 {
@@ -18,10 +19,9 @@ char *get_line(char *line)
 	return (line);
 }
 
-// FIXME: Can't use fprintf(), replace with a ft function
 void	panic(char *s)
 {
-	fprintf(stderr, "%s\n", s);
+	ft_dprintf(STDERR_FILENO, "%s\n", s);
 	exit(EXIT_FAILURE);
 }
 

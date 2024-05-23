@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 char	**ft_split(char *str, char chr);
+int		  ft_dprintf(int fd, const char *format, ...);
 void	 *ft_memset(void *s, int c, size_t n);
 
 #endif

@@ -2,6 +2,7 @@ NAME = minishell
 
 SRCS = \
 	src/ft/ft_memset.c \
+	src/ft/ft_dprintf.c \
 	src/ft/ft_split.c \
 	src/lexer/backcmd.c \
 	src/lexer/execcmd.c \
@@ -64,5 +65,13 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+valgrind: CFLAGS = -Wall -Werror -Wextra -g3 $(INCLUDES)
+valgrind: LDFLAGS = -lreadline
+valgrind: re
+	valgrind \
+		--leak-check=full \
+		--show-leak-kinds=all \
+		./$(NAME)
 
 # vim: ts=4 sts=4 sw=4 noet

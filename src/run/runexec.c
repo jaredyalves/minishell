@@ -1,6 +1,5 @@
 #include "ft.h"
 #include "lexer.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -30,7 +29,6 @@ void	search_in_path(char *program, char **argv, char **envp)
 	free(tokens);
 }
 
-// FIXME: Can't use fprintf(), replace with a ft function
 void	runexec(t_execcmd *ecmd, char **envp)
 {
 	if (ecmd->argv[0] == 0)
@@ -40,7 +38,8 @@ void	runexec(t_execcmd *ecmd, char **envp)
 		execve(ecmd->argv[0], ecmd->argv, envp);
 	else
 		search_in_path(ecmd->argv[0], ecmd->argv, envp);
-	fprintf(stderr, "minishell: %s: command not found\n", ecmd->argv[0]);
+	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n",
+		ecmd->argv[0]);
 }
 
 // vim: ts=4 sts=4 sw=4 noet
