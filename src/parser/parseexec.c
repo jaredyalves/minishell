@@ -7,7 +7,7 @@ t_cmd	*parseexec(char **ps, char *es)
 {
 	char		*q;
 	char		*eq;
-	int			tok;
+	t_token		 token;
 	t_execcmd	*cmd;
 	t_cmd		*ret;
 
@@ -17,10 +17,10 @@ t_cmd	*parseexec(char **ps, char *es)
 	cmd = (t_execcmd *)ret;
 	while (!peek(ps, es, SYMBOLS))
 	{
-		tok = get_token(ps, es, &q, &eq);
-		if (tok == 0)
+		token = get_token(ps, es, &q, &eq);
+		if (token == TOKEN_NULL)
 			break ;
-		if (tok != 'a')
+		if (token != TOKEN_NO_SPECIAL)
 		{
 			freecmd(ret);
 			panic("syntax");

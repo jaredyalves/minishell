@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
+#include <stddef.h>
 
 t_cmd	*parseline(char **ps, char *es)
 {
@@ -8,12 +9,12 @@ t_cmd	*parseline(char **ps, char *es)
 	cmd = parsepipe(ps, es);
 	if (peek(ps, es, "&"))
 	{
-		get_token(ps, es, 0, 0);
+		get_token(ps, es, NULL, NULL);
 		cmd = backcmd(cmd);
 	}
 	if (peek(ps, es, ";"))
 	{
-		get_token(ps, es, 0, 0);
+		get_token(ps, es, NULL, NULL);
 		cmd = listcmd(cmd, parseline(ps, es));
 	}
 	return (cmd);

@@ -6,10 +6,26 @@
 # define WHITESPACE " \t\r\n\v"
 # define SYMBOLS "<|>&;()"
 
-void	skip_whitespace(char **ps, char *es);
-void	process_token(char **ps, char *es, int *ret);
-int		get_token(char **ps, char *es, char **q, char **eq);
-int		peek(char **ps, char *es, char *toks);
+typedef enum e_token
+{
+	TOKEN_NULL,
+	TOKEN_NO_SPECIAL,
+	TOKEN_SINGLE_AMPERSAND,
+	TOKEN_DOUBLE_AMPERSAND,
+	TOKEN_SINGLE_PIPE,
+	TOKEN_DOUBLE_PIPE,
+	TOKEN_SINGLE_LESS,
+	TOKEN_DOUBLE_LESS,
+	TOKEN_SINGLE_GREATER,
+	TOKEN_DOUBLE_GREATER,
+	TOKEN_SINGLE_SEMICOLON,
+	TOKEN_LEFT_PARENTHESES,
+	TOKEN_RIGHT_PARENTHESES,
+} t_token;
+
+t_token parse_token(char **ps, const char *es);
+t_token get_token(char **ps, char *es, char **q, char **eq);
+int		peek(char **ps, char *es, char *tokens);
 
 t_cmd	*parseline(char **ps, char *es);
 t_cmd	*parsepipe(char **ps, char *es);

@@ -4,12 +4,14 @@ SRCS = \
 	src/ft/ft_dprintf.c \
 	src/ft/ft_memset.c \
 	src/ft/ft_split.c \
+	src/ft/ft_strchr.c \
 	src/ft/ft_strlen.c \
 	src/lexer/backcmd.c \
 	src/lexer/execcmd.c \
 	src/lexer/listcmd.c \
 	src/lexer/pipecmd.c \
 	src/lexer/redicmd.c \
+	src/parser/parse_token.c \
 	src/parser/parseblock.c \
 	src/parser/parsecmd.c \
 	src/parser/parseexec.c \

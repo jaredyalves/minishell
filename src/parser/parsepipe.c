@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
+#include <stddef.h>
 
 t_cmd	*parsepipe(char **ps, char *es)
 {
@@ -8,7 +9,7 @@ t_cmd	*parsepipe(char **ps, char *es)
 	cmd = parseexec(ps, es);
 	if (peek(ps, es, "|"))
 	{
-		get_token(ps, es, 0, 0);
+		get_token(ps, es, NULL, NULL);
 		cmd = pipecmd(cmd, parsepipe(ps, es));
 	}
 	return (cmd);
