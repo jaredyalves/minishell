@@ -1,7 +1,4 @@
-#include "ft.h"
-#include "lexer.h"
 #include "minishell.h"
-#include <stdlib.h>
 
 t_cmd	*listcmd(t_cmd *left, t_cmd *right)
 {

@@ -1,6 +1,4 @@
-#include "lexer.h"
 #include "minishell.h"
-#include "run.h"
 
 int runback(t_backcmd *bcmd, char **envp)
 {

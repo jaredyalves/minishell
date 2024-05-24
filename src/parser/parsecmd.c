@@ -1,9 +1,4 @@
-#include "ft.h"
-#include "lexer.h"
-#include "parser.h"
-#include "run.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
 
 t_cmd	*parsecmd(char *s)
 {

@@ -40,12 +40,7 @@ SRCS = \
 	src/terminate/terminate_sequence.c \
 	src/utils.c \
 	src/minishell.c
-HEADS = \
-	include/ft.h \
-	include/lexer.h \
-	include/parser.h \
-	include/run.h \
-	include/minishell.h
+HEADS = include/minishell.h
 OBJS = $(SRCS:.c=.o)
 
 CC = cc

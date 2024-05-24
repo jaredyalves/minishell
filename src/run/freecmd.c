@@ -1,5 +1,4 @@
-#include "lexer.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 void	freecmd(t_cmd *cmd)
 {

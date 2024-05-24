@@ -1,4 +1,4 @@
-#include "lexer.h"
+#include "minishell.h"
 
 void terminate_execute(t_execcmd *ecmd)
 {

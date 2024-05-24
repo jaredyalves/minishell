@@ -1,5 +1,4 @@
-#include "lexer.h"
-#include "parser.h"
+#include "minishell.h"
 
 void terminate_and(t_andcmd *acmd)
 {

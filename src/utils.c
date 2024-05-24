@@ -1,11 +1,4 @@
-#include "ft.h"
-#include "lexer.h"
-#include "run.h"
-#include <errno.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
 
 char *get_line(char *line)
 {

@@ -1,6 +1,4 @@
-#include "lexer.h"
 #include "minishell.h"
-#include "parser.h"
 
 t_cmd	*parseexec(char **ps, char *es)
 {

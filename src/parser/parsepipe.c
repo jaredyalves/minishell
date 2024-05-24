@@ -1,6 +1,4 @@
-#include "lexer.h"
-#include "parser.h"
-#include <stddef.h>
+#include "minishell.h"
 
 t_cmd	*parsepipe(char **ps, char *es)
 {

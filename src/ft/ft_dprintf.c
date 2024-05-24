@@ -1,5 +1,4 @@
-#include <stdarg.h>
-#include <unistd.h>
+#include "minishell.h"
 
 static int write_char(int fd, char c)
 {

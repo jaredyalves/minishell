@@ -1,8 +1,4 @@
-#include "ft.h"
-#include "lexer.h"
 #include "minishell.h"
-#include <fcntl.h>
-#include <stdlib.h>
 
 t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 {

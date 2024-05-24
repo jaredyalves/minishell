@@ -1,7 +1,4 @@
-#include "ft.h"
-#include "lexer.h"
 #include "minishell.h"
-#include <stdlib.h>
 
 t_cmd	*backcmd(t_cmd *subcmd)
 {

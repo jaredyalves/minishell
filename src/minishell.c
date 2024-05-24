@@ -1,9 +1,4 @@
 #include "minishell.h"
-#include "parser.h"
-#include "run.h"
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
 
 int	main(int argc, char **argv, char **envp)
 {

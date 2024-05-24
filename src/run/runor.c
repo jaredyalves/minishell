@@ -1,7 +1,4 @@
-#include "lexer.h"
 #include "minishell.h"
-#include "run.h"
-#include <sys/wait.h>
 
 int runor(t_orcmd *ocmd, char **envp)
 {

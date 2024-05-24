@@ -1,6 +1,4 @@
-#include "lexer.h"
-#include "run.h"
-#include <stddef.h>
+#include "minishell.h"
 
 int runcmd(t_cmd *cmd, char **envp)
 {

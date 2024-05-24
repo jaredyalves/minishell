@@ -1,8 +1,4 @@
-#include "ft.h"
-#include "lexer.h"
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "minishell.h"
 
 // FIXME: Can't use strcpy(), replace with a ft function
 // FIXME: Can't use strcat(), replace with a ft function

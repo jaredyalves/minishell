@@ -1,6 +1,4 @@
-#include "ft.h"
-#include "parser.h"
-#include <stddef.h>
+#include "minishell.h"
 
 static void skip_whitespace(char **ps, const char *es)
 {

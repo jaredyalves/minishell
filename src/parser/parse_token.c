@@ -1,5 +1,4 @@
-#include "ft.h"
-#include "parser.h"
+#include "minishell.h"
 
 t_token double_token(char **ps)
 {

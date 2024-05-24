@@ -1,8 +1,4 @@
-#include "lexer.h"
 #include "minishell.h"
-#include "run.h"
-#include <fcntl.h>
-#include <unistd.h>
 
 int runredi(t_redicmd *rcmd, char **envp)
 {

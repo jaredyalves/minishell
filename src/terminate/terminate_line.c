@@ -1,6 +1,4 @@
-#include "lexer.h"
-#include "parser.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 t_cmd *terminate_line(t_cmd *cmd)
 {

@@ -1,8 +1,4 @@
-#include "lexer.h"
 #include "minishell.h"
-#include "run.h"
-#include <sys/wait.h>
-#include <unistd.h>
 
 int runpipe(t_pipecmd *pcmd, char **envp)
 {
