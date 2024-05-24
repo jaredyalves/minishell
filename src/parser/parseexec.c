@@ -10,7 +10,7 @@ t_cmd	*parseexec(char **ps, char *es)
 
 	if (peek(ps, es, "("))
 		return (parseblock(ps, es));
-	ret = execcmd();
+	ret = execute_command();
 	cmd = (t_execcmd *)ret;
 	while (!peek(ps, es, SYMBOLS))
 	{

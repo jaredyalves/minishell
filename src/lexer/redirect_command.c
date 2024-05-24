@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
+t_cmd	*redirect_command(t_cmd *command, char *file, char *end_file, int mode)
 {
 	t_redicmd	*cmd;
 
@@ -9,9 +9,9 @@ t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 		panic("malloc", NULL);
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_REDIRECT;
-	cmd->cmd = subcmd;
+	cmd->cmd = command;
 	cmd->file = file;
-	cmd->efile = efile;
+	cmd->efile = end_file;
 	cmd->mode = mode;
 	if ((mode & O_ACCMODE) == O_RDONLY)
 		cmd->fd = 0;

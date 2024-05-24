@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_cmd	*backcmd(t_cmd *subcmd)
+t_cmd	*background_command(t_cmd *command)
 {
 	t_backcmd	*cmd;
 
@@ -9,6 +9,6 @@ t_cmd	*backcmd(t_cmd *subcmd)
 		panic("malloc", NULL);
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_BACKGROUND;
-	cmd->cmd = subcmd;
+	cmd->cmd = command;
 	return ((t_cmd *)cmd);
 }

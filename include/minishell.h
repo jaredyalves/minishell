@@ -101,13 +101,13 @@ typedef struct s_orcmd
 } t_orcmd;
 
 // Lexer
-t_cmd *execcmd(void);
-t_cmd *redicmd(t_cmd *subcmd, char *file, char *efile, int mode);
-t_cmd *pipecmd(t_cmd *left, t_cmd *right);
-t_cmd *listcmd(t_cmd *left, t_cmd *right);
-t_cmd *backcmd(t_cmd *subcmd);
-t_cmd *andcmd(t_cmd *left, t_cmd *right);
-t_cmd *orcmd(t_cmd *left, t_cmd *right);
+t_cmd *and_command(t_cmd *left, t_cmd *right);
+t_cmd *background_command(t_cmd *command);
+t_cmd *execute_command(void);
+t_cmd *or_command(t_cmd *left, t_cmd *right);
+t_cmd *pipe_command(t_cmd *left, t_cmd *right);
+t_cmd *redirect_command(t_cmd *command, char *file, char *end_file, int mode);
+t_cmd *sequence_command(t_cmd *left, t_cmd *right);
 
 // Parser
 int		peek(char **ps, char *es, char *tokens);

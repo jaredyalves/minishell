@@ -6,13 +6,13 @@ SRCS = \
 	src/ft/ft_split.c \
 	src/ft/ft_strchr.c \
 	src/ft/ft_strlen.c \
-	src/lexer/andcmd.c \
-	src/lexer/backcmd.c \
-	src/lexer/execcmd.c \
-	src/lexer/listcmd.c \
-	src/lexer/orcmd.c \
-	src/lexer/pipecmd.c \
-	src/lexer/redicmd.c \
+	src/lexer/and_command.c \
+	src/lexer/background_command.c \
+	src/lexer/execute_command.c \
+	src/lexer/or_command.c \
+	src/lexer/pipe_command.c \
+	src/lexer/redirect_command.c \
+	src/lexer/sequence_command.c \
 	src/parser/parse_token.c \
 	src/parser/parseblock.c \
 	src/parser/parsecmd.c \

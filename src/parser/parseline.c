@@ -10,14 +10,14 @@ t_cmd	*parseline(char **ps, char *es)
 	{
 		token = get_token(ps, es, NULL, NULL);
 		if (token == TOKEN_SINGLE_AMPERSAND)
-			cmd = backcmd(cmd);
+			cmd = background_command(cmd);
 		else if (token == TOKEN_DOUBLE_AMPERSAND)
-			cmd = andcmd(cmd, parseline(ps, es));
+			cmd = and_command(cmd, parseline(ps, es));
 	}
 	if (peek(ps, es, ";"))
 	{
 		get_token(ps, es, NULL, NULL);
-		cmd = listcmd(cmd, parseline(ps, es));
+		cmd = sequence_command(cmd, parseline(ps, es));
 	}
 	return (cmd);
 }

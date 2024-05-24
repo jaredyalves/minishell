@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_cmd *andcmd(t_cmd *left, t_cmd *right)
+t_cmd *and_command(t_cmd *left, t_cmd *right)
 {
 	t_andcmd *cmd;
 

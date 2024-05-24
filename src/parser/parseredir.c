@@ -12,11 +12,11 @@ t_cmd	*parseredir(t_cmd *cmd, char **ps, char *es)
 		if (get_token(ps, es, &q, &eq) != TOKEN_NO_SPECIAL)
 			panic("missing file for redirection", cmd);
 		if (token == TOKEN_SINGLE_LESS)
-			cmd = redicmd(cmd, q, eq, O_RDONLY);
+			cmd = redirect_command(cmd, q, eq, O_RDONLY);
 		else if (token == TOKEN_SINGLE_GREATER)
-			cmd = redicmd(cmd, q, eq, O_WRONLY | O_CREAT | O_TRUNC);
+			cmd = redirect_command(cmd, q, eq, O_WRONLY | O_CREAT | O_TRUNC);
 		else if (token == TOKEN_DOUBLE_GREATER)
-			cmd = redicmd(cmd, q, eq, O_WRONLY | O_CREAT | O_APPEND);
+			cmd = redirect_command(cmd, q, eq, O_WRONLY | O_CREAT | O_APPEND);
 	}
 	return (cmd);
 }
