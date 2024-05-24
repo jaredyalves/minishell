@@ -1,42 +1,44 @@
-#include "ft.h"
-#include <stdio.h>
+#include <stdarg.h>
 #include <unistd.h>
 
-static int printf_c(int fd, char c)
+static int write_char(int fd, char c)
 {
 	return ((int)write(fd, &c, 1));
 }
 
-static int printf_s(int fd, const char *s)
+static int write_string(int fd, const char *s)
 {
 	int written;
 
 	written = 0;
-	if (s == NULL)
-		written += printf_s(fd, "(null)");
-	while (s != NULL && s[written] != '\0')
-		written += printf_c(fd, s[written]);
+	if (!s)
+		s = "(null)";
+	while (*s)
+		written += write_char(fd, *s++);
 	return (written);
 }
 
-static int printf_d(int fd, ssize_t n)
+static int write_number(int fd, ssize_t n)
 {
-	int written;
+	int	 i;
+	int	 written;
+	char buffer[20];
 
+	i = 0;
 	written = 0;
 	if (n < 0)
 	{
-		written += printf_c(fd, '-');
+		written += write_char(fd, '-');
 		n = -n;
 	}
-	if (n < 10)
-		written += printf_c(fd, (char)(n + '0'));
-	else
+	while (n > 0)
 	{
-		written += printf_d(fd, n / 10);
-		written += printf_c(fd, (char)((n % 10) + '0'));
+		buffer[i++] = (char)(n % 10 + '0');
+		n /= 10;
 	}
-	return (written);
+	while (i > 0)
+		written += write_char(fd, buffer[--i]);
+	return written;
 }
 
 int ft_dprintf(int fd, const char *format, ...)
@@ -54,14 +56,14 @@ int ft_dprintf(int fd, const char *format, ...)
 		{
 			p++;
 			if (*p == 's')
-				written += printf_s(fd, va_arg(args, const char *));
+				written += write_string(fd, va_arg(args, const char *));
 			else if (*p == 'd')
-				written += printf_d(fd, va_arg(args, int));
+				written += write_number(fd, va_arg(args, int));
 			else if (*p == 'c')
-				written += printf_c(fd, (char)va_arg(args, int));
+				written += write_char(fd, (char)va_arg(args, int));
 		}
 		else
-			written += printf_c(fd, *p);
+			written += write_char(fd, *p);
 		p++;
 	}
 	va_end(args);
