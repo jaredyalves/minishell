@@ -16,6 +16,10 @@ int runcmd(t_cmd *cmd, char **envp)
 		return (runlist((t_listcmd *)cmd, envp));
 	else if (cmd->type == TYPE_BACKGROUND)
 		return (runback((t_backcmd *)cmd, envp));
+	else if (cmd->type == TYPE_AND)
+		return (runand((t_andcmd *)cmd, envp));
+	else if (cmd->type == TYPE_OR)
+		return (runor((t_orcmd *)cmd, envp));
 	return (0);
 }
 

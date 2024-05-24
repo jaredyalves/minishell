@@ -6,9 +6,11 @@ SRCS = \
 	src/ft/ft_split.c \
 	src/ft/ft_strchr.c \
 	src/ft/ft_strlen.c \
+	src/lexer/andcmd.c \
 	src/lexer/backcmd.c \
 	src/lexer/execcmd.c \
 	src/lexer/listcmd.c \
+	src/lexer/orcmd.c \
 	src/lexer/pipecmd.c \
 	src/lexer/redicmd.c \
 	src/parser/parse_token.c \
@@ -20,15 +22,19 @@ SRCS = \
 	src/parser/parseredir.c \
 	src/parser/utils.c \
 	src/run/freecmd.c \
+	src/run/runand.c \
 	src/run/runback.c \
 	src/run/runcmd.c \
 	src/run/runexec.c \
 	src/run/runlist.c \
+	src/run/runor.c \
 	src/run/runpipe.c \
 	src/run/runredi.c \
+	src/terminate/terminate_and.c \
 	src/terminate/terminate_background.c \
 	src/terminate/terminate_execute.c \
 	src/terminate/terminate_line.c \
+	src/terminate/terminate_or.c \
 	src/terminate/terminate_pipe.c \
 	src/terminate/terminate_redirect.c \
 	src/terminate/terminate_sequence.c \

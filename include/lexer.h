@@ -10,6 +10,8 @@ typedef enum e_type
 	TYPE_PIPE,
 	TYPE_SEQUENCE,
 	TYPE_BACKGROUND,
+	TYPE_AND,
+	TYPE_OR,
 } t_type;
 
 typedef struct s_cmd
@@ -55,11 +57,27 @@ typedef struct s_backcmd
 	t_cmd	*cmd;
 }			t_backcmd;
 
+typedef struct s_andcmd
+{
+	t_type type;
+	t_cmd *left;
+	t_cmd *right;
+} t_andcmd;
+
+typedef struct s_orcmd
+{
+	t_type type;
+	t_cmd *left;
+	t_cmd *right;
+} t_orcmd;
+
 t_cmd		*execcmd(void);
 t_cmd		*redicmd(t_cmd *subcmd, char *file, char *efile, int mode);
 t_cmd		*pipecmd(t_cmd *left, t_cmd *right);
 t_cmd		*listcmd(t_cmd *left, t_cmd *right);
 t_cmd		*backcmd(t_cmd *subcmd);
+t_cmd		*andcmd(t_cmd *left, t_cmd *right);
+t_cmd		*orcmd(t_cmd *left, t_cmd *right);
 
 #endif
 

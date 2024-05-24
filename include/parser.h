@@ -38,6 +38,8 @@ void   terminate_redirect(t_redicmd *rcmd);
 void   terminate_pipe(t_pipecmd *pcmd);
 void   terminate_sequence(t_listcmd *lcmd);
 void   terminate_background(t_backcmd *bcmd);
+void   terminate_and(t_andcmd *acmd);
+void   terminate_or(t_orcmd *ocmd);
 t_cmd *terminate_line(t_cmd *cmd);
 
 t_cmd	*parsecmd(char *s);

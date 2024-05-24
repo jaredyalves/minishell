@@ -16,6 +16,10 @@ t_cmd *terminate_line(t_cmd *cmd)
 		terminate_sequence((t_listcmd *)cmd);
 	else if (cmd->type == TYPE_BACKGROUND)
 		terminate_background((t_backcmd *)cmd);
+	else if (cmd->type == TYPE_AND)
+		terminate_and((t_andcmd *)cmd);
+	else if (cmd->type == TYPE_OR)
+		terminate_or((t_orcmd *)cmd);
 	return (cmd);
 }
 
