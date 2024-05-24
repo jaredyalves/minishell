@@ -79,5 +79,3 @@ char	**ft_split(char *str, char chr)
 	split_words(str, chr, s2, num_words);
 	return (s2);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

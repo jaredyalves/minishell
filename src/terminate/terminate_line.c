@@ -22,5 +22,3 @@ t_cmd *terminate_line(t_cmd *cmd)
 		terminate_or((t_orcmd *)cmd);
 	return (cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

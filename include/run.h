@@ -15,5 +15,3 @@ void	freecmd(t_cmd *cmd);
 int		runcmd(t_cmd *cmd, char **envp);
 
 #endif
-
-// vim: ts=4 sts=4 sw=4 noet

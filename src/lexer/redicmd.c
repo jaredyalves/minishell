@@ -25,5 +25,3 @@ t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 		cmd->fd = -1;
 	return ((t_cmd *)cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

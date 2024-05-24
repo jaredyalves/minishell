@@ -28,5 +28,3 @@ void	freecmd(t_cmd *cmd)
 		free(((t_backcmd *)cmd));
 	}
 }
-
-// vim: ts=4 sts=4 sw=4 noet

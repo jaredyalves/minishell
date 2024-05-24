@@ -10,5 +10,3 @@ int runlist(t_listcmd *lcmd, char **envp)
 	wait(0);
 	return (runcmd(lcmd->right, envp));
 }
-
-// vim: ts=4 sts=4 sw=4 noet

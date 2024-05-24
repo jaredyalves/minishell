@@ -10,5 +10,3 @@ size_t	  ft_strlen(const char *s);
 void	 *ft_memset(void *s, int c, size_t n);
 
 #endif
-
-// vim: ts=4 sts=4 sw=4 noet

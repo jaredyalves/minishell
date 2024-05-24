@@ -40,5 +40,3 @@ int peek(char **ps, char *es, char *tokens)
 	*ps = s;
 	return (*s && ft_strchr(tokens, *s));
 }
-
-// vim: ts=4 sts=4 sw=4 noet

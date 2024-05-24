@@ -15,5 +15,3 @@ t_cmd	*backcmd(t_cmd *subcmd)
 	cmd->cmd = subcmd;
 	return ((t_cmd *)cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

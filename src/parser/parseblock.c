@@ -17,5 +17,3 @@ t_cmd	*parseblock(char **ps, char *es)
 	cmd = parseredir(cmd, ps, es);
 	return (cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

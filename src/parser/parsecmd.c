@@ -22,5 +22,3 @@ t_cmd	*parsecmd(char *s)
 	terminate_line(cmd);
 	return (cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

@@ -14,5 +14,3 @@ int runor(t_orcmd *ocmd, char **envp)
 		return (runcmd(ocmd->right, envp));
 	return (-1);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

@@ -69,5 +69,3 @@ int ft_dprintf(int fd, const char *format, ...)
 	va_end(args);
 	return written;
 }
-
-// vim: ts=4 sts=4 sw=4 noet

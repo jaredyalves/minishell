@@ -11,5 +11,3 @@ int runredi(t_redicmd *rcmd, char **envp)
 		panic(rcmd->file, (t_cmd *)rcmd);
 	return (runcmd(rcmd->cmd, envp));
 }
-
-// vim: ts=4 sts=4 sw=4 noet

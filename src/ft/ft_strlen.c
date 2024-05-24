@@ -7,5 +7,3 @@ size_t ft_strlen(const char *s)
 		str++;
 	return str - s;
 }
-
-// vim: ts=4 sts=4 sw=4 noet

@@ -30,5 +30,3 @@ t_cmd	*parseexec(char **ps, char *es)
 	}
 	return (ret);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

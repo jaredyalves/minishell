@@ -53,5 +53,3 @@ t_token parse_token(char **ps, const char *es)
 	*ps = s;
 	return (token);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

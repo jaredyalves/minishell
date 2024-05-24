@@ -43,5 +43,3 @@ int runexec(t_execcmd *ecmd, char **envp)
 	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n", program);
 	return (-1);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

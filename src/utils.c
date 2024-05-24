@@ -44,5 +44,3 @@ int	fork1(void)
 		panic("fork", NULL);
 	return (pid);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

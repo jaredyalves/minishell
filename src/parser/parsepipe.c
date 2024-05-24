@@ -18,5 +18,3 @@ t_cmd	*parsepipe(char **ps, char *es)
 	}
 	return (cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

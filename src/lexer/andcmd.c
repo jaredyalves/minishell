@@ -16,5 +16,3 @@ t_cmd *andcmd(t_cmd *left, t_cmd *right)
 	cmd->right = right;
 	return ((t_cmd *)cmd);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

@@ -81,5 +81,3 @@ valgrind: re
 		--leak-check=full \
 		--show-leak-kinds=all \
 		./$(NAME)
-
-# vim: ts=4 sts=4 sw=4 noet

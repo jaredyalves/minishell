@@ -12,5 +12,3 @@ char *ft_strchr(const char *s, int c)
 		return ((char *)s);
 	return (NULL);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

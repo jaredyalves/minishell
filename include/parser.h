@@ -45,5 +45,3 @@ t_cmd *terminate_line(t_cmd *cmd);
 t_cmd	*parsecmd(char *s);
 
 #endif
-
-// vim: ts=4 sts=4 sw=4 noet

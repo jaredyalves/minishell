@@ -8,5 +8,3 @@ int runback(t_backcmd *bcmd, char **envp)
 		return (runcmd(bcmd->cmd, envp));
 	return (0);
 }
-
-// vim: ts=4 sts=4 sw=4 noet

@@ -29,5 +29,3 @@ int	main(int argc, char **argv, char **envp)
 		wait(0);
 	}
 }
-
-// vim: ts=4 sts=4 sw=4 noet

@@ -80,5 +80,3 @@ t_cmd		*andcmd(t_cmd *left, t_cmd *right);
 t_cmd		*orcmd(t_cmd *left, t_cmd *right);
 
 #endif
-
-// vim: ts=4 sts=4 sw=4 noet
