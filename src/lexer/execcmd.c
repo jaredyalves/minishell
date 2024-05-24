@@ -9,7 +9,7 @@ t_cmd	*execcmd(void)
 
 	cmd = (t_execcmd *)malloc(sizeof(*cmd));
 	if (cmd == NULL)
-		panic("malloc");
+		panic("malloc", NULL);
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_EXECUTE;
 	cmd->argc = 0;

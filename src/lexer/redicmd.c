@@ -10,7 +10,7 @@ t_cmd	*redicmd(t_cmd *subcmd, char *file, char *efile, int mode)
 
 	cmd = (t_redicmd *)malloc(sizeof(*cmd));
 	if (cmd == NULL)
-		panic("malloc");
+		panic("malloc", NULL);
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_REDIRECT;
 	cmd->cmd = subcmd;

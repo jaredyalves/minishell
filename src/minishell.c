@@ -1,12 +1,14 @@
 #include "minishell.h"
 #include "parser.h"
 #include "run.h"
+#include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 
 int	main(int argc, char **argv, char **envp)
 {
 	static char *line = NULL;
+	t_cmd		*cmd;
 
 	(void)argc;
 	(void)argv;
@@ -14,7 +16,16 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = get_line(line);
 		if (fork1() == 0)
-			runcmd(parsecmd(line), envp);
+		{
+			cmd = parsecmd(line);
+			if (runcmd(cmd, envp) == -1)
+			{
+				freecmd(cmd);
+				exit(EXIT_FAILURE);
+			}
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
 		wait(0);
 	}
 }

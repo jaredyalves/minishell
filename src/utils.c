@@ -1,4 +1,6 @@
 #include "ft.h"
+#include "lexer.h"
+#include "run.h"
 #include <errno.h>
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -18,16 +20,18 @@ char *get_line(char *line)
 	return (line);
 }
 
-void panic(const char *s)
+void panic(char *str, t_cmd *cmd)
 {
-	if (s != NULL && errno != 0)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", s, strerror(errno));
-	else if (s != NULL && errno == 0)
-		ft_dprintf(STDERR_FILENO, "minishell: %s\n", s);
-	else if (s == NULL && errno != 0)
+	if (str != NULL && errno != 0)
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", str, strerror(errno));
+	else if (str != NULL && errno == 0)
+		ft_dprintf(STDERR_FILENO, "minishell: %s\n", str);
+	else if (str == NULL && errno != 0)
 		ft_dprintf(STDERR_FILENO, "minishell: %s\n", strerror(errno));
 	else
 		ft_dprintf(STDERR_FILENO, "minishell: unexpected error\n");
+	if (cmd != NULL)
+		freecmd(cmd);
 	exit(EXIT_FAILURE);
 }
 
@@ -37,7 +41,7 @@ int	fork1(void)
 
 	pid = fork();
 	if (pid == -1)
-		panic("fork");
+		panic("fork", NULL);
 	return (pid);
 }
 

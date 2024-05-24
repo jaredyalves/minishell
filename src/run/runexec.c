@@ -29,17 +29,19 @@ void	search_in_path(char *program, char **argv, char **envp)
 	free(tokens);
 }
 
-void	runexec(t_execcmd *ecmd, char **envp)
+int runexec(t_execcmd *ecmd, char **envp)
 {
-	if (ecmd->argv[0] == 0)
-		return ;
-	if (ecmd->argv[0][0] == '/' || (ecmd->argv[0][0] == '.'
-			&& ecmd->argv[0][1] == '/'))
-		execve(ecmd->argv[0], ecmd->argv, envp);
+	char *program;
+
+	program = ecmd->argv[0];
+	if (program == NULL)
+		return (0);
+	if (ft_strchr(program, '/'))
+		execve(program, ecmd->argv, envp);
 	else
-		search_in_path(ecmd->argv[0], ecmd->argv, envp);
-	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n",
-		ecmd->argv[0]);
+		search_in_path(program, ecmd->argv, envp);
+	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n", program);
+	return (-1);
 }
 
 // vim: ts=4 sts=4 sw=4 noet

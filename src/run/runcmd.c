@@ -1,24 +1,22 @@
 #include "lexer.h"
-#include "minishell.h"
 #include "run.h"
-#include <stdlib.h>
+#include <stddef.h>
 
-void	runcmd(t_cmd *cmd, char **envp)
+int runcmd(t_cmd *cmd, char **envp)
 {
-	if (cmd == 0)
-		panic("runcmd");
+	if (cmd == NULL)
+		return (-1);
 	if (cmd->type == TYPE_EXECUTE)
-		runexec((t_execcmd *)cmd, envp);
+		return (runexec((t_execcmd *)cmd, envp));
 	else if (cmd->type == TYPE_REDIRECT)
-		runredi((t_redicmd *)cmd, envp);
+		return (runredi((t_redicmd *)cmd, envp));
 	else if (cmd->type == TYPE_PIPE)
-		runpipe((t_pipecmd *)cmd, envp);
+		return (runpipe((t_pipecmd *)cmd, envp));
 	else if (cmd->type == TYPE_SEQUENCE)
-		runlist((t_listcmd *)cmd, envp);
+		return (runlist((t_listcmd *)cmd, envp));
 	else if (cmd->type == TYPE_BACKGROUND)
-		runback((t_backcmd *)cmd, envp);
-	freecmd(cmd);
-	exit(EXIT_SUCCESS);
+		return (runback((t_backcmd *)cmd, envp));
+	return (0);
 }
 
 // vim: ts=4 sts=4 sw=4 noet

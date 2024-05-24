@@ -1,7 +1,6 @@
 #include "lexer.h"
 #include "minishell.h"
 #include "parser.h"
-#include "run.h"
 
 t_cmd	*parseexec(char **ps, char *es)
 {
@@ -21,15 +20,9 @@ t_cmd	*parseexec(char **ps, char *es)
 		if (token == TOKEN_NULL)
 			break ;
 		if (token != TOKEN_NO_SPECIAL)
-		{
-			freecmd(ret);
-			panic("syntax");
-		}
+			panic("syntax", ret);
 		if (cmd->argc >= ARG_MAX)
-		{
-			freecmd(ret);
-			panic("too many args");
-		}
+			panic("too many args", ret);
 		cmd->argv[cmd->argc] = q;
 		cmd->eargv[cmd->argc] = eq;
 		cmd->argc++;

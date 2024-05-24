@@ -9,7 +9,7 @@ t_cmd	*backcmd(t_cmd *subcmd)
 
 	cmd = (t_backcmd *)malloc(sizeof(*cmd));
 	if (cmd == NULL)
-		panic("malloc");
+		panic("malloc", NULL);
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_BACKGROUND;
 	cmd->cmd = subcmd;

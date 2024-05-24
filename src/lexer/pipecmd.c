@@ -9,7 +9,7 @@ t_cmd	*pipecmd(t_cmd *left, t_cmd *right)
 
 	cmd = (t_pipecmd *)malloc(sizeof(*cmd));
 	if (cmd == NULL)
-		panic("malloc");
+		panic("malloc", NULL);
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_PIPE;
 	cmd->left = left;
