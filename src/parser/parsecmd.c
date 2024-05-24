@@ -3,16 +3,14 @@
 #include "parser.h"
 #include "run.h"
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
-// FIXME: Can't use strlen(), replace with a ft function
 t_cmd	*parsecmd(char *s)
 {
 	char	*es;
 	t_cmd	*cmd;
 
-	es = s + strlen(s);
+	es = s + ft_strlen(s);
 	cmd = parseline(&s, es);
 	peek(&s, es, "");
 	if (s != es)

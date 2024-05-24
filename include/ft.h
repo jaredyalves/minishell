@@ -5,6 +5,7 @@
 
 char	**ft_split(char *str, char chr);
 int		  ft_dprintf(int fd, const char *format, ...);
+size_t	  ft_strlen(const char *s);
 void	 *ft_memset(void *s, int c, size_t n);
 
 #endif
