@@ -14,18 +14,29 @@ static void skip_whitespace(char **ps, const char *es)
 
 t_token get_token(char **ps, char *es, char **q, char **eq)
 {
-	char   *s;
 	t_token token;
 
-	s = *ps;
-	skip_whitespace(&s, es);
+	skip_whitespace(ps, es);
 	if (q)
-		*q = s;
-	token = parse_token(&s, es);
+		*q = *ps;
+	token = parse_token(ps, es);
+	if (token == TOKEN_DOUBLE_QUOTE || token == TOKEN_SINGLE_QUOTE)
+	{
+		if (q)
+			*q = *ps;
+		if (token == TOKEN_DOUBLE_QUOTE)
+			while (*ps < es && !ft_strchr("\"", **ps))
+				(*ps)++;
+		if (token == TOKEN_SINGLE_QUOTE)
+			while (*ps < es && !ft_strchr("'", **ps))
+				(*ps)++;
+	}
 	if (eq)
-		*eq = s;
-	skip_whitespace(&s, es);
-	*ps = s;
+		*eq = *ps;
+	if (*ps < es
+		&& (token == TOKEN_DOUBLE_QUOTE || token == TOKEN_SINGLE_QUOTE))
+		(*ps)++;
+	skip_whitespace(ps, es);
 	return (token);
 }
 

@@ -9,7 +9,8 @@ int	parse_arguments(t_execcmd *e_command, char **ps, char *es)
 	token = get_token(ps, es, &q, &eq);
 	if (token == TOKEN_NULL)
 		return (1);
-	if (token != TOKEN_NO_SPECIAL)
+	if (token != TOKEN_NO_SPECIAL && token != TOKEN_SINGLE_QUOTE
+		&& token != TOKEN_DOUBLE_QUOTE)
 		panic("syntax", (t_cmd *)e_command);
 	if (e_command->argc >= ARG_MAX)
 		panic("too many arguments", (t_cmd *)e_command);
