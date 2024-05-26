@@ -9,5 +9,5 @@ int runand(t_andcmd *acmd, char **envp)
 	waitpid(0, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 		return (runcmd(acmd->right, envp));
-	return (-1);
+	return (0);
 }

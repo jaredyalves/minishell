@@ -142,11 +142,21 @@ void   terminate_and(t_andcmd *acmd);
 void   terminate_or(t_orcmd *ocmd);
 t_cmd *terminate_line(t_cmd *cmd);
 
+// Free
+void free_and(t_andcmd *a_command);
+void free_background(t_backcmd *b_command);
+void free_command(t_cmd *command);
+void free_execute(t_execcmd *e_command);
+void free_or(t_orcmd *o_command);
+void free_pipe(t_pipecmd *p_command);
+void free_redirect(t_redicmd *r_command);
+void free_sequence(t_listcmd *s_command);
+
 // Utils
 char   *get_line(char *line);
 void	panic(char *str, t_cmd *cmd);
 int		fork1(void);
-void	freecmd(t_cmd *cmd);
+int		pipe1(int *pipes);
 
 // Ft
 char  *ft_strcat(char *dst, const char *src);

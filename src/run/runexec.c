@@ -39,5 +39,5 @@ int	runexec(t_execcmd *ecmd, char **envp)
 	else
 		search_in_path(program, ecmd->argv, envp);
 	ft_dprintf(STDERR_FILENO, "minishell: %s: Command not found\n", program);
-	return (-1);
+	return (1);
 }

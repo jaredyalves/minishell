@@ -18,5 +18,5 @@ int runcmd(t_cmd *cmd, char **envp)
 		return (runand((t_andcmd *)cmd, envp));
 	else if (cmd->type == TYPE_OR)
 		return (runor((t_orcmd *)cmd, envp));
-	return (0);
+	return (1);
 }

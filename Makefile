@@ -1,6 +1,8 @@
 NAME = minishell
 
 SRCS = \
+	src/free/free_and.c \
+	src/free/free_command.c \
 	src/ft/ft_dprintf.c \
 	src/ft/ft_memset.c \
 	src/ft/ft_split.c \
@@ -23,7 +25,6 @@ SRCS = \
 	src/parser/parsepipe.c \
 	src/parser/parseredir.c \
 	src/parser/utils.c \
-	src/run/freecmd.c \
 	src/run/runand.c \
 	src/run/runback.c \
 	src/run/runcmd.c \
@@ -41,6 +42,12 @@ SRCS = \
 	src/terminate/terminate_redirect.c \
 	src/terminate/terminate_sequence.c \
 	src/utils.c \
+    src/free/free_background.c \
+    src/free/free_execute.c \
+    src/free/free_or.c \
+    src/free/free_pipe.c \
+    src/free/free_redirect.c \
+    src/free/free_sequence.c \
 	src/minishell.c
 HEADS = include/minishell.h
 OBJS = $(SRCS:.c=.o)

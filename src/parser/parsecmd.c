@@ -9,11 +9,7 @@ t_cmd	*parsecmd(char *s)
 	cmd = parseline(&s, es);
 	peek(&s, es, "");
 	if (s != es)
-	{
-		freecmd(cmd);
 		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", s);
-		exit(EXIT_FAILURE);
-	}
 	terminate_line(cmd);
 	return (cmd);
 }

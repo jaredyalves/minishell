@@ -4,6 +4,9 @@ int runredi(t_redicmd *rcmd, char **envp)
 {
 	close(rcmd->fd);
 	if (open(rcmd->file, rcmd->mode, 0664) < 0)
-		panic(rcmd->file, (t_cmd *)rcmd);
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", rcmd->file, strerror(errno));
+		return (1);
+	}
 	return (runcmd(rcmd->cmd, envp));
 }

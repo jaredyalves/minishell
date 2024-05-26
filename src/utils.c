@@ -24,7 +24,7 @@ void panic(char *str, t_cmd *cmd)
 	else
 		ft_dprintf(STDERR_FILENO, "minishell: unexpected error\n");
 	if (cmd != NULL)
-		freecmd(cmd);
+		free_command(cmd);
 	exit(EXIT_FAILURE);
 }
 
@@ -34,6 +34,22 @@ int	fork1(void)
 
 	pid = fork();
 	if (pid == -1)
-		panic("fork", NULL);
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: fork: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
 	return (pid);
+}
+
+int pipe1(int *pipes)
+{
+	int status;
+
+	status = pipe(pipes);
+	if (status == -1)
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: pipe: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+	return (status);
 }
