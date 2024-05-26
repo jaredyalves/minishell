@@ -2,9 +2,9 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	static char *line = NULL;
+	static char	*line = NULL;
 	t_cmd		*command;
-	int			 status;
+	int			status;
 
 	(void)argc;
 	(void)argv;
@@ -13,7 +13,7 @@ int	main(int argc, char **argv, char **envp)
 		line = get_line(line);
 		if (fork1() == 0)
 		{
-			command = parsecmd(line);
+			command = parse_command(line);
 			status = runcmd(command, envp);
 			free_command(command);
 			free(line);

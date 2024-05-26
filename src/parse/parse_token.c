@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static t_token double_token(char **ps)
+static t_token	double_token(char **ps)
 {
 	if (**ps == '<' && *(*ps + 1) == '<')
 		return ((*ps) += 2, TOKEN_DOUBLE_LESS);
@@ -13,7 +13,7 @@ static t_token double_token(char **ps)
 	return (TOKEN_NULL);
 }
 
-static t_token single_token(char **ps)
+static t_token	single_token(char **ps)
 {
 	if (**ps == '<')
 		return ((*ps)++, TOKEN_SINGLE_LESS);
@@ -36,10 +36,10 @@ static t_token single_token(char **ps)
 	return (TOKEN_NULL);
 }
 
-t_token parse_token(char **ps, const char *es)
+t_token	parse_token(char **ps, const char *es)
 {
-	char   *s;
-	t_token token;
+	char	*s;
+	t_token	token;
 
 	s = *ps;
 	if (*s == '\0')

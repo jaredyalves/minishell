@@ -112,13 +112,15 @@ t_cmd *redirect_command(t_cmd *command, char *file, char *end_file, int mode);
 t_cmd *sequence_command(t_cmd *left, t_cmd *right);
 
 // Parser
+t_cmd *parse_block(char **p_line, char *end_line);
+t_cmd *parse_command(char *line);
+t_cmd *parse_execute(char **p_line, char *end_line);
+t_cmd *parse_line(char **p_line, char *end_line);
+t_cmd *parse_pipe(char **p_line, char *end_line);
+t_cmd *parse_redirect(t_cmd *command, char **p_line, char *end_line);
+
+// Parser Utils
 int		peek(char **ps, char *es, char *tokens);
-t_cmd  *parseblock(char **ps, char *es);
-t_cmd  *parsecmd(char *s);
-t_cmd  *parseexec(char **ps, char *es);
-t_cmd  *parseline(char **ps, char *es);
-t_cmd  *parsepipe(char **ps, char *es);
-t_cmd  *parseredir(t_cmd *cmd, char **ps, char *es);
 t_token get_token(char **ps, char *es, char **q, char **eq);
 t_token parse_token(char **ps, const char *es);
 

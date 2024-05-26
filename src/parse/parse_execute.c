@@ -20,20 +20,20 @@ int	parse_arguments(t_execcmd *e_command, char **ps, char *es)
 	return (0);
 }
 
-t_cmd	*parseexec(char **ps, char *es)
+t_cmd	*parse_execute(char **p_line, char *end_line)
 {
 	t_cmd		*command;
 	t_execcmd	*e_command;
 
-	if (peek(ps, es, "("))
-		return (parseblock(ps, es));
+	if (peek(p_line, end_line, "("))
+		return (parse_block(p_line, end_line));
 	command = execute_command();
 	e_command = (t_execcmd *)command;
-	while (!peek(ps, es, SYMBOLS))
+	while (!peek(p_line, end_line, SYMBOLS))
 	{
-		if (parse_arguments(e_command, ps, es))
+		if (parse_arguments(e_command, p_line, end_line))
 			break ;
-		command = parseredir(command, ps, es);
+		command = parse_redirect(command, p_line, end_line);
 	}
 	return (command);
 }
