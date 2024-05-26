@@ -1,49 +1,54 @@
 #include "minishell.h"
 
-static int write_char(int fd, char c)
+static size_t	write_char(int fd, char c)
 {
-	return ((int)write(fd, &c, 1));
+	return (write(fd, &c, 1));
 }
 
-static int write_string(int fd, const char *s)
+static size_t	write_string(int fd, const char *s)
 {
-	int written;
+	size_t	written;
 
 	written = 0;
 	if (!s)
 		s = "(null)";
 	while (*s)
-		written += write_char(fd, *s++);
+		written += write(fd, s++, 1);
 	return (written);
 }
 
-static int write_number(int fd, ssize_t n)
+static size_t	write_number(int fd, ssize_t n)
 {
-	int	 i;
-	int	 written;
-	char buffer[20];
+	int		i;
+	size_t	written;
+	char	buffer[65];
 
 	i = 0;
 	written = 0;
 	if (n < 0)
 	{
-		written += write_char(fd, '-');
 		n = -n;
+		written += write(fd, "-", 1);
 	}
-	while (n > 0)
+	if (n == 0)
+		buffer[i++] = '0';
+	else
 	{
-		buffer[i++] = (char)(n % 10 + '0');
-		n /= 10;
+		while (n > 0)
+		{
+			buffer[i++] = (char)(n % 10 + '0');
+			n /= 10;
+		}
 	}
 	while (i > 0)
-		written += write_char(fd, buffer[--i]);
-	return written;
+		written += write(fd, &(buffer[--i]), 1);
+	return (written);
 }
 
-int ft_dprintf(int fd, const char *format, ...)
+size_t	ft_dprintf(int fd, const char *format, ...)
 {
-	const char *p;
-	int			written;
+	const char	*p;
+	size_t		written;
 	va_list		args;
 
 	p = format;
@@ -54,17 +59,17 @@ int ft_dprintf(int fd, const char *format, ...)
 		if (*p == '%' && *(p + 1))
 		{
 			p++;
+			if (*p == 'c')
+				written += write_char(fd, va_arg(args, int));
 			if (*p == 's')
 				written += write_string(fd, va_arg(args, const char *));
-			else if (*p == 'd')
+			if (*p == 'd')
 				written += write_number(fd, va_arg(args, int));
-			else if (*p == 'c')
-				written += write_char(fd, (char)va_arg(args, int));
 		}
 		else
-			written += write_char(fd, *p);
+			written += write(fd, p, 1);
 		p++;
 	}
 	va_end(args);
-	return written;
+	return (written);
 }
