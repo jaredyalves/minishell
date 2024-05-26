@@ -1,33 +1,35 @@
 #include "minishell.h"
 
-// FIXME: Can't use strcpy(), replace with a ft function
-// FIXME: Can't use strcat(), replace with a ft function
 void	search_in_path(char *program, char **argv, char **envp)
 {
 	int		i;
-	char	*path;
-	char	**tokens;
-	char	executable[1024];
+	char	**paths;
+	char	path[PATH_MAX];
 
-	i = 0;
-	path = getenv("PATH");
-	tokens = ft_split(path, ':');
-	while (tokens[i] != 0)
+	paths = ft_split(getenv("PATH"), ':');
+	if (paths == NULL)
+		return ;
+	i = -1;
+	while (paths[++i] != NULL)
 	{
-		strcpy(executable, tokens[i]);
-		strcat(executable, "/");
-		strcat(executable, program);
-		if (access(executable, X_OK) == 0)
-			execve(executable, argv, envp);
-		free(tokens[i]);
-		i++;
+		ft_strcpy(path, paths[i]);
+		ft_strcat(path, "/");
+		ft_strcat(path, program);
+		if (access(path, X_OK) == 0)
+		{
+			execve(path, argv, envp);
+			break ;
+		}
 	}
-	free(tokens);
+	i = -1;
+	while (paths[++i] != NULL)
+		free(paths[i]);
+	free(paths);
 }
 
-int runexec(t_execcmd *ecmd, char **envp)
+int	runexec(t_execcmd *ecmd, char **envp)
 {
-	char *program;
+	char	*program;
 
 	program = ecmd->argv[0];
 	if (program == NULL)
@@ -36,6 +38,6 @@ int runexec(t_execcmd *ecmd, char **envp)
 		execve(program, ecmd->argv, envp);
 	else
 		search_in_path(program, ecmd->argv, envp);
-	ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n", program);
+	ft_dprintf(STDERR_FILENO, "minishell: %s: Command not found\n", program);
 	return (-1);
 }

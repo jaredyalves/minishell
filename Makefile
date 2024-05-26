@@ -4,7 +4,9 @@ SRCS = \
 	src/ft/ft_dprintf.c \
 	src/ft/ft_memset.c \
 	src/ft/ft_split.c \
+	src/ft/ft_strcat.c \
 	src/ft/ft_strchr.c \
+	src/ft/ft_strcpy.c \
 	src/ft/ft_strlen.c \
 	src/lexer/and_command.c \
 	src/lexer/background_command.c \

@@ -149,7 +149,9 @@ int		fork1(void);
 void	freecmd(t_cmd *cmd);
 
 // Ft
+char  *ft_strcat(char *dst, const char *src);
 char  *ft_strchr(const char *s, int c);
+char  *ft_strcpy(char *dst, const char *src);
 char **ft_split(char *str, char chr);
 size_t ft_dprintf(int fd, const char *format, ...);
 size_t ft_strlen(const char *s);
