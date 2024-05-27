@@ -2,13 +2,16 @@ FROM ubuntu:latest
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    ca-certificates \
     build-essential \
+    ca-certificates \
     cmake \
+    curl \
     gdb \
     git \
-    curl \
-    wget \
-    valgrind \
+    gnupg \
     libreadline-dev \
-    && rm -rf /var/lib/apt/lists/*
+    openssh-client \
+    sudo \
+    valgrind \
+    wget \
+    && rm -rf /var/lib/apt/lists/* \
