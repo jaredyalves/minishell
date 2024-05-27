@@ -15,6 +15,7 @@ SRCS = \
 	src/ft/ft_strcat.c \
 	src/ft/ft_strchr.c \
 	src/ft/ft_strcpy.c \
+	src/ft/ft_strdup.c \
 	src/ft/ft_strlen.c \
 	src/lexer/and_command.c \
 	src/lexer/background_command.c \
@@ -39,6 +40,7 @@ SRCS = \
 	src/run/runor.c \
 	src/run/runpipe.c \
 	src/run/runredi.c \
+	src/shell.c \
 	src/terminate/terminate_and.c \
 	src/terminate/terminate_background.c \
 	src/terminate/terminate_execute.c \

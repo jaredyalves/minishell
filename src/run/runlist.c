@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-int runlist(t_listcmd *lcmd, char **envp)
+int runlist(t_listcmd *lcmd)
 {
 	if (fork1() == 0)
-		return (runcmd(lcmd->left, envp));
+		return (runcmd(lcmd->left));
 	wait(0);
-	return (runcmd(lcmd->right, envp));
+	return (runcmd(lcmd->right));
 }

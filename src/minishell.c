@@ -2,27 +2,26 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	static char	*line = NULL;
-	t_cmd		*command;
-	int			status;
+	int	i;
 
 	(void)argc;
 	(void)argv;
+	i = -1;
+	while (envp[++i] != NULL)
+		get_shell()->environ[i] = envp[i];
+	get_shell()->environ[i] = NULL;
 	while (1)
 	{
-		line = get_line(line);
+		get_shell()->cmdline = get_line(get_shell()->cmdline);
 		if (fork1() == 0)
 		{
-			command = parse_command(line);
-			status = runcmd(command, envp);
-			free_command(command);
-			free(line);
-			if (status == 0)
+			get_shell()->command = parse_command(get_shell()->cmdline);
+			get_shell()->status = runcmd(get_shell()->command);
+			free_command(get_shell()->command);
+			if (get_shell()->status == 0)
 				exit(EXIT_SUCCESS);
 			exit(EXIT_FAILURE);
 		}
 		wait(0);
-		free(line);
-		line = NULL;
 	}
 }

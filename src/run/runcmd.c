@@ -1,22 +1,22 @@
 #include "minishell.h"
 
-int runcmd(t_cmd *cmd, char **envp)
+int runcmd(t_cmd *cmd)
 {
 	if (cmd == NULL)
 		return (-1);
 	if (cmd->type == TYPE_EXECUTE)
-		return (runexec((t_execcmd *)cmd, envp));
+		return (runexec((t_execcmd *)cmd));
 	else if (cmd->type == TYPE_REDIRECT)
-		return (runredi((t_redicmd *)cmd, envp));
+		return (runredi((t_redicmd *)cmd));
 	else if (cmd->type == TYPE_PIPE)
-		return (runpipe((t_pipecmd *)cmd, envp));
+		return (runpipe((t_pipecmd *)cmd));
 	else if (cmd->type == TYPE_SEQUENCE)
-		return (runlist((t_listcmd *)cmd, envp));
+		return (runlist((t_listcmd *)cmd));
 	else if (cmd->type == TYPE_BACKGROUND)
-		return (runback((t_backcmd *)cmd, envp));
+		return (runback((t_backcmd *)cmd));
 	else if (cmd->type == TYPE_AND)
-		return (runand((t_andcmd *)cmd, envp));
+		return (runand((t_andcmd *)cmd));
 	else if (cmd->type == TYPE_OR)
-		return (runor((t_orcmd *)cmd, envp));
+		return (runor((t_orcmd *)cmd));
 	return (1);
 }

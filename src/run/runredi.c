@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int runredi(t_redicmd *rcmd, char **envp)
+int runredi(t_redicmd *rcmd)
 {
 	close(rcmd->fd);
 	if (open(rcmd->file, rcmd->mode, 0664) < 0)
@@ -8,5 +8,5 @@ int runredi(t_redicmd *rcmd, char **envp)
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", rcmd->file, strerror(errno));
 		return (1);
 	}
-	return (runcmd(rcmd->cmd, envp));
+	return (runcmd(rcmd->cmd));
 }

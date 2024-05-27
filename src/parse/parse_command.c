@@ -9,7 +9,7 @@ t_cmd	*parse_command(char *line)
 	cmd = parse_line(&line, es);
 	peek(&line, es, "");
 	if (line != es)
-		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %line\n", line);
+		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", line);
 	terminate_line(cmd);
 	return (cmd);
 }

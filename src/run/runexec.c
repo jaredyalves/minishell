@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	search_in_path(char *program, char **argv, char **envp)
+static void	search_in_path(char *program, char **argv)
 {
 	int		i;
 	char	**paths;
@@ -17,7 +17,7 @@ void	search_in_path(char *program, char **argv, char **envp)
 		ft_strcat(path, program);
 		if (access(path, X_OK) == 0)
 		{
-			execve(path, argv, envp);
+			execve(path, argv, get_shell()->environ);
 			break ;
 		}
 	}
@@ -27,7 +27,7 @@ void	search_in_path(char *program, char **argv, char **envp)
 	free(paths);
 }
 
-int	runexec(t_execcmd *ecmd, char **envp)
+int	runexec(t_execcmd *ecmd)
 {
 	char	*program;
 
@@ -35,9 +35,9 @@ int	runexec(t_execcmd *ecmd, char **envp)
 	if (program == NULL)
 		return (0);
 	if (ft_strchr(program, '/'))
-		execve(program, ecmd->argv, envp);
+		execve(program, ecmd->argv, get_shell()->environ);
 	else
-		search_in_path(program, ecmd->argv, envp);
+		search_in_path(program, ecmd->argv);
 	ft_dprintf(STDERR_FILENO, "minishell: %s: Command not found\n", program);
 	return (1);
 }

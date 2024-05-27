@@ -102,6 +102,17 @@ typedef struct s_orcmd
 	t_cmd *right;
 } t_orcmd;
 
+typedef struct s_shell
+{
+	char  *cmdline;
+	char  *environ[ARG_MAX];
+	int	   status;
+	t_cmd *command;
+} t_shell;
+
+// Shell
+t_shell *get_shell(void);
+
 // Lexer
 t_cmd *and_command(t_cmd *left, t_cmd *right);
 t_cmd *background_command(t_cmd *command);
@@ -125,14 +136,14 @@ t_token get_token(char **ps, char *es, char **q, char **eq);
 t_token parse_token(char **ps, const char *es);
 
 // Run
-int runand(t_andcmd *acmd, char **envp);
-int runback(t_backcmd *bcmd, char **envp);
-int runcmd(t_cmd *cmd, char **envp);
-int runexec(t_execcmd *ecmd, char **envp);
-int runlist(t_listcmd *lcmd, char **envp);
-int runor(t_orcmd *ocmd, char **envp);
-int runpipe(t_pipecmd *pcmd, char **envp);
-int runredi(t_redicmd *rcmd, char **envp);
+int runand(t_andcmd *acmd);
+int runback(t_backcmd *bcmd);
+int runcmd(t_cmd *cmd);
+int runexec(t_execcmd *ecmd);
+int runlist(t_listcmd *lcmd);
+int runor(t_orcmd *ocmd);
+int runpipe(t_pipecmd *pcmd);
+int runredi(t_redicmd *rcmd);
 
 // Terminate
 void   terminate_execute(t_execcmd *ecmd);
@@ -164,6 +175,7 @@ int		pipe1(int *pipes);
 char  *ft_strcat(char *dst, const char *src);
 char  *ft_strchr(const char *s, int c);
 char  *ft_strcpy(char *dst, const char *src);
+char  *ft_strdup(const char *src);
 char **ft_split(char *str, char chr);
 size_t ft_dprintf(int fd, const char *format, ...);
 size_t ft_strlen(const char *s);

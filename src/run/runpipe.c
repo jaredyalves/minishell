@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int runpipe(t_pipecmd *pcmd, char **envp)
+int runpipe(t_pipecmd *pcmd)
 {
 	int	p[2];
 
@@ -11,14 +11,14 @@ int runpipe(t_pipecmd *pcmd, char **envp)
 		dup2(p[1], 1);
 		close(p[0]);
 		close(p[1]);
-		return (runcmd(pcmd->left, envp));
+		return (runcmd(pcmd->left));
 	}
 	if (fork() == 0)
 	{
 		dup2(p[0], 0);
 		close(p[0]);
 		close(p[1]);
-		return (runcmd(pcmd->right, envp));
+		return (runcmd(pcmd->right));
 	}
 	close(p[0]);
 	close(p[1]);
