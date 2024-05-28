@@ -69,9 +69,6 @@ $(NAME): $(OBJS) $(HEADS)
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-run: all
-	@./$(NAME)
-
 clean:
 	rm -rf $(OBJS)
 
@@ -79,11 +76,3 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-valgrind: CFLAGS = -Wall -Werror -Wextra -g3 $(INCLUDES)
-valgrind: LDFLAGS = -lreadline
-valgrind: re
-	valgrind \
-		--leak-check=full \
-		--show-leak-kinds=all \
-		./$(NAME)
