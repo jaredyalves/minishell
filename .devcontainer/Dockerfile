@@ -1,8 +1,7 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
-RUN apk update
-RUN apk add --no-cache curl freetype gcompat libxext libxi libxrender libxtst procps unzip
-RUN apk add --no-cache ca-certificates git gnupg openssh sudo unzip wget
-RUN apk add --no-cache build-base cmake
-RUN apk add --no-cache gdb valgrind
-RUN apk add --no-cache readline-dev
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl libfreetype6 libxext6 libxi6 libxrender1 libxtst6 procps unzip \
+    && apt-get install -y --no-install-recommends build-essential cmake gdb git valgrind \
+    && apt-get install -y --no-install-recommends libreadline-dev \
+    && rm -rf /var/lib/apt/lists/*
