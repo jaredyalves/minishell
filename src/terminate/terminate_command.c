@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_cmd *terminate_line(t_cmd *cmd)
+t_cmd *terminate_command(t_cmd *cmd)
 {
 	if (cmd == NULL)
 		return (NULL);

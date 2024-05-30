@@ -12,9 +12,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define WHITESPACE " \t\r\n\v"
-#define SYMBOLS "<|>&;()"
-
 typedef enum e_type
 {
 	TYPE_EXECUTE,
@@ -28,21 +25,19 @@ typedef enum e_type
 
 typedef enum e_token
 {
-	TOKEN_NULL,
-	TOKEN_NO_SPECIAL,
-	TOKEN_SINGLE_AMPERSAND,
-	TOKEN_DOUBLE_AMPERSAND,
-	TOKEN_SINGLE_PIPE,
-	TOKEN_DOUBLE_PIPE,
-	TOKEN_SINGLE_LESS,
-	TOKEN_DOUBLE_LESS,
-	TOKEN_SINGLE_GREATER,
-	TOKEN_DOUBLE_GREATER,
-	TOKEN_SINGLE_SEMICOLON,
 	TOKEN_LEFT_PARENTHESES,
 	TOKEN_RIGHT_PARENTHESES,
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
+	TOKEN_DOUBLE_AMPERSAND,
+	TOKEN_SINGLE_AMPERSAND,
+	TOKEN_DOUBLE_GREATER,
+	TOKEN_SINGLE_GREATER,
+	TOKEN_DOUBLE_LESS,
+	TOKEN_SINGLE_LESS,
+	TOKEN_DOUBLE_PIPE,
+	TOKEN_SINGLE_PIPE,
+	TOKEN_SINGLE_SEMICOLON,
+	TOKEN_WORD,
+	TOKEN_NULL,
 } t_token;
 
 typedef struct s_cmd
@@ -106,8 +101,6 @@ typedef struct s_shell
 {
 	char  *cmdline;
 	char  *environ[ARG_MAX];
-	int	   status;
-	t_cmd *command;
 } t_shell;
 
 // Shell
@@ -123,17 +116,14 @@ t_cmd *redirect_command(t_cmd *command, char *file, char *end_file, int mode);
 t_cmd *sequence_command(t_cmd *left, t_cmd *right);
 
 // Parser
-t_cmd *parse_block(char **p_line, char *end_line);
-t_cmd *parse_command(char *line);
-t_cmd *parse_execute(char **p_line, char *end_line);
-t_cmd *parse_line(char **p_line, char *end_line);
-t_cmd *parse_pipe(char **p_line, char *end_line);
-t_cmd *parse_redirect(t_cmd *command, char **p_line, char *end_line);
-
-// Parser Utils
-int		peek(char **ps, char *es, char *tokens);
-t_token get_token(char **ps, char *es, char **q, char **eq);
-t_token parse_token(char **ps, const char *es);
+t_cmd  *parse_cmdline(char *cmdline);
+t_cmd  *parse_list(char **ps, const char *es);
+t_cmd  *parse_pipeline(char **ps, const char *es);
+t_cmd  *parse_command(char **ps, const char *es);
+t_cmd  *parse_redirection(t_cmd *command, char **ps, const char *es);
+int		find_token(char **ps, const char *s, const t_token *to_search);
+t_token get_token(char **ps, const char *es, char **q, char **eq);
+t_token peek_token(char **ps, const char *es, int skip);
 
 // Run
 int runand(t_andcmd *acmd);
@@ -153,7 +143,7 @@ void   terminate_sequence(t_listcmd *lcmd);
 void   terminate_background(t_backcmd *bcmd);
 void   terminate_and(t_andcmd *acmd);
 void   terminate_or(t_orcmd *ocmd);
-t_cmd *terminate_line(t_cmd *cmd);
+t_cmd *terminate_command(t_cmd *cmd);
 
 // Free
 void free_and(t_andcmd *a_command);
@@ -175,10 +165,12 @@ int		pipe1(int *pipes);
 char  *ft_strcat(char *dst, const char *src);
 char  *ft_strchr(const char *s, int c);
 char  *ft_strcpy(char *dst, const char *src);
-char  *ft_strdup(const char *src);
+char  *ft_strncpy(char *dst, const char *src, size_t n);
+char  *ft_strndup(const char *src, size_t n);
 char **ft_split(char *str, char chr);
 size_t ft_dprintf(int fd, const char *format, ...);
 size_t ft_strlen(const char *s);
+size_t ft_strnlen(const char *s, size_t n);
 void  *ft_memset(void *s, int c, size_t n);
 
 #endif

@@ -2,5 +2,5 @@
 
 void terminate_background(t_backcmd *bcmd)
 {
-	terminate_line(bcmd->cmd);
+	terminate_command(bcmd->cmd);
 }

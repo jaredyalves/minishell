@@ -4,48 +4,84 @@ static void	skip_whitespace(char **ps, const char *es)
 {
 	char	*s;
 
-	if (*ps == NULL || es == NULL)
-		return ;
 	s = *ps;
-	while (s < es && ft_strchr(WHITESPACE, *s))
+	while (s < es && ft_strchr(" \t", *s))
 		s++;
 	*ps = s;
 }
 
-t_token	get_token(char **ps, char *es, char **q, char **eq)
+static t_token	parse_token(char **ps, const char *es)
 {
-	t_token	token;
+	const char	*tokens[] = {"(", ")", "&&", "&", ">>", ">", "<<", "<", "||",
+		"|", ";"};
+	char		*s;
+	size_t		i;
+	size_t		token_len;
 
-	skip_whitespace(ps, es);
-	if (q)
-		*q = *ps;
-	token = parse_token(ps, es);
-	if (token == TOKEN_DOUBLE_QUOTE || token == TOKEN_SINGLE_QUOTE)
+	i = 0;
+	s = *ps;
+	while (i < (sizeof(tokens) / sizeof(char *)))
 	{
-		if (q)
-			*q = *ps;
-		if (token == TOKEN_DOUBLE_QUOTE)
-			while (*ps < es && !ft_strchr("\"", **ps))
-				(*ps)++;
-		if (token == TOKEN_SINGLE_QUOTE)
-			while (*ps < es && !ft_strchr("'", **ps))
-				(*ps)++;
+		token_len = ft_strlen(tokens[i]);
+		if (s + token_len <= es && strncmp(s, tokens[i], token_len) == 0)
+			return (*ps = s + token_len, i);
+		i++;
 	}
-	if (eq)
-		*eq = *ps;
-	if (*ps < es && (token == TOKEN_DOUBLE_QUOTE
-			|| token == TOKEN_SINGLE_QUOTE))
-		(*ps)++;
-	skip_whitespace(ps, es);
-	return (token);
+	if (s < es && !ft_strchr(" \t", *s))
+	{
+		while (s < es && !ft_strchr(" \t", *s) && !ft_strchr("()&><|;", *s))
+			s++;
+		return (*ps = s, TOKEN_WORD);
+	}
+	return (TOKEN_NULL);
 }
 
-int	peek(char **ps, char *es, char *tokens)
+int	find_token(char **ps, const char *es, const t_token *to_search)
 {
 	char	*s;
+	t_token	token;
 
 	s = *ps;
 	skip_whitespace(&s, es);
+	token = parse_token(&s, es);
+	while (*to_search != TOKEN_NULL)
+	{
+		if (token == *to_search)
+			return (1);
+		to_search++;
+	}
+	return (0);
+}
+
+t_token	get_token(char **ps, const char *es, char **q, char **eq)
+{
+	char	*s;
+	t_token	token;
+
+	s = *ps;
+	skip_whitespace(&s, es);
+	if (q)
+		*q = s;
+	token = parse_token(&s, es);
+	if (eq)
+		*eq = s;
+	skip_whitespace(&s, es);
 	*ps = s;
-	return (*s && ft_strchr(tokens, *s));
+	return (token);
+}
+
+t_token	peek_token(char **ps, const char *es, int skip)
+{
+	char	*s;
+	t_token	token;
+
+	s = *ps;
+	skip_whitespace(&s, es);
+	while (skip >= 0)
+	{
+		token = parse_token(&s, es);
+		skip_whitespace(&s, es);
+		skip--;
+	}
+	return (token);
 }

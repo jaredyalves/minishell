@@ -2,6 +2,6 @@
 
 void terminate_redirect(t_redicmd *rcmd)
 {
-	terminate_line(rcmd->cmd);
+	terminate_command(rcmd->cmd);
 	*rcmd->efile = 0;
 }

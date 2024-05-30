@@ -15,8 +15,10 @@ SRCS = \
 	src/ft/ft_strcat.c \
 	src/ft/ft_strchr.c \
 	src/ft/ft_strcpy.c \
-	src/ft/ft_strdup.c \
 	src/ft/ft_strlen.c \
+	src/ft/ft_strncpy.c \
+	src/ft/ft_strndup.c \
+	src/ft/ft_strnlen.c \
 	src/lexer/and_command.c \
 	src/lexer/background_command.c \
 	src/lexer/execute_command.c \
@@ -24,13 +26,7 @@ SRCS = \
 	src/lexer/pipe_command.c \
 	src/lexer/redirect_command.c \
 	src/lexer/sequence_command.c \
-	src/parse/parse_block.c \
-	src/parse/parse_command.c \
-	src/parse/parse_execute.c \
-	src/parse/parse_line.c \
-	src/parse/parse_pipe.c \
-	src/parse/parse_redirect.c \
-	src/parse/parse_token.c \
+	src/parse/parse_cmdline.c \
 	src/parse/parse_utils.c \
 	src/run/runand.c \
 	src/run/runback.c \
@@ -43,8 +39,8 @@ SRCS = \
 	src/shell.c \
 	src/terminate/terminate_and.c \
 	src/terminate/terminate_background.c \
+	src/terminate/terminate_command.c \
 	src/terminate/terminate_execute.c \
-	src/terminate/terminate_line.c \
 	src/terminate/terminate_or.c \
 	src/terminate/terminate_pipe.c \
 	src/terminate/terminate_redirect.c \
