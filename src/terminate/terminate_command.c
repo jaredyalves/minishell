@@ -2,6 +2,8 @@
 
 void	terminate_command(t_cmd *command)
 {
+	if (command == NULL)
+		return ;
 	if (command->type == TYPE_EXECUTE)
 		terminate_execute((t_execcmd *)command);
 	else if (command->type == TYPE_REDIRECT)
