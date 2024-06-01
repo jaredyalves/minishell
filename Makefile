@@ -37,14 +37,8 @@ SRCS = \
 	src/run/runpipe.c \
 	src/run/runredi.c \
 	src/shell.c \
-	src/terminate/terminate_and.c \
-	src/terminate/terminate_background.c \
 	src/terminate/terminate_command.c \
-	src/terminate/terminate_execute.c \
-	src/terminate/terminate_or.c \
-	src/terminate/terminate_pipe.c \
-	src/terminate/terminate_redirect.c \
-	src/terminate/terminate_sequence.c \
+	src/terminate/terminate_command_ext.c \
 	src/utils.c \
 	src/minishell.c
 HEADS = include/minishell.h

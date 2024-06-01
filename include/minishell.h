@@ -136,14 +136,14 @@ int runpipe(t_pipecmd *pcmd);
 int runredi(t_redicmd *rcmd);
 
 // Terminate
-void   terminate_execute(t_execcmd *ecmd);
-void   terminate_redirect(t_redicmd *rcmd);
-void   terminate_pipe(t_pipecmd *pcmd);
-void   terminate_sequence(t_listcmd *lcmd);
-void   terminate_background(t_backcmd *bcmd);
-void   terminate_and(t_andcmd *acmd);
-void   terminate_or(t_orcmd *ocmd);
-t_cmd *terminate_command(t_cmd *cmd);
+void terminate_command(t_cmd *cmd);
+void terminate_execute(t_execcmd *e_command);
+void terminate_redirect(t_redicmd *r_command);
+void terminate_pipe(t_pipecmd *p_command);
+void terminate_sequence(t_listcmd *s_command);
+void terminate_background(t_backcmd *b_command);
+void terminate_and(t_andcmd *a_command);
+void terminate_or(t_orcmd *o_command);
 
 // Free
 void free_and(t_andcmd *a_command);
