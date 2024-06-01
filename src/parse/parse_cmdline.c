@@ -26,7 +26,8 @@ t_cmd	*parse_list(char **ps, const char *es)
 	{
 		token = get_token(ps, es, NULL, NULL);
 		if (peek_token(ps, es, 0) != TOKEN_WORD
-			&& peek_token(ps, es, 0) != TOKEN_NULL)
+			&& peek_token(ps, es, 0) != TOKEN_NULL
+			&& peek_token(ps, es, 0) != TOKEN_LEFT_PARENTHESES)
 			return (free_command(command), NULL);
 		if (token == TOKEN_DOUBLE_AMPERSAND)
 			command = and_command(command, parse_list(ps, es));
@@ -66,6 +67,8 @@ t_cmd	*parse_command(char **ps, const char *es)
 	t_cmd		*command;
 	t_execcmd	*e_command;
 
+	if (peek_token(ps, es, 0) == TOKEN_LEFT_PARENTHESES)
+		return (parse_block(ps, es));
 	command = execute_command();
 	e_command = (t_execcmd *)command;
 	while (peek_token(ps, es, 0) == TOKEN_WORD)

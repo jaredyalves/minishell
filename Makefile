@@ -27,6 +27,7 @@ SRCS = \
 	src/lexer/redirect_command.c \
 	src/lexer/sequence_command.c \
 	src/parse/parse_cmdline.c \
+	src/parse/parse_cmdline_ext.c \
 	src/parse/parse_utils.c \
 	src/run/runand.c \
 	src/run/runback.c \

@@ -120,6 +120,7 @@ t_cmd  *parse_cmdline(char *cmdline);
 t_cmd  *parse_list(char **ps, const char *es);
 t_cmd  *parse_pipeline(char **ps, const char *es);
 t_cmd  *parse_command(char **ps, const char *es);
+t_cmd  *parse_block(char **ps, const char *es);
 t_cmd  *parse_redirection(t_cmd *command, char **ps, const char *es);
 int		find_token(char **ps, const char *s, const t_token *to_search);
 t_token get_token(char **ps, const char *es, char **q, char **eq);
