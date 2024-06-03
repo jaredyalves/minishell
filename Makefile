@@ -1,69 +1,70 @@
-NAME = minishell
+# Target
+NAME := minishell
 
-SRCS = \
-	src/free/free_and.c \
-	src/free/free_background.c \
-	src/free/free_command.c \
-	src/free/free_execute.c \
-	src/free/free_or.c \
-	src/free/free_pipe.c \
-	src/free/free_redirect.c \
-	src/free/free_sequence.c \
-	src/ft/ft_dprintf.c \
-	src/ft/ft_memset.c \
-	src/ft/ft_split.c \
-	src/ft/ft_strcat.c \
-	src/ft/ft_strchr.c \
-	src/ft/ft_strcpy.c \
-	src/ft/ft_strlen.c \
-	src/ft/ft_strncpy.c \
-	src/ft/ft_strndup.c \
-	src/ft/ft_strnlen.c \
-	src/lexer/and_command.c \
-	src/lexer/background_command.c \
-	src/lexer/execute_command.c \
-	src/lexer/or_command.c \
-	src/lexer/pipe_command.c \
-	src/lexer/redirect_command.c \
-	src/lexer/sequence_command.c \
-	src/parse/parse_cmdline.c \
-	src/parse/parse_cmdline_ext.c \
-	src/parse/parse_utils.c \
-	src/run/runand.c \
-	src/run/runback.c \
-	src/run/runcmd.c \
-	src/run/runexec.c \
-	src/run/runlist.c \
-	src/run/runor.c \
-	src/run/runpipe.c \
-	src/run/runredi.c \
-	src/shell.c \
-	src/terminate/terminate_command.c \
-	src/terminate/terminate_command_ext.c \
-	src/utils.c \
-	src/minishell.c
-HEADS = include/minishell.h
-OBJS = $(SRCS:.c=.o)
+# Directories
+SRCDIR := src
+OBJDIR := obj
+INCDIR := include
 
-CC = cc
-INCLUDES = -I./include
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g $(INCLUDES)
-LDFLAGS = -lreadline -fsanitize=address
+# Files
+SRCS := \
+	$(SRCDIR)/execute/builtin.c \
+	$(SRCDIR)/execute/execute.c \
+	$(SRCDIR)/execute/external.c \
+	$(SRCDIR)/ft/ft_dprintf.c \
+	$(SRCDIR)/ft/ft_memset.c \
+	$(SRCDIR)/ft/ft_split.c \
+	$(SRCDIR)/ft/ft_strcat.c \
+	$(SRCDIR)/ft/ft_strchr.c \
+	$(SRCDIR)/ft/ft_strcpy.c \
+	$(SRCDIR)/ft/ft_strlen.c \
+	$(SRCDIR)/ft/ft_strncpy.c \
+	$(SRCDIR)/ft/ft_strndup.c \
+	$(SRCDIR)/ft/ft_strnlen.c \
+	$(SRCDIR)/ft/ft_getenv.c \
+	$(SRCDIR)/parse/lexer.c \
+	$(SRCDIR)/parse/parse.c \
+	$(SRCDIR)/parse/tokenizer.c \
+	$(SRCDIR)/run/runand.c \
+	$(SRCDIR)/run/runback.c \
+	$(SRCDIR)/run/runexec.c \
+	$(SRCDIR)/run/runlist.c \
+	$(SRCDIR)/run/runor.c \
+	$(SRCDIR)/run/runpipe.c \
+	$(SRCDIR)/run/runredi.c \
+	$(SRCDIR)/utils/fork_and_pipe.c \
+	$(SRCDIR)/utils/free_command.c \
+	$(SRCDIR)/utils/line.c \
+	$(SRCDIR)/utils/null_terminate.c \
+	$(SRCDIR)/utils/execute_from_path.c \
+	$(SRCDIR)/utils/shell.c \
+	$(SRCDIR)/utils/signal.c \
+	$(SRCDIR)/main.c
+OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
+INCS := $(INCDIR)/minishell.h
 
+# Compiler and flags
+CC := cc
+INCLUDES := -I$(INCDIR)
+CFLAGS := -Wall -Werror -Wextra -fsanitize=address -g $(INCLUDES)
+LDFLAGS := -lreadline -fsanitize=address
+
+# Targets
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADS)
-	$(CC) -o $@ $(OBJS) $(LDFLAGS)
+$(NAME): $(OBJS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-%.o: %.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -f $(NAME)
 
 re: fclean all

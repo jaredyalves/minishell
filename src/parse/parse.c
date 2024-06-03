@@ -9,7 +9,7 @@ t_cmd	*parse_cmdline(char *cmdline)
 	s = cmdline;
 	es = s + ft_strlen(s);
 	command = parse_list(&s, es);
-	terminate_command(command);
+	null_terminate(command);
 	return (command);
 }
 
@@ -28,15 +28,15 @@ t_cmd	*parse_list(char **ps, const char *es)
 		if (peek_token(ps, es, 0) != TOKEN_WORD
 			&& peek_token(ps, es, 0) != TOKEN_NULL
 			&& peek_token(ps, es, 0) != TOKEN_LEFT_PARENTHESES)
-			return (free_command(command), NULL);
+			return (free_command(&command), NULL);
 		if (token == TOKEN_DOUBLE_AMPERSAND)
-			command = and_command(command, parse_list(ps, es));
+			command = logical_command(TYPE_AND, command, parse_list(ps, es));
 		if (token == TOKEN_SINGLE_AMPERSAND)
 			command = background_command(command);
 		if (token == TOKEN_DOUBLE_PIPE)
-			command = or_command(command, parse_list(ps, es));
+			command = logical_command(TYPE_OR, command, parse_list(ps, es));
 		if (token == TOKEN_SINGLE_SEMICOLON)
-			command = sequence_command(command, parse_list(ps, es));
+			command = logical_command(TYPE_SEQUENCE, command, parse_list(ps, es));
 	}
 	return (command);
 }
@@ -53,9 +53,9 @@ t_cmd	*parse_pipeline(char **ps, const char *es)
 		token = get_token(ps, es, NULL, NULL);
 		if (peek_token(ps, es, 0) != TOKEN_WORD && peek_token(ps, es,
 				0) != TOKEN_NULL)
-			return (free_command(command), NULL);
+			return (free_command(&command), NULL);
 		if (token == TOKEN_SINGLE_PIPE)
-			command = pipe_command(command, parse_pipeline(ps, es));
+			command = logical_command(TYPE_PIPE, command, parse_pipeline(ps, es));
 	}
 	return (command);
 }
@@ -77,10 +77,10 @@ t_cmd	*parse_command(char **ps, const char *es)
 		if (e_command->argc >= ARG_MAX)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: too many arguments\n");
-			return (free_command(command), NULL);
+			return (free_command(&command), NULL);
 		}
 		e_command->argv[e_command->argc] = q;
-		e_command->eargv[e_command->argc] = eq;
+		e_command->end_argv[e_command->argc] = eq;
 		e_command->argc++;
 		command = parse_redirection(command, ps, es);
 	}
@@ -99,7 +99,7 @@ t_cmd	*parse_redirection(t_cmd *command, char **ps, const char *es)
 	{
 		token = get_token(ps, es, NULL, NULL);
 		if (peek_token(ps, es, 0) != TOKEN_WORD)
-			return (free_command(command), NULL);
+			return (free_command(&command), NULL);
 		get_token(ps, es, &q, &eq);
 		if (token == TOKEN_DOUBLE_GREATER)
 			command = redirect_command(command, q, eq,
@@ -110,5 +110,19 @@ t_cmd	*parse_redirection(t_cmd *command, char **ps, const char *es)
 		if (token == TOKEN_SINGLE_LESS)
 			command = redirect_command(command, q, eq, O_RDONLY);
 	}
+	return (command);
+}
+
+t_cmd	*parse_block(char **ps, const char *es)
+{
+	t_cmd	*command;
+
+	get_token(ps, es, NULL, NULL);
+	if (peek_token(ps, es, 0) != TOKEN_WORD)
+		return (NULL);
+	command = parse_list(ps, es);
+	if (peek_token(ps, es, 0) != TOKEN_RIGHT_PARENTHESES)
+		return (free_command(&command), NULL);
+	get_token(ps, es, NULL, NULL);
 	return (command);
 }

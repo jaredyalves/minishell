@@ -3,6 +3,6 @@
 int runback(t_backcmd *bcmd)
 {
 	if (fork1() == 0)
-		return (runcmd(bcmd->cmd));
+		return (execute(bcmd->command));
 	return (0);
 }
