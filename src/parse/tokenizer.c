@@ -23,7 +23,7 @@ static t_token	parse_token(char **ps, const char *es)
 	while (i < (sizeof(tokens) / sizeof(char *)))
 	{
 		token_len = ft_strlen(tokens[i]);
-		if (s + token_len <= es && strncmp(s, tokens[i], token_len) == 0)
+		if (s + token_len <= es && ft_strncmp(s, tokens[i], token_len) == 0)
 			return (*ps = s + token_len, i);
 		i++;
 	}

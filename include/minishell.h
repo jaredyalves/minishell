@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
+
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
@@ -127,16 +129,7 @@ void		free_str(char **str);
 void		terminate(t_cmd *cmd);
 void		setup_signal_handlers(void);
 
-char		**ft_split(char *str, char chr);
 char		*ft_getenv(char *name, char **envp);
-char		*ft_strcat(char *dst, const char *src);
-char		*ft_strchr(const char *s, int c);
-char		*ft_strcpy(char *dst, const char *src);
-char		*ft_strncpy(char *dst, const char *src, size_t n);
-char		*ft_strndup(const char *src, size_t n);
 size_t		ft_dprintf(int fd, const char *format, ...);
-size_t		ft_strlen(const char *s);
-size_t		ft_strnlen(const char *s, size_t n);
-void		*ft_memset(void *s, int c, size_t n);
 
 #endif

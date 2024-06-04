@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 static size_t	write_char(int fd, char c)
 {
