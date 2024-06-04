@@ -66,7 +66,7 @@ t_cmd	*logical_command(t_type type, t_cmd *left, t_cmd *right)
 	}
 	ft_memset(cmd, 0, sizeof(*cmd));
 	cmd->type = TYPE_LOGICAL;
-	cmd->sub_type = type;
+	cmd->sub = type;
 	cmd->left = left;
 	cmd->right = right;
 	return ((t_cmd *)cmd);

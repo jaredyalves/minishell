@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int	execute_from_path(const char *name, char **argv, char **envp)
+int	execute_path(const char *name, char **argv, char **envp)
 {
-	const char	*env_path = ft_getenv("PATH");
+	const char	*env_path = ft_getenv("PATH", envp);
 	const char	*start = env_path;
 	char		path[PATH_MAX];
 	char		*current;

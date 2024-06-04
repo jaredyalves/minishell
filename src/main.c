@@ -1,26 +1,24 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(const int argc, const char **argv, char **envp)
 {
-	t_shell	*shell;
+	t_ms	*ms;
 
-	init_shell(argc, argv, envp);
-	setup_signal_handlers();
-	shell = get_shell();
-	while (shell->stop == 0)
+	ms = ms_init(argc, argv, envp);
+	while (1)
 	{
-		shell->cmdline = get_line(shell->cmdline);
-		if (shell->cmdline == NULL)
+		ms->str = get_str(ms->str);
+		if (ms->str == NULL)
 			break ;
-		shell->command = parse_cmdline(shell->cmdline);
-		if (shell->command && fork1() == 0)
+		ms->cmd = parse(ms->str);
+		if (ms->cmd && fork1() == 0)
 		{
-			shell->exit_status = execute(shell->command);
-			exit(cleanup_shell());
+			ms->exit_status = execute(ms, ms->cmd);
+			exit(ms_exit(&ms));
 		}
-		waitpid(0, &shell->status, 0);
-		free_command(&shell->command);
-		free_line(&shell->cmdline);
+		waitpid(0, &ms->wait_status, 0);
+		free_cmd(&ms->cmd);
+		free_str(&ms->str);
 	}
-	exit(cleanup_shell());
+	exit(ms_exit(&ms));
 }

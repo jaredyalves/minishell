@@ -8,9 +8,13 @@ INCDIR := include
 
 # Files
 SRCS := \
+	$(SRCDIR)/execute/background.c \
 	$(SRCDIR)/execute/builtin.c \
 	$(SRCDIR)/execute/execute.c \
 	$(SRCDIR)/execute/external.c \
+	$(SRCDIR)/execute/logical.c \
+	$(SRCDIR)/execute/path.c \
+	$(SRCDIR)/execute/redirect.c \
 	$(SRCDIR)/ft/ft_dprintf.c \
 	$(SRCDIR)/ft/ft_getenv.c \
 	$(SRCDIR)/ft/ft_memset.c \
@@ -25,20 +29,12 @@ SRCS := \
 	$(SRCDIR)/parse/lexer.c \
 	$(SRCDIR)/parse/parse.c \
 	$(SRCDIR)/parse/tokenizer.c \
-	$(SRCDIR)/run/runand.c \
-	$(SRCDIR)/run/runback.c \
-	$(SRCDIR)/run/runexec.c \
-	$(SRCDIR)/run/runlist.c \
-	$(SRCDIR)/run/runor.c \
-	$(SRCDIR)/run/runpipe.c \
-	$(SRCDIR)/run/runredi.c \
-	$(SRCDIR)/utils/execute_from_path.c \
+	$(SRCDIR)/utils/command.c \
 	$(SRCDIR)/utils/fork_and_pipe.c \
-	$(SRCDIR)/utils/free_command.c \
-	$(SRCDIR)/utils/line.c \
-	$(SRCDIR)/utils/null_terminate.c \
-	$(SRCDIR)/utils/shell.c \
+	$(SRCDIR)/utils/minishell.c \
 	$(SRCDIR)/utils/signal.c \
+	$(SRCDIR)/utils/string.c \
+	$(SRCDIR)/utils/terminate.c \
 	$(SRCDIR)/main.c
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 INCS := $(INCDIR)/minishell.h
@@ -46,8 +42,8 @@ INCS := $(INCDIR)/minishell.h
 # Compiler and flags
 CC := cc
 INCLUDES := -I$(INCDIR)
-CFLAGS := -Wall -Werror -Wextra -fsanitize=address -g $(INCLUDES)
-LDFLAGS := -lreadline -fsanitize=address
+CFLAGS := -Wall -Werror -Wextra -g $(INCLUDES)
+LDFLAGS := -lreadline
 
 # Targets
 .PHONY: all clean fclean re

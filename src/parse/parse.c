@@ -1,16 +1,16 @@
 #include "minishell.h"
 
-t_cmd	*parse_cmdline(char *cmdline)
+t_cmd	*parse(char *str)
 {
 	char	*s;
 	char	*es;
-	t_cmd	*command;
+	t_cmd	*cmd;
 
-	s = cmdline;
+	s = str;
 	es = s + ft_strlen(s);
-	command = parse_list(&s, es);
-	null_terminate(command);
-	return (command);
+	cmd = parse_list(&s, es);
+	terminate(cmd);
+	return (cmd);
 }
 
 t_cmd	*parse_list(char **ps, const char *es)
@@ -28,7 +28,7 @@ t_cmd	*parse_list(char **ps, const char *es)
 		if (peek_token(ps, es, 0) != TOKEN_WORD
 			&& peek_token(ps, es, 0) != TOKEN_NULL
 			&& peek_token(ps, es, 0) != TOKEN_LEFT_PARENTHESES)
-			return (free_command(&command), NULL);
+			return (free_cmd(&command), NULL);
 		if (token == TOKEN_DOUBLE_AMPERSAND)
 			command = logical_command(TYPE_AND, command, parse_list(ps, es));
 		if (token == TOKEN_SINGLE_AMPERSAND)
@@ -53,7 +53,7 @@ t_cmd	*parse_pipeline(char **ps, const char *es)
 		token = get_token(ps, es, NULL, NULL);
 		if (peek_token(ps, es, 0) != TOKEN_WORD && peek_token(ps, es,
 				0) != TOKEN_NULL)
-			return (free_command(&command), NULL);
+			return (free_cmd(&command), NULL);
 		if (token == TOKEN_SINGLE_PIPE)
 			command = logical_command(TYPE_PIPE, command, parse_pipeline(ps, es));
 	}
@@ -77,7 +77,7 @@ t_cmd	*parse_command(char **ps, const char *es)
 		if (e_command->argc >= ARG_MAX)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: too many arguments\n");
-			return (free_command(&command), NULL);
+			return (free_cmd(&command), NULL);
 		}
 		e_command->argv[e_command->argc] = q;
 		e_command->end_argv[e_command->argc] = eq;
@@ -99,7 +99,7 @@ t_cmd	*parse_redirection(t_cmd *command, char **ps, const char *es)
 	{
 		token = get_token(ps, es, NULL, NULL);
 		if (peek_token(ps, es, 0) != TOKEN_WORD)
-			return (free_command(&command), NULL);
+			return (free_cmd(&command), NULL);
 		get_token(ps, es, &q, &eq);
 		if (token == TOKEN_DOUBLE_GREATER)
 			command = redirect_command(command, q, eq,
@@ -122,7 +122,7 @@ t_cmd	*parse_block(char **ps, const char *es)
 		return (NULL);
 	command = parse_list(ps, es);
 	if (peek_token(ps, es, 0) != TOKEN_RIGHT_PARENTHESES)
-		return (free_command(&command), NULL);
+		return (free_cmd(&command), NULL);
 	get_token(ps, es, NULL, NULL);
 	return (command);
 }

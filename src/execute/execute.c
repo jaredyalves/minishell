@@ -1,29 +1,30 @@
 #include "minishell.h"
 
-int	execute(t_cmd *command)
+int	execute(t_ms *ms, t_cmd *cmd)
 {
-	if (command == NULL)
-		return (1);
-	if (command->type == TYPE_EXECUTE)
+	if (ms && cmd)
 	{
-		if (is_builtin((t_execcmd *)command))
-			return (execute_builtin((t_execcmd *)command));
-		return (execute_external((t_execcmd *)command));
-	}
-	if (command->type == TYPE_REDIRECT)
-		return (runredi((t_redicmd *)command));
-	if (command->type == TYPE_BACKGROUND)
-		return (runback((t_backcmd *)command));
-	if (command->type == TYPE_LOGICAL)
-	{
-		if (((t_logicmd *)command)->sub_type == TYPE_PIPE)
-			return (runpipe((t_logicmd *)command));
-		if (((t_logicmd *)command)->sub_type == TYPE_SEQUENCE)
-			return (runlist((t_logicmd *)command));
-		if (((t_logicmd *)command)->sub_type == TYPE_AND)
-			return (runand((t_logicmd *)command));
-		if (((t_logicmd *)command)->sub_type == TYPE_OR)
-			return (runor((t_logicmd *)command));
+		if (cmd->type == TYPE_EXECUTE)
+		{
+			if (is_builtin(ms, (t_execcmd *)cmd))
+				return (execute_builtin(ms, (t_execcmd *)cmd));
+			return (execute_external(ms, (t_execcmd *)cmd));
+		}
+		if (cmd->type == TYPE_REDIRECT)
+			return (execute_redirect(ms, (t_redicmd *)cmd));
+		if (cmd->type == TYPE_BACKGROUND)
+			return (execute_background(ms, (t_backcmd *)cmd));
+		if (cmd->type == TYPE_LOGICAL)
+		{
+			if (((t_logicmd *)cmd)->sub == TYPE_PIPE)
+				return (execute_pipe(ms, (t_logicmd *)cmd));
+			if (((t_logicmd *)cmd)->sub == TYPE_SEQUENCE)
+				return (execute_sequence(ms, (t_logicmd *)cmd));
+			if (((t_logicmd *)cmd)->sub == TYPE_AND)
+				return (execute_andif(ms, (t_logicmd *)cmd));
+			if (((t_logicmd *)cmd)->sub == TYPE_OR)
+				return (execute_orif(ms, (t_logicmd *)cmd));
+		}
 	}
 	return (1);
 }

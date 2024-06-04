@@ -75,42 +75,40 @@ typedef struct s_backcmd
 typedef struct s_logicmd
 {
 	t_type	type;
-	t_type	sub_type;
+	t_type	sub;
 	t_cmd	*left;
 	t_cmd	*right;
 }			t_logicmd;
 
-typedef struct s_shell
+typedef struct s_ms
 {
-	char	*cmdline;
-	char	*environ[ARG_MAX];
-	int		stop;
-	int		status;
+	char	*env[ARG_MAX];
+	char	*str;
+	t_cmd	*cmd;
 	int		exit_status;
-	t_cmd	*command;
-}			t_shell;
+	int		wait_status;
+}			t_ms;
 
-t_shell		*get_shell(void);
-void		init_shell(int argc, char **argv, char **envp);
-int			cleanup_shell(void);
+t_ms		*ms_init(int argc, const char **argv, char **envp);
+int			ms_exit(t_ms **ms);
 
-int			execute(t_cmd *command);
-int			execute_builtin(t_execcmd *command);
-int			is_builtin(t_execcmd *command);
-int			execute_external(t_execcmd *e_command);
-int			runand(t_logicmd *acmd);
-int			runback(t_backcmd *bcmd);
-int			runlist(t_logicmd *lcmd);
-int			runor(t_logicmd *ocmd);
-int			runpipe(t_logicmd *pcmd);
-int			runredi(t_redicmd *rcmd);
+int			execute(t_ms *ms, t_cmd *cmd);
+int			is_builtin(t_ms *ms, t_execcmd *cmd);
+int			execute_builtin(t_ms *ms, t_execcmd *cmd);
+int			execute_external(t_ms *ms, t_execcmd *cmd);
+int			execute_andif(t_ms *ms, t_logicmd *cmd);
+int			execute_background(t_ms *ms, t_backcmd *cmd);
+int			execute_sequence(t_ms *ms, t_logicmd *cmd);
+int			execute_orif(t_ms *ms, t_logicmd *cmd);
+int			execute_pipe(t_ms *ms, t_logicmd *cmd);
+int			execute_redirect(t_ms *ms, t_redicmd *cmd);
 
 t_cmd		*execute_command(void);
 t_cmd		*redirect_command(t_cmd *sub, char *file, char *end_file, int mode);
 t_cmd		*background_command(t_cmd *sub);
 t_cmd		*logical_command(t_type type, t_cmd *left, t_cmd *right);
 
-t_cmd		*parse_cmdline(char *cmdline);
+t_cmd		*parse(char *str);
 t_cmd		*parse_list(char **ps, const char *es);
 t_cmd		*parse_pipeline(char **ps, const char *es);
 t_cmd		*parse_command(char **ps, const char *es);
@@ -120,17 +118,17 @@ int			find_token(char **ps, const char *s, const t_token *to_search);
 t_token		get_token(char **ps, const char *es, char **q, char **eq);
 t_token		peek_token(char **ps, const char *es, int skip);
 
-char		*get_line(char *line);
-int			execute_from_path(const char *name, char **argv, char **envp);
+char		*get_str(char *str);
+int			execute_path(const char *name, char **argv, char **envp);
 int			fork1(void);
 int			pipe1(int *pipes);
-void		free_command(t_cmd **p_command);
-void		free_line(char **p_line);
-void		null_terminate(t_cmd *command);
+void		free_cmd(t_cmd **cmd);
+void		free_str(char **str);
+void		terminate(t_cmd *cmd);
 void		setup_signal_handlers(void);
 
 char		**ft_split(char *str, char chr);
-char		*ft_getenv(const char *name);
+char		*ft_getenv(char *name, char **envp);
 char		*ft_strcat(char *dst, const char *src);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strcpy(char *dst, const char *src);
