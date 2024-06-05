@@ -41,6 +41,7 @@ typedef enum e_token
 	TOKEN_DOUBLE_PIPE,
 	TOKEN_SINGLE_PIPE,
 	TOKEN_SINGLE_SEMICOLON,
+	TOKEN_QUOTE,
 	TOKEN_WORD,
 	TOKEN_NULL,
 }			t_token;
@@ -119,6 +120,7 @@ t_cmd		*parse_redirection(t_cmd *command, char **ps, const char *es);
 int			find_token(char **ps, const char *s, const t_token *to_search);
 t_token		get_token(char **ps, const char *es, char **q, char **eq);
 t_token		peek_token(char **ps, const char *es, int skip);
+char		**expand_arguments(char **args, char **envp);
 
 char		*get_str(char *str);
 int			execute_path(const char *name, char **argv, char **envp);

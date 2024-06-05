@@ -10,6 +10,25 @@ static void	skip_whitespace(char **ps, const char *es)
 	*ps = s;
 }
 
+static char	*parse_quote(char **ps, const char *es)
+{
+	char	*s;
+	char	quote;
+
+	s = *ps;
+	quote = *s;
+	s++;
+	while (s < es && *s != quote)
+	{
+		if (quote == '\"' && *s == '\\' && s + 1 < es)
+			s++;
+		s++;
+	}
+	if (s < es && *s == quote)
+		s++;
+	return (s);
+}
+
 static t_token	parse_token(char **ps, const char *es)
 {
 	const char	*tokens[] = {"(", ")", "&&", "&", ">>", ">", "<<", "<", "||",
@@ -20,6 +39,8 @@ static t_token	parse_token(char **ps, const char *es)
 
 	i = 0;
 	s = *ps;
+	if (*s == '"' || *s == '\'')
+		return (*ps = parse_quote(&s, es), TOKEN_QUOTE);
 	while (i < (sizeof(tokens) / sizeof(char *)))
 	{
 		token_len = ft_strlen(tokens[i]);
@@ -29,7 +50,7 @@ static t_token	parse_token(char **ps, const char *es)
 	}
 	if (s < es && !ft_strchr(" \t", *s))
 	{
-		while (s < es && !ft_strchr(" \t", *s) && !ft_strchr("()&><|;", *s))
+		while (s < es && !ft_strchr(" \t", *s) && !ft_strchr("()&><|;\"'", *s))
 			s++;
 		return (*ps = s, TOKEN_WORD);
 	}

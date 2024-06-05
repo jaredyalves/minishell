@@ -54,6 +54,7 @@ SRCS := \
 	$(SRCDIR)/parse/lexer.c \
 	$(SRCDIR)/parse/parse.c \
 	$(SRCDIR)/parse/tokenizer.c \
+	$(SRCDIR)/parse/expand.c \
 	$(SRCDIR)/utils/command.c \
 	$(SRCDIR)/utils/fork_and_pipe.c \
 	$(SRCDIR)/utils/minishell.c \

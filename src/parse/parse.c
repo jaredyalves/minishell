@@ -18,6 +18,8 @@ t_cmd	*parse_list(char **ps, const char *es)
 	const t_token	to_search[] = {TOKEN_DOUBLE_AMPERSAND,
 		TOKEN_SINGLE_AMPERSAND, TOKEN_DOUBLE_PIPE, TOKEN_SINGLE_SEMICOLON,
 		TOKEN_NULL};
+	const t_token	exeptions[] = {TOKEN_WORD, TOKEN_NULL,
+		TOKEN_LEFT_PARENTHESES, TOKEN_QUOTE};
 	t_cmd			*command;
 	t_token			token;
 
@@ -25,9 +27,7 @@ t_cmd	*parse_list(char **ps, const char *es)
 	if (find_token(ps, es, to_search))
 	{
 		token = get_token(ps, es, NULL, NULL);
-		if (peek_token(ps, es, 0) != TOKEN_WORD
-			&& peek_token(ps, es, 0) != TOKEN_NULL
-			&& peek_token(ps, es, 0) != TOKEN_LEFT_PARENTHESES)
+		if (find_token(ps, es, exeptions))
 			return (free_cmd(&command), NULL);
 		if (token == TOKEN_DOUBLE_AMPERSAND)
 			command = logical_command(TYPE_AND, command, parse_list(ps, es));
@@ -71,7 +71,7 @@ t_cmd	*parse_command(char **ps, const char *es)
 		return (parse_block(ps, es));
 	command = execute_command();
 	e_command = (t_execcmd *)command;
-	while (peek_token(ps, es, 0) == TOKEN_WORD)
+	while (peek_token(ps, es, 0) == TOKEN_WORD || peek_token(ps, es, 0) == TOKEN_QUOTE)
 	{
 		get_token(ps, es, &q, &eq);
 		if (e_command->argc >= ARG_MAX)
