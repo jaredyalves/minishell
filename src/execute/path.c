@@ -17,8 +17,8 @@ int	execute_path(const char *name, char **argv, char **envp)
 		*current = '\0';
 		if (*start == ':')
 			start++;
-		strncat(path, "/", PATH_MAX - ft_strlen(path) - 1);
-		strncat(path, name, PATH_MAX - ft_strlen(path) - 1);
+		ft_strlcat(path, "/", sizeof(path));
+		ft_strlcat(path, name, sizeof(path));
 		if (access(path, F_OK) == 0)
 		{
 			if (access(path, X_OK) == 0)
