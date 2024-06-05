@@ -19,15 +19,6 @@ SRCS := \
 	$(SRCDIR)/ft/ft_isdigit.c \
 	$(SRCDIR)/ft/ft_isprint.c \
 	$(SRCDIR)/ft/ft_itoa.c \
-	$(SRCDIR)/ft/ft_lstadd_back.c \
-	$(SRCDIR)/ft/ft_lstadd_front.c \
-	$(SRCDIR)/ft/ft_lstclear.c \
-	$(SRCDIR)/ft/ft_lstdelone.c \
-	$(SRCDIR)/ft/ft_lstiter.c \
-	$(SRCDIR)/ft/ft_lstlast.c \
-	$(SRCDIR)/ft/ft_lstmap.c \
-	$(SRCDIR)/ft/ft_lstnew.c \
-	$(SRCDIR)/ft/ft_lstsize.c \
 	$(SRCDIR)/ft/ft_memchr.c \
 	$(SRCDIR)/ft/ft_memcmp.c \
 	$(SRCDIR)/ft/ft_memcpy.c \
