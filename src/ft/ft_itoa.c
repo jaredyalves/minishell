@@ -1,23 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/21 21:57:04 by jcapistr          #+#    #+#             */
-/*   Updated: 2022/11/24 19:13:28 by jcapistr         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft.h"
+#include <stddef.h>
 
 static int	ft_abs(int n)
 {
 	if (n < 0)
 		return (-n);
-	else
-		return (n);
+	return (n);
 }
 
 static int	ft_nbrlen(int n)

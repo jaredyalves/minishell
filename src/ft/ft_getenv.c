@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include <stddef.h>
 
 char	*ft_getenv(char *name, char **envp)
 {

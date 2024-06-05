@@ -1,4 +1,5 @@
-#include "minishell.h"
+#include <stdarg.h>
+#include <unistd.h>
 
 static size_t	write_char(int fd, char c)
 {
