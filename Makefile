@@ -68,8 +68,8 @@ INCS := $(INCDIR)/minishell.h $(INCDIR)/ft.h
 # Compiler and flags
 CC := cc
 INCLUDES := -I$(INCDIR)
-CFLAGS := -Wall -Werror -Wextra -fsanitize=address -g $(INCLUDES)
-LDFLAGS := -lreadline -fsanitize=address
+CFLAGS := -Wall -Werror -Wextra -g $(INCLUDES)
+LDFLAGS := -lreadline
 
 # Targets
 .PHONY: all clean fclean re
