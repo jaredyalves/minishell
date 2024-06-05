@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "ft.h"
 
 # include <errno.h>
 # include <fcntl.h>
@@ -128,8 +128,5 @@ void		free_cmd(t_cmd **cmd);
 void		free_str(char **str);
 void		terminate(t_cmd *cmd);
 void		setup_signal_handlers(void);
-
-char		*ft_getenv(char *name, char **envp);
-size_t		ft_dprintf(int fd, const char *format, ...);
 
 #endif
