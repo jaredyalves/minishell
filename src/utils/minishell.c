@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_ms	*ms_init(const int argc, const char **argv, char **envp)
+t_ms	*ms_init(const int argc, const char *argv[], char *envp[])
 {
 	t_ms	*ms;
 	char	**p;
