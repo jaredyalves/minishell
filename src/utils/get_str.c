@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+
 #include "minishell.h"
 
 char	*get_str(char *str)
@@ -7,13 +11,4 @@ char	*get_str(char *str)
 	if (str && *str)
 		add_history(str);
 	return (str);
-}
-
-void	free_str(char **str)
-{
-	if (str && *str)
-	{
-		free(*str);
-		*str = NULL;
-	}
 }

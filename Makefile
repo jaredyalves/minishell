@@ -61,7 +61,8 @@ SRCS := \
 	$(SRCDIR)/utils/ms_init.c \
 	$(SRCDIR)/utils/pipe1.c \
 	$(SRCDIR)/utils/setup_signal_handlers.c \
-	$(SRCDIR)/utils/string.c \
+	$(SRCDIR)/utils/get_str.c \
+	$(SRCDIR)/utils/free_str.c \
 	$(SRCDIR)/utils/terminate.c \
 	$(SRCDIR)/main.c
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
