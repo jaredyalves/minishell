@@ -57,7 +57,8 @@ SRCS := \
 	$(SRCDIR)/parse/expand.c \
 	$(SRCDIR)/utils/command.c \
 	$(SRCDIR)/utils/fork_and_pipe.c \
-	$(SRCDIR)/utils/minishell.c \
+	$(SRCDIR)/utils/ms_exit.c \
+	$(SRCDIR)/utils/ms_init.c \
 	$(SRCDIR)/utils/signal.c \
 	$(SRCDIR)/utils/string.c \
 	$(SRCDIR)/utils/terminate.c \
