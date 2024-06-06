@@ -32,7 +32,7 @@ int	execute_external(t_ms *ms, t_execcmd *cmd)
 	argv = expand_arguments(cmd->argv, ms->env);
 	name = argv[0];
 	if (name == NULL || *name == '\0')
-		return (free_argv(argv), 0);
+		return (free_argv(argv), ms->exit_status);
 	if (ft_strchr(name, '/'))
 	{
 		status = 127;

@@ -24,6 +24,7 @@ int	main(const int argc, const char *argv[], char *envp[])
 			exit(ms_exit(&ms));
 		}
 		waitpid(-1, &ms->wait_status, 0);
+		ms->exit_status = WEXITSTATUS(ms->wait_status);
 		free_cmd(&ms->cmd);
 		free_str(&ms->str);
 	}

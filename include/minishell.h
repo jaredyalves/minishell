@@ -122,7 +122,7 @@ t_token		get_token(char **ps, const char *es, char **q, char **eq);
 t_token		peek_token(char **ps, const char *es, int skip);
 char		**expand_arguments(char **args, char **envp);
 
-char		*get_str(char *str);
+char		*get_str(const t_ms* ms, char *str);
 int			execute_path(const char *name, char **argv, char **envp);
 int			fork1(void);
 int			pipe1(int *pipes);
