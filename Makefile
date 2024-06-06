@@ -55,8 +55,8 @@ SRCS := \
 	$(SRCDIR)/parse/parse.c \
 	$(SRCDIR)/parse/tokenizer.c \
 	$(SRCDIR)/parse/expand.c \
-	$(SRCDIR)/utils/command.c \
 	$(SRCDIR)/utils/fork_and_pipe.c \
+	$(SRCDIR)/utils/free_cmd.c \
 	$(SRCDIR)/utils/ms_exit.c \
 	$(SRCDIR)/utils/ms_init.c \
 	$(SRCDIR)/utils/signal.c \
