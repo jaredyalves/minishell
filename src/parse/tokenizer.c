@@ -98,11 +98,11 @@ t_token	peek_token(char **ps, const char *es, int skip)
 
 	s = *ps;
 	skip_whitespace(&s, es);
-	while (skip >= 0)
+	token = parse_token(&s, es);
+	while (skip-- > 0)
 	{
-		token = parse_token(&s, es);
 		skip_whitespace(&s, es);
-		skip--;
+		token = parse_token(&s, es);
 	}
 	return (token);
 }
