@@ -60,7 +60,7 @@ SRCS := \
 	$(SRCDIR)/utils/ms_exit.c \
 	$(SRCDIR)/utils/ms_init.c \
 	$(SRCDIR)/utils/pipe1.c \
-	$(SRCDIR)/utils/signal.c \
+	$(SRCDIR)/utils/setup_signal_handlers.c \
 	$(SRCDIR)/utils/string.c \
 	$(SRCDIR)/utils/terminate.c \
 	$(SRCDIR)/main.c
