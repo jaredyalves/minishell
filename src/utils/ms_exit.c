@@ -1,9 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+
 #include "minishell.h"
 
 int	ms_exit(t_ms **ms)
 {
-	const int	status = (*ms)->exit_status;
+	int	status;
 
+	if (ms == NULL || *ms == NULL)
+		return (-1);
+	status = (*ms)->exit_status;
 	if ((*ms)->str)
 		free_str(&(*ms)->str);
 	if ((*ms)->cmd)
