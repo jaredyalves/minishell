@@ -11,6 +11,15 @@ static void	free_redirect(t_redicmd *cmd)
 	}
 }
 
+static void	free_heredoc(t_herecmd *cmd)
+{
+	if (cmd)
+	{
+		free_cmd(&cmd->command);
+		free(cmd);
+	}
+}
+
 static void	free_background(t_backcmd *cmd)
 {
 	if (cmd)
@@ -38,6 +47,8 @@ void	free_cmd(t_cmd **cmd)
 			free((t_execcmd *)*cmd);
 		else if ((*cmd)->type == TYPE_REDIRECT)
 			free_redirect((t_redicmd *)*cmd);
+		else if ((*cmd)->type == TYPE_HEREDOC)
+			free_heredoc((t_herecmd *)*cmd);
 		else if ((*cmd)->type == TYPE_BACKGROUND)
 			free_background((t_backcmd *)*cmd);
 		else if ((*cmd)->type == TYPE_LOGICAL)

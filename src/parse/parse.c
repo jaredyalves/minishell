@@ -103,12 +103,14 @@ t_cmd	*parse_redirection(t_cmd *command, char **ps, const char *es)
 		get_token(ps, es, &q, &eq);
 		if (token == TOKEN_DOUBLE_GREATER)
 			command = redirect_command(command, q, eq,
-					O_WRONLY | O_CREAT | O_APPEND);
+			                           O_WRONLY | O_CREAT | O_APPEND);
 		if (token == TOKEN_SINGLE_GREATER)
 			command = redirect_command(command, q, eq,
-					O_WRONLY | O_CREAT | O_TRUNC);
+			                           O_WRONLY | O_CREAT | O_TRUNC);
 		if (token == TOKEN_SINGLE_LESS)
 			command = redirect_command(command, q, eq, O_RDONLY);
+		if (token == TOKEN_DOUBLE_LESS)
+			command = heredoc_command(command, q, eq);
 	}
 	return (command);
 }

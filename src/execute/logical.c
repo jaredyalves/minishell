@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+int	execute_logical(t_ms *ms, t_logicmd *cmd)
+{
+	if (ms && cmd)
+	{
+		if (cmd->sub == TYPE_PIPE)
+			return (execute_pipe(ms, cmd));
+		if (cmd->sub == TYPE_SEQUENCE)
+			return (execute_sequence(ms, cmd));
+		if (cmd->sub == TYPE_AND)
+			return (execute_andif(ms, cmd));
+		if (cmd->sub == TYPE_OR)
+			return (execute_orif(ms, cmd));
+	}
+	return (1);
+}
+
 int	execute_pipe(t_ms *ms, t_logicmd *cmd)
 {
 	int	p[2];

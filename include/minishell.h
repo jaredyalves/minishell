@@ -22,6 +22,7 @@ typedef enum e_type
 {
 	TYPE_EXECUTE,
 	TYPE_REDIRECT,
+	TYPE_HEREDOC,
 	TYPE_PIPE,
 	TYPE_SEQUENCE,
 	TYPE_BACKGROUND,
@@ -71,6 +72,14 @@ typedef struct s_redicmd
 	int		fd;
 }			t_redicmd;
 
+typedef struct s_herecmd
+{
+	t_type type;
+	t_cmd *command;
+	char *delim;
+	char *end_delim;
+} t_herecmd;
+
 typedef struct s_backcmd
 {
 	t_type	type;
@@ -107,9 +116,12 @@ int			execute_sequence(t_ms *ms, t_logicmd *cmd);
 int			execute_orif(t_ms *ms, t_logicmd *cmd);
 int			execute_pipe(t_ms *ms, t_logicmd *cmd);
 int			execute_redirect(t_ms *ms, t_redicmd *cmd);
+int			execute_logical(t_ms* ms, t_logicmd* cmd);
+int			execute_heredoc(t_ms* ms, t_herecmd* cmd);
 
 t_cmd		*execute_command(void);
 t_cmd		*redirect_command(t_cmd *sub, char *file, char *end_file, int mode);
+t_cmd		*heredoc_command(t_cmd *sub, char *delim, char *end_delim);
 t_cmd		*background_command(t_cmd *sub);
 t_cmd		*logical_command(t_type type, t_cmd *left, t_cmd *right);
 

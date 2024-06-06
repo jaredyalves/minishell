@@ -49,6 +49,7 @@ SRCS := \
 	$(SRCDIR)/execute/execute.c \
 	$(SRCDIR)/execute/external.c \
 	$(SRCDIR)/execute/logical.c \
+	$(SRCDIR)/execute/heredoc.c \
 	$(SRCDIR)/execute/path.c \
 	$(SRCDIR)/execute/redirect.c \
 	$(SRCDIR)/parse/lexer.c \

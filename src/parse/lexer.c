@@ -38,6 +38,24 @@ t_cmd	*redirect_command(t_cmd *sub, char *file, char *end_file, int mode)
 	return ((t_cmd *)cmd);
 }
 
+t_cmd	*heredoc_command(t_cmd *sub, char *delim, char *end_delim)
+{
+	t_herecmd	*cmd;
+
+	cmd = (t_herecmd *)malloc(sizeof(*cmd));
+	if (cmd == NULL)
+	{
+		perror("minishell: malloc");
+		exit(1);
+	}
+	ft_memset(cmd, 0, sizeof(*cmd));
+	cmd->type = TYPE_HEREDOC;
+	cmd->command = sub;
+	cmd->delim = delim;
+	cmd->end_delim = end_delim;
+	return ((t_cmd *)cmd);
+}
+
 t_cmd	*background_command(t_cmd *sub)
 {
 	t_backcmd	*cmd;
