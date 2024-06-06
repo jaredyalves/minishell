@@ -12,7 +12,7 @@ int	main(const int argc, const char *argv[], char *envp[])
 		return (1);
 	while (1)
 	{
-		ms->str = get_str(ms->str);
+		ms->str = get_str(ms, ms->str);
 		if (ms->str == NULL)
 			break ;
 		ms->cmd = parse(ms->str);
@@ -26,7 +26,6 @@ int	main(const int argc, const char *argv[], char *envp[])
 		waitpid(-1, &ms->wait_status, 0);
 		ms->exit_status = WEXITSTATUS(ms->wait_status);
 		free_cmd(&ms->cmd);
-		free_str(&ms->str);
 	}
 	exit(ms_exit(&ms));
 }
