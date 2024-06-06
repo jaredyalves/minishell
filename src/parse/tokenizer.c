@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-static void	skip_whitespace(char **ps, const char *es)
-{
-	char	*s;
-
-	s = *ps;
-	while (s < es && ft_strchr(" \t", *s))
-		s++;
-	*ps = s;
-}
-
 static char	*parse_quote(char **ps, const char *es)
 {
 	char	*s;
@@ -50,7 +40,7 @@ static t_token	parse_token(char **ps, const char *es)
 	}
 	if (s < es && !ft_strchr(" \t", *s))
 	{
-		while (s < es && !ft_strchr(" \t", *s) && !ft_strchr("()&><|;\"'", *s))
+		while (s < es && !ft_strchr(WHITESPACE, *s) && !ft_strchr("()&><|;\"'", *s))
 			s++;
 		return (*ps = s, TOKEN_WORD);
 	}
@@ -63,7 +53,8 @@ int	find_token(char **ps, const char *es, const t_token *to_search)
 	t_token	token;
 
 	s = *ps;
-	skip_whitespace(&s, es);
+	while (s < es && ft_strchr(WHITESPACE, *s))
+		s++;
 	token = parse_token(&s, es);
 	while (*to_search != TOKEN_NULL)
 	{
@@ -80,13 +71,15 @@ t_token	get_token(char **ps, const char *es, char **q, char **eq)
 	t_token	token;
 
 	s = *ps;
-	skip_whitespace(&s, es);
+	while (s < es && ft_strchr(WHITESPACE, *s))
+		s++;
 	if (q)
 		*q = s;
 	token = parse_token(&s, es);
 	if (eq)
 		*eq = s;
-	skip_whitespace(&s, es);
+	while (s < es && ft_strchr(WHITESPACE, *s))
+		s++;
 	*ps = s;
 	return (token);
 }
@@ -97,11 +90,13 @@ t_token	peek_token(char **ps, const char *es, int skip)
 	t_token	token;
 
 	s = *ps;
-	skip_whitespace(&s, es);
+	while (s < es && ft_strchr(WHITESPACE, *s))
+		s++;
 	token = parse_token(&s, es);
 	while (skip-- > 0)
 	{
-		skip_whitespace(&s, es);
+		while (s < es && ft_strchr(WHITESPACE, *s))
+			s++;
 		token = parse_token(&s, es);
 	}
 	return (token);

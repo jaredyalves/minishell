@@ -16,6 +16,8 @@
 # include <readline/readline.h>
 # include <sys/wait.h>
 
+# define WHITESPACE " \t"
+
 typedef enum e_type
 {
 	TYPE_EXECUTE,
