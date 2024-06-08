@@ -1,74 +1,53 @@
+#include "ft.h"
 #include "minishell.h"
 
-static char	*parse_quote(char **ps, const char *es)
+void	parse_quote(char **ps, const char *es)
 {
 	char	*s;
-	char	quote;
+	int		quote;
 
 	s = *ps;
-	quote = *s;
-	s++;
+	quote = *s++;
 	while (s < es && *s != quote)
-	{
-		if (quote == '\"' && *s == '\\' && s + 1 < es)
-			s++;
 		s++;
-	}
-	if (s < es && *s == quote)
+	if (s < es)
 		s++;
-	return (s);
+	*ps = s;
 }
 
-static t_token	parse_token(char **ps, const char *es)
-{
-	const char	*tokens[] = {"(", ")", "&&", "&", ">>", ">", "<<", "<", "||",
-		"|", ";"};
-	char		*s;
-	size_t		i;
-	size_t		token_len;
-
-	i = 0;
-	s = *ps;
-	if (*s == '"' || *s == '\'')
-		return (*ps = parse_quote(&s, es), TOKEN_QUOTE);
-	while (i < (sizeof(tokens) / sizeof(char *)))
-	{
-		token_len = ft_strlen(tokens[i]);
-		if (s + token_len <= es && ft_strncmp(s, tokens[i], token_len) == 0)
-			return (*ps = s + token_len, i);
-		i++;
-	}
-	if (s < es && !ft_strchr(" \t", *s))
-	{
-		while (s < es && !ft_strchr(WHITESPACE, *s) && !ft_strchr("()&><|;\"'", *s))
-			s++;
-		return (*ps = s, TOKEN_WORD);
-	}
-	return (TOKEN_NULL);
-}
-
-int	find_token(char **ps, const char *es, const t_token *to_search)
+int	parse_token(char **ps, const char *es)
 {
 	char	*s;
-	t_token	token;
+	int		token;
 
 	s = *ps;
-	while (s < es && ft_strchr(WHITESPACE, *s))
-		s++;
-	token = parse_token(&s, es);
-	while (*to_search != TOKEN_NULL)
+	token = 0;
+	if (s < es && ft_strchr(SYMBOLS, *s))
 	{
-		if (token == *to_search)
-			return (1);
-		to_search++;
+		token = *s++;
+		if (*s != '(' && *s != ')' && s < es && *s == *(s - 1))
+			token = -*s++;
 	}
-	return (0);
+	else if (s < es)
+	{
+		token = 'a';
+		while (s < es && ft_strchr(WHITESPACE, *s) == NULL
+			&& ft_strchr(SYMBOLS, *s) == NULL)
+		{
+			if (*s == '\'' || *s == '"')
+				parse_quote(&s, es);
+			else
+				s++;
+		}
+	}
+	*ps = s;
+	return (token);
 }
 
-t_token	get_token(char **ps, const char *es, char **q, char **eq)
+int	get_token(char **ps, const char *es, char **q, char **eq)
 {
 	char	*s;
-	t_token	token;
+	int		token;
 
 	s = *ps;
 	while (s < es && ft_strchr(WHITESPACE, *s))
@@ -84,20 +63,17 @@ t_token	get_token(char **ps, const char *es, char **q, char **eq)
 	return (token);
 }
 
-t_token	peek_token(char **ps, const char *es, int skip)
+int	peek(char **ps, const char *es, const char *stoks, const char *dtoks)
 {
 	char	*s;
-	t_token	token;
 
 	s = *ps;
 	while (s < es && ft_strchr(WHITESPACE, *s))
 		s++;
-	token = parse_token(&s, es);
-	while (skip-- > 0)
-	{
-		while (s < es && ft_strchr(WHITESPACE, *s))
-			s++;
-		token = parse_token(&s, es);
-	}
-	return (token);
+	*ps = s;
+	if (*s && *s != *(s + 1))
+		return (ft_strchr(stoks, *s) != NULL);
+	if (*s && *s == *(s + 1))
+		return (ft_strchr(dtoks, *s) != NULL);
+	return (0);
 }

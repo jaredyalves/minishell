@@ -16,7 +16,8 @@
 # include <readline/readline.h>
 # include <sys/wait.h>
 
-# define WHITESPACE " \t"
+#define WHITESPACE " \t"
+#define SYMBOLS "<|>()&;"
 
 typedef enum e_type
 {
@@ -30,24 +31,6 @@ typedef enum e_type
 	TYPE_OR,
 	TYPE_LOGICAL,
 }			t_type;
-
-typedef enum e_token
-{
-	TOKEN_LEFT_PARENTHESES,
-	TOKEN_RIGHT_PARENTHESES,
-	TOKEN_DOUBLE_AMPERSAND,
-	TOKEN_SINGLE_AMPERSAND,
-	TOKEN_DOUBLE_GREATER,
-	TOKEN_SINGLE_GREATER,
-	TOKEN_DOUBLE_LESS,
-	TOKEN_SINGLE_LESS,
-	TOKEN_DOUBLE_PIPE,
-	TOKEN_SINGLE_PIPE,
-	TOKEN_SINGLE_SEMICOLON,
-	TOKEN_QUOTE,
-	TOKEN_WORD,
-	TOKEN_NULL,
-}			t_token;
 
 typedef struct s_cmd
 {
@@ -130,11 +113,11 @@ t_cmd		*parse_list(char **ps, const char *es);
 t_cmd		*parse_pipeline(char **ps, const char *es);
 t_cmd		*parse_command(char **ps, const char *es);
 t_cmd		*parse_block(char **ps, const char *es);
-t_cmd		*parse_redirection(t_cmd *command, char **ps, const char *es);
-int			find_token(char **ps, const char *s, const t_token *to_search);
-t_token		get_token(char **ps, const char *es, char **q, char **eq);
-t_token		peek_token(char **ps, const char *es, int skip);
+t_cmd		*parse_redirection(t_cmd *cmd, char **ps, const char *es);
 char		**expand_arguments(char **args, char **envp);
+
+int			get_token(char **ps, const char *es, char **q, char **eq);
+int			peek(char **ps, const char *es, const char *stoks, const char *dtoks);
 
 char		*get_str(const t_ms* ms, char *str);
 int			execute_path(const char *name, char **argv, char **envp);

@@ -2,129 +2,133 @@
 
 t_cmd	*parse(char *str)
 {
-	char	*s;
 	char	*es;
 	t_cmd	*cmd;
 
-	s = str;
-	es = s + ft_strlen(s);
-	cmd = parse_list(&s, es);
+	es = str + ft_strlen(str);
+	cmd = parse_list(&str, es);
+	if (cmd == NULL)
+		return (NULL);
+	peek(&str, es, "", "");
+	if (str != es)
+	{
+		ft_dprintf(STDERR_FILENO, "leftovers: %s\n", str);
+		free_cmd(&cmd);
+		return (NULL);
+	}
 	terminate(cmd);
 	return (cmd);
 }
 
 t_cmd	*parse_list(char **ps, const char *es)
 {
-	const t_token	to_search[] = {TOKEN_DOUBLE_AMPERSAND,
-		TOKEN_SINGLE_AMPERSAND, TOKEN_DOUBLE_PIPE, TOKEN_SINGLE_SEMICOLON,
-		TOKEN_NULL};
-	const t_token	exeptions[] = {TOKEN_WORD, TOKEN_NULL,
-		TOKEN_LEFT_PARENTHESES, TOKEN_QUOTE};
-	t_cmd			*command;
-	t_token			token;
+	t_cmd	*cmd;
+	int		token;
 
-	command = parse_pipeline(ps, es);
-	if (find_token(ps, es, to_search))
+	cmd = parse_pipeline(ps, es);
+	if (cmd == NULL)
+		return (NULL);
+	if (peek(ps, es, "&;", "&|"))
 	{
 		token = get_token(ps, es, NULL, NULL);
-		if (find_token(ps, es, exeptions))
-			return (free_cmd(&command), NULL);
-		if (token == TOKEN_DOUBLE_AMPERSAND)
-			command = logical_command(TYPE_AND, command, parse_list(ps, es));
-		if (token == TOKEN_SINGLE_AMPERSAND)
-			command = background_command(command);
-		if (token == TOKEN_DOUBLE_PIPE)
-			command = logical_command(TYPE_OR, command, parse_list(ps, es));
-		if (token == TOKEN_SINGLE_SEMICOLON)
-			command = logical_command(TYPE_SEQUENCE, command, parse_list(ps, es));
+		if (peek(ps, es, "<|>&;", "<|>&;"))
+			return (free_cmd(&cmd), NULL);
+		if (token == '&')
+			cmd = background_command(cmd);
+		else if (token == - '&')
+			cmd = logical_command(TYPE_AND, cmd, parse_list(ps, es));
+		else if (token == ';')
+			cmd = logical_command(TYPE_SEQUENCE, cmd, parse_list(ps, es));
+		else if (token == - '|')
+			cmd = logical_command(TYPE_OR, cmd, parse_list(ps, es));
 	}
-	return (command);
+	return (cmd);
 }
 
 t_cmd	*parse_pipeline(char **ps, const char *es)
 {
-	const t_token	to_search[] = {TOKEN_SINGLE_PIPE, TOKEN_NULL};
-	t_cmd			*command;
-	t_token			token;
+	t_cmd	*cmd;
+	int		token;
 
-	command = parse_command(ps, es);
-	if (find_token(ps, es, to_search))
+	cmd = parse_command(ps, es);
+	if (cmd == NULL)
+		return (NULL);
+	if (peek(ps, es, "|", ""))
 	{
 		token = get_token(ps, es, NULL, NULL);
-		if (peek_token(ps, es, 0) != TOKEN_WORD && peek_token(ps, es,
-				0) != TOKEN_NULL)
-			return (free_cmd(&command), NULL);
-		if (token == TOKEN_SINGLE_PIPE)
-			command = logical_command(TYPE_PIPE, command, parse_pipeline(ps, es));
+		if (peek(ps, es, "<|>&;", "<|>&;"))
+			return (free_cmd(&cmd), NULL);
+		if (token == '|')
+			cmd = logical_command(TYPE_PIPE, cmd, parse_pipeline(ps, es));
 	}
-	return (command);
+	return (cmd);
 }
 
 t_cmd	*parse_command(char **ps, const char *es)
 {
 	char		*eq;
 	char		*q;
-	t_cmd		*command;
-	t_execcmd	*e_command;
+	t_cmd		*cmd;
+	t_execcmd	*ecmd;
+	int			token;
 
-	if (peek_token(ps, es, 0) == TOKEN_LEFT_PARENTHESES)
+	if (peek(ps, es, "(", "("))
 		return (parse_block(ps, es));
-	command = execute_command();
-	e_command = (t_execcmd *)command;
-	while (peek_token(ps, es, 0) == TOKEN_WORD || peek_token(ps, es, 0) == TOKEN_QUOTE)
+	cmd = execute_command();
+	ecmd = (t_execcmd *)cmd;
+	while (!peek(ps, es, SYMBOLS, SYMBOLS))
 	{
-		get_token(ps, es, &q, &eq);
-		if (e_command->argc >= ARG_MAX)
+		token = get_token(ps, es, &q, &eq);
+		if (token == 0)
+			break ;
+		if (token != 'a')
+			return (free_cmd(&cmd), NULL);
+		if (ecmd->argc >= ARG_MAX)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: too many arguments\n");
-			return (free_cmd(&command), NULL);
+			return (free_cmd(&cmd), NULL);
 		}
-		e_command->argv[e_command->argc] = q;
-		e_command->end_argv[e_command->argc] = eq;
-		e_command->argc++;
-		command = parse_redirection(command, ps, es);
+		ecmd->argv[ecmd->argc] = q;
+		ecmd->end_argv[ecmd->argc++] = eq;
+		cmd = parse_redirection(cmd, ps, es);
 	}
-	return (command);
+	return (cmd);
 }
 
-t_cmd	*parse_redirection(t_cmd *command, char **ps, const char *es)
+t_cmd	*parse_redirection(t_cmd *cmd, char **ps, const char *es)
 {
-	const t_token	to_search[] = {TOKEN_DOUBLE_GREATER, TOKEN_SINGLE_GREATER,
-		TOKEN_DOUBLE_LESS, TOKEN_SINGLE_LESS, TOKEN_NULL};
-	char			*eq;
-	char			*q;
-	t_token			token;
+	char	*eq;
+	char	*q;
+	int		token;
 
-	if (find_token(ps, es, to_search))
+	while (peek(ps, es, "<>", "<>"))
 	{
 		token = get_token(ps, es, NULL, NULL);
-		if (peek_token(ps, es, 0) != TOKEN_WORD)
-			return (free_cmd(&command), NULL);
-		get_token(ps, es, &q, &eq);
-		if (token == TOKEN_DOUBLE_GREATER)
-			command = redirect_command(command, q, eq,
-			                           O_WRONLY | O_CREAT | O_APPEND);
-		if (token == TOKEN_SINGLE_GREATER)
-			command = redirect_command(command, q, eq,
-			                           O_WRONLY | O_CREAT | O_TRUNC);
-		if (token == TOKEN_SINGLE_LESS)
-			command = redirect_command(command, q, eq, O_RDONLY);
-		if (token == TOKEN_DOUBLE_LESS)
-			command = heredoc_command(command, q, eq);
+		if (get_token(ps, es, &q, &eq) != 'a')
+			return (free_cmd(&cmd), NULL);
+		if (token == - '>')
+			cmd = redirect_command(cmd, q, eq, O_WRONLY | O_CREAT | O_APPEND);
+		else if (token == '>')
+			cmd = redirect_command(cmd, q, eq, O_WRONLY | O_CREAT | O_TRUNC);
+		else if (token == '<')
+			cmd = redirect_command(cmd, q, eq, O_RDONLY);
+		else if (token == - '<')
+			cmd = heredoc_command(cmd, q, eq);
 	}
-	return (command);
+	return (cmd);
 }
 
 t_cmd	*parse_block(char **ps, const char *es)
 {
-	t_cmd	*command;
+	t_cmd	*cmd;
 
 	get_token(ps, es, NULL, NULL);
-	if (peek_token(ps, es, 0) != TOKEN_WORD)
+	cmd = parse_list(ps, es);
+	if (cmd == NULL)
 		return (NULL);
-	command = parse_list(ps, es);
-	if (peek_token(ps, es, 0) != TOKEN_RIGHT_PARENTHESES)
-		return (free_cmd(&command), NULL);
+	if (!peek(ps, es, ")", ")"))
+		return (free_cmd(&cmd), NULL);
 	get_token(ps, es, NULL, NULL);
-	return (command);
+	cmd = parse_redirection(cmd, ps, es);
+	return (cmd);
 }
