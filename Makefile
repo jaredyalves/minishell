@@ -47,28 +47,28 @@ SRCS := \
 	$(SRCDIR)/execute/background.c \
 	$(SRCDIR)/execute/builtin.c \
 	$(SRCDIR)/execute/execute.c \
+	$(SRCDIR)/execute/expand.c \
 	$(SRCDIR)/execute/external.c \
-	$(SRCDIR)/execute/logical.c \
 	$(SRCDIR)/execute/heredoc.c \
+	$(SRCDIR)/execute/logical.c \
 	$(SRCDIR)/execute/path.c \
 	$(SRCDIR)/execute/redirect.c \
+	$(SRCDIR)/parse/block.c \
+	$(SRCDIR)/parse/command.c \
 	$(SRCDIR)/parse/lexer.c \
 	$(SRCDIR)/parse/list.c \
-	$(SRCDIR)/parse/pipeline.c \
-	$(SRCDIR)/parse/command.c \
-	$(SRCDIR)/parse/redirection.c \
-	$(SRCDIR)/parse/block.c \
 	$(SRCDIR)/parse/parse.c \
+	$(SRCDIR)/parse/pipeline.c \
+	$(SRCDIR)/parse/redirection.c \
 	$(SRCDIR)/parse/tokenizer.c \
-	$(SRCDIR)/parse/expand.c \
 	$(SRCDIR)/utils/fork1.c \
 	$(SRCDIR)/utils/free_cmd.c \
+	$(SRCDIR)/utils/free_str.c \
+	$(SRCDIR)/utils/get_str.c \
 	$(SRCDIR)/utils/ms_exit.c \
 	$(SRCDIR)/utils/ms_init.c \
 	$(SRCDIR)/utils/pipe1.c \
 	$(SRCDIR)/utils/setup_signal_handlers.c \
-	$(SRCDIR)/utils/get_str.c \
-	$(SRCDIR)/utils/free_str.c \
 	$(SRCDIR)/utils/terminate.c \
 	$(SRCDIR)/main.c
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))

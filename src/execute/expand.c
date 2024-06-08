@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 char	*expand_variables(const char *arg, char **envp)
 {
