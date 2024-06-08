@@ -53,6 +53,11 @@ SRCS := \
 	$(SRCDIR)/execute/path.c \
 	$(SRCDIR)/execute/redirect.c \
 	$(SRCDIR)/parse/lexer.c \
+	$(SRCDIR)/parse/list.c \
+	$(SRCDIR)/parse/pipeline.c \
+	$(SRCDIR)/parse/command.c \
+	$(SRCDIR)/parse/redirection.c \
+	$(SRCDIR)/parse/block.c \
 	$(SRCDIR)/parse/parse.c \
 	$(SRCDIR)/parse/tokenizer.c \
 	$(SRCDIR)/parse/expand.c \
