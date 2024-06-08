@@ -2,26 +2,23 @@
 
 char	*ft_getenv(char *name, char **envp)
 {
-	char	**env;
-	size_t	name_len;
-	char	*env_name;
-	char	*p;
+	char	*env;
+	char	*ptr;
 
 	if (name == NULL || *name == '\0')
 		return (NULL);
-	env = envp;
-	name_len = 0;
-	while (name[name_len])
-		name_len++;
-	while (*env)
+	while (*envp)
 	{
-		env_name = *env;
-		p = name;
-		while (*p && *env_name++ == *p++)
-			;
-		if (*p == '\0' && *env_name == '=')
-			return (env_name + 1);
-		env++;
+		env = *envp;
+		ptr = name;
+		while (*env == *ptr && *ptr != '\0')
+		{
+			env++;
+			ptr++;
+		}
+		if (*ptr == '\0' && *env == '=')
+			return (env + 1);
+		envp++;
 	}
 	return (NULL);
 }

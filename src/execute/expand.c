@@ -1,12 +1,35 @@
-#include "../../include/minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "ft.h"
+
+char	*expand_variable(const char **arg, char **envp)
+{
+	char	env_name[1024];
+	char	*env_value;
+	char	*current;
+
+	ft_bzero(env_name, sizeof(env_name));
+	if (*arg && (ft_isalnum(**arg) || **arg == '_'))
+	{
+		current = env_name;
+		while (*arg && (ft_isalnum(**arg) || **arg == '_'))
+			*current++ = *(*arg)++;
+		*current = '\0';
+		env_value = ft_getenv(env_name, envp);
+		if (env_value)
+			return (env_value);
+		return ("");
+	}
+	return ("$");
+}
 
 char	*expand_variables(const char *arg, char **envp)
 {
+	char	expanded[1024];
 	char	*current;
-	char	expanded[MAX_INPUT];
-	char	env_name[MAX_INPUT];
-	char	*env_value;
 
+	ft_bzero(expanded, sizeof(expanded));
 	while (arg && *arg)
 	{
 		current = expanded + ft_strlen(expanded);
@@ -16,12 +39,7 @@ char	*expand_variables(const char *arg, char **envp)
 		if (*arg == '$')
 		{
 			arg++;
-			current = env_name;
-			while (*arg && (ft_isalnum(*arg) || *arg == '_'))
-				*current++ = *arg++;
-			env_value = ft_getenv(env_name, envp);
-			if (env_value)
-				ft_strlcat(expanded, env_value, sizeof(expanded));
+			ft_strlcat(expanded, expand_variable(&arg, envp), sizeof(expanded));
 		}
 	}
 	return (ft_strdup(expanded));
