@@ -82,9 +82,11 @@ char	*expand_argument(const char *arg, char **envp)
 		return (no_quotes);
 	if (ft_strchr(arg, '$'))
 	{
-		expanded = expand_variables(no_quotes, envp);
 		free(no_quotes);
-		return (expanded);
+		expanded = expand_variables(arg, envp);
+		no_quotes = remove_quotes(expanded);
+		free(expanded);
+		return (no_quotes);
 	}
 	return (no_quotes);
 }
