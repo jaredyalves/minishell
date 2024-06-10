@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "ft.h"
+#include "minishell.h"
 
 char	*expand_variable(const char **arg, char **envp)
 {
@@ -48,16 +49,18 @@ char	*expand_variables(const char *arg, char **envp)
 char	*remove_quotes(const char *arg)
 {
 	char	*no_quotes;
-	char	*dst;
+	char	*dest;
 	char	quote;
 
 	no_quotes = (char *)malloc(ft_strlen(arg) + 1);
-	dst = no_quotes;
+	if (no_quotes == NULL)
+		panic("malloc");
+	dest = no_quotes;
 	quote = 0;
 	while (*arg)
 	{
 		if (*arg == '\\' && (*(arg + 1) == '"' || *(arg + 1) == '\''))
-			*dst++ = *++arg;
+			*dest++ = *++arg;
 		else if (!quote && (*arg == '"' || *arg == '\''))
 			quote = *arg++;
 		else if (*arg == quote)
@@ -66,9 +69,9 @@ char	*remove_quotes(const char *arg)
 			arg++;
 		}
 		else
-			*dst++ = *arg++;
+			*dest++ = *arg++;
 	}
-	*dst = '\0';
+	*dest = '\0';
 	return (no_quotes);
 }
 
@@ -102,10 +105,7 @@ char	**expand_arguments(char **args, char **envp)
 		size++;
 	expanded = (char **)malloc((size + 1) * sizeof(char *));
 	if (expanded == NULL)
-	{
-		perror("minishell: malloc");
-		exit(1);
-	}
+		panic("malloc");
 	i = -1;
 	while (++i < size)
 		expanded[i] = expand_argument(args[i], envp);

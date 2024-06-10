@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+
+#include "minishell.h"
 
 int	pipe1(int *pipes)
 {
@@ -8,9 +8,6 @@ int	pipe1(int *pipes)
 
 	status = pipe(pipes);
 	if (status == -1)
-	{
-		perror("minishell: pipe");
-		exit(1);
-	}
+		panic("pipe");
 	return (status);
 }

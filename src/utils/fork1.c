@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+
+#include "minishell.h"
 
 int	fork1(void)
 {
@@ -8,9 +8,6 @@ int	fork1(void)
 
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("minishell: fork");
-		exit(1);
-	}
+		panic("fork");
 	return (pid);
 }

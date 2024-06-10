@@ -9,7 +9,7 @@ int	ms_exit(t_ms **ms)
 	int	status;
 
 	if (ms == NULL || *ms == NULL)
-		return (-1);
+		return (1);
 	status = (*ms)->exit_status;
 	if ((*ms)->str)
 		free_str(&(*ms)->str);

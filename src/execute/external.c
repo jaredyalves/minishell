@@ -46,6 +46,5 @@ int	execute_external(t_ms *ms, t_execcmd *cmd)
 	else
 		status = execute_path(name, argv, ms->env);
 	error_message(name, status);
-	free_argv(argv);
-	return (status);
+	return (free_argv(argv), status);
 }

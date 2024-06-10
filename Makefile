@@ -61,6 +61,7 @@ SRCS := \
 	$(SRCDIR)/parse/pipeline.c \
 	$(SRCDIR)/parse/redirection.c \
 	$(SRCDIR)/parse/tokenizer.c \
+	$(SRCDIR)/utils/error.c \
 	$(SRCDIR)/utils/fork1.c \
 	$(SRCDIR)/utils/free_cmd.c \
 	$(SRCDIR)/utils/free_str.c \

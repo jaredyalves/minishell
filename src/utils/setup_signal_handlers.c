@@ -1,8 +1,9 @@
 #include <signal.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
+
+#include "minishell.h"
 
 static void	sigint_handler(const int sig)
 {
@@ -16,13 +17,7 @@ static void	sigint_handler(const int sig)
 void	setup_signal_handlers(void)
 {
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-	{
-		perror("minishell: signal");
-		exit(EXIT_FAILURE);
-	}
+		panic("signal");
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-	{
-		perror("minishell: signal");
-		exit(EXIT_FAILURE);
-	}
+		panic("signal");
 }

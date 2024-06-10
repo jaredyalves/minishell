@@ -12,7 +12,7 @@ t_cmd	*parse(char *str)
 	peek(&str, es, "", "");
 	if (str != es)
 	{
-		ft_dprintf(STDERR_FILENO, "leftovers: %s\n", str);
+		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", str);
 		free_cmd(&cmd);
 		return (NULL);
 	}

@@ -13,7 +13,7 @@ t_ms	*ms_init(const int argc, const char *argv[], char *envp[])
 	(void)argv;
 	ms = ft_calloc(1, sizeof(*ms));
 	if (ms == NULL)
-		return (NULL);
+		panic("ft_calloc");
 	envp_count = 0;
 	while (envp[envp_count] != NULL)
 		envp_count++;

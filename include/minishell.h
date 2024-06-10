@@ -16,8 +16,8 @@
 # include <readline/readline.h>
 # include <sys/wait.h>
 
-#define WHITESPACE " \t"
-#define SYMBOLS "<|>()&;"
+# define WHITESPACE " \t"
+# define SYMBOLS "<|>()&;"
 
 typedef enum e_type
 {
@@ -57,11 +57,11 @@ typedef struct s_redicmd
 
 typedef struct s_herecmd
 {
-	t_type type;
-	t_cmd *command;
-	char *delim;
-	char *end_delim;
-} t_herecmd;
+	t_type	type;
+	t_cmd	*command;
+	char	*delim;
+	char	*end_delim;
+}			t_herecmd;
 
 typedef struct s_backcmd
 {
@@ -99,8 +99,8 @@ int			execute_sequence(t_ms *ms, t_logicmd *cmd);
 int			execute_orif(t_ms *ms, t_logicmd *cmd);
 int			execute_pipe(t_ms *ms, t_logicmd *cmd);
 int			execute_redirect(t_ms *ms, t_redicmd *cmd);
-int			execute_logical(t_ms* ms, t_logicmd* cmd);
-int			execute_heredoc(t_ms* ms, t_herecmd* cmd);
+int			execute_logical(t_ms *ms, t_logicmd *cmd);
+int			execute_heredoc(t_ms *ms, t_herecmd *cmd);
 
 t_cmd		*execute_command(void);
 t_cmd		*redirect_command(t_cmd *sub, char *file, char *end_file, int mode);
@@ -119,7 +119,7 @@ char		**expand_arguments(char **args, char **envp);
 int			get_token(char **ps, const char *es, char **q, char **eq);
 int			peek(char **ps, const char *es, const char *stoks, const char *dtoks);
 
-char		*get_str(const t_ms* ms, char *str);
+char		*get_str(const t_ms *ms, char *str);
 int			execute_path(const char *name, char **argv, char **envp);
 int			fork1(void);
 int			pipe1(int *pipes);
@@ -127,5 +127,7 @@ void		free_cmd(t_cmd **cmd);
 void		free_str(char **str);
 void		terminate(t_cmd *cmd);
 void		setup_signal_handlers(void);
+
+void		panic(const char *err) __attribute__((noreturn));
 
 #endif
