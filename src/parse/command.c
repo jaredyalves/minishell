@@ -14,6 +14,7 @@ t_cmd	*parse_command(char **ps, const char *es)
 		return (parse_block(ps, es));
 	cmd = execute_command();
 	ecmd = (t_execcmd *)cmd;
+	cmd = parse_redirection(cmd, ps, es);
 	while (!peek(ps, es, SYMBOLS, SYMBOLS))
 	{
 		token = get_token(ps, es, &q, &eq);
