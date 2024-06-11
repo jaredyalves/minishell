@@ -2,6 +2,25 @@
 
 #include "minishell.h"
 
+static t_cmd	*parse_heredoc(t_cmd *cmd, char *q, char *eq)
+{
+	t_herecmd	*rcmd;
+	char		*line;
+
+	*eq = '\0';
+	rcmd = (t_herecmd *)heredoc_command(cmd);
+	line = readline("∙ ");
+	while (!ft_strncmp(q, line, ft_strlen(q) + 1) == 0)
+	{
+		ft_strlcat(rcmd->buffer, line, sizeof(rcmd->buffer));
+		ft_strlcat(rcmd->buffer, "\n", sizeof(rcmd->buffer));
+		free(line);
+		line = readline("∙ ");
+	}
+	free(line);
+	return ((t_cmd *)rcmd);
+}
+
 t_cmd	*parse_redirection(t_cmd *cmd, char **ps, const char *es)
 {
 	char	*eq;
@@ -20,7 +39,7 @@ t_cmd	*parse_redirection(t_cmd *cmd, char **ps, const char *es)
 		else if (token == '<')
 			cmd = redirect_command(cmd, q, eq, O_RDONLY);
 		else if (token == - '<')
-			cmd = heredoc_command(cmd, q, eq);
+			cmd = parse_heredoc(cmd, q, eq);
 	}
 	return (cmd);
 }

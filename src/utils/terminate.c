@@ -21,10 +21,7 @@ void	terminate(t_cmd *cmd)
 			*((t_redicmd *)cmd)->end_file = '\0';
 		}
 		else if (cmd->type == TYPE_HEREDOC)
-		{
 			terminate(((t_herecmd *)cmd)->command);
-			*((t_herecmd *)cmd)->end_delim = '\0';
-		}
 		else if (cmd->type == TYPE_BACKGROUND)
 			terminate(((t_backcmd *)cmd)->command);
 		else if (cmd->type == TYPE_LOGICAL)

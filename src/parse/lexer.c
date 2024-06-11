@@ -30,7 +30,7 @@ t_cmd	*redirect_command(t_cmd *sub, char *file, char *end_file, int mode)
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*heredoc_command(t_cmd *sub, char *delim, char *end_delim)
+t_cmd	*heredoc_command(t_cmd *sub)
 {
 	t_herecmd	*cmd;
 
@@ -39,8 +39,6 @@ t_cmd	*heredoc_command(t_cmd *sub, char *delim, char *end_delim)
 		panic("ft_calloc");
 	cmd->type = TYPE_HEREDOC;
 	cmd->command = sub;
-	cmd->delim = delim;
-	cmd->end_delim = end_delim;
 	return ((t_cmd *)cmd);
 }
 

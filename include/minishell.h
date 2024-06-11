@@ -59,8 +59,7 @@ typedef struct s_herecmd
 {
 	t_type	type;
 	t_cmd	*command;
-	char	*delim;
-	char	*end_delim;
+	char	buffer[1024];
 }			t_herecmd;
 
 typedef struct s_backcmd
@@ -104,7 +103,7 @@ int			execute_heredoc(t_ms *ms, t_herecmd *cmd);
 
 t_cmd		*execute_command(void);
 t_cmd		*redirect_command(t_cmd *sub, char *file, char *end_file, int mode);
-t_cmd		*heredoc_command(t_cmd *sub, char *delim, char *end_delim);
+t_cmd		*heredoc_command(t_cmd *sub);
 t_cmd		*background_command(t_cmd *sub);
 t_cmd		*logical_command(t_type type, t_cmd *left, t_cmd *right);
 
