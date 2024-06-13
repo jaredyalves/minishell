@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+#include <stddef.h>
+
 t_cmd	*parse_block(char **ps, const char *es)
 {
 	t_cmd	*cmd;

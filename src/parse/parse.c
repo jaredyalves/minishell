@@ -1,4 +1,7 @@
+#include "ft.h"
 #include "minishell.h"
+
+#include <unistd.h>
 
 t_cmd	*parse(char *str)
 {

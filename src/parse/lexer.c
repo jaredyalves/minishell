@@ -1,4 +1,7 @@
+#include "ft.h"
 #include "minishell.h"
+
+#include <fcntl.h>
 
 t_cmd	*execute_command(void)
 {

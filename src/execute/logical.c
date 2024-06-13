@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+#include <sys/wait.h>
+#include <unistd.h>
+
 int	execute_logical(t_ms *ms, t_logicmd *cmd)
 {
 	if (ms && cmd)

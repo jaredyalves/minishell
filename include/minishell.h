@@ -1,21 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "ft.h"
-
-# include <errno.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <stdarg.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <linux/limits.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <sys/wait.h>
-
 # define WHITESPACE " \t"
 # define SYMBOLS "<|>()&;"
 
@@ -41,8 +26,8 @@ typedef struct s_execcmd
 {
 	t_type	type;
 	int		argc;
-	char	*argv[ARG_MAX];
-	char	*end_argv[ARG_MAX];
+	char	*argv[1024];
+	char	*end_argv[1024];
 }			t_execcmd;
 
 typedef struct s_redicmd
@@ -78,7 +63,7 @@ typedef struct s_logicmd
 
 typedef struct s_ms
 {
-	char	*env[ARG_MAX];
+	char	*env[1024];
 	char	*str;
 	t_cmd	*cmd;
 	int		exit_status;

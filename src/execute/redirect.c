@@ -1,4 +1,10 @@
+#include "ft.h"
 #include "minishell.h"
+
+#include <errno.h>
+#include <fcntl.h>
+#include <string.h>
+#include <unistd.h>
 
 int	execute_redirect(t_ms *ms, t_redicmd *cmd)
 {

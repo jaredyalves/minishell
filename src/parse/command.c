@@ -1,6 +1,7 @@
-#include <linux/limits.h>
-
+#include "ft.h"
 #include "minishell.h"
+
+#include <unistd.h>
 
 static t_cmd	*invert_redirections(t_cmd *cmd)
 {
@@ -56,7 +57,7 @@ t_cmd	*parse_command(char **ps, const char *es)
 			break ;
 		if (token != 'a')
 			return (free_cmd(&cmd), NULL);
-		if (ecmd->argc >= ARG_MAX)
+		if (ecmd->argc >= 1024)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: too many arguments\n");
 			return (free_cmd(&cmd), NULL);

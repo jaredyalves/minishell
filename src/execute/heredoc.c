@@ -1,6 +1,10 @@
+#include "ft.h"
 #include "minishell.h"
 
-int execute_heredoc(t_ms* ms, t_herecmd* cmd)
+#include <unistd.h>
+#include <sys/wait.h>
+
+int execute_heredoc(t_ms *ms, t_herecmd *cmd)
 {
 	int p[2];
 
