@@ -3,47 +3,55 @@
 
 #include <fcntl.h>
 #include <stdio.h>
-#include <readline/readline.h>
 #include <stdlib.h>
+#include <readline/readline.h>
 
-static t_cmd *parse_heredoc(t_cmd *cmd, char *q, char *eq)
+static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 {
-	t_herecmd *rcmd;
-	char      *line;
+	t_redirection	*rcmd;
+	char			*word;
+	char			*line;
 
-	*eq = '\0';
-	rcmd = (t_herecmd *) heredoc_command(cmd);
-	line = readline("∙ ");
-	while (!ft_strncmp(q, line, ft_strlen(q) + 1) == 0)
+	rcmd = (t_redirection *)redirection(HEREDOC, subcmd, 0, 0);
+	word = expand_argument(q, eq);
+	line = readline(N_WHITE "∙ " RESET);
+	rcmd->buffer = ft_strdup("");
+	while (!ft_strncmp(word, line, ft_strlen(word) + 1) == 0)
 	{
-		ft_strlcat(rcmd->buffer, line, sizeof(rcmd->buffer));
-		ft_strlcat(rcmd->buffer, "\n", sizeof(rcmd->buffer));
+		rcmd->buffer = ft_strjoin(rcmd->buffer, line);
+		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
 		free(line);
-		line = readline("∙ ");
+		line = readline(N_WHITE "∙ " RESET);
 	}
 	free(line);
-	return ((t_cmd *) rcmd);
+	free(word);
+	return ((t_cmd *)rcmd);
 }
 
-t_cmd *parse_redirection(t_cmd *cmd, char **ps, const char *es)
+t_cmd	*parse_redirection(t_cmd *cmd, char **ps, char *es)
 {
-	char *eq;
-	char *q;
-	int   token;
+	char	*eq;
+	char	*q;
+	int		token;
 
 	while (peek(ps, es, "<>", "<>"))
 	{
 		token = get_token(ps, es, NULL, NULL);
-		if (get_token(ps, es, &q, &eq) != 'a')
-			return (free_cmd(&cmd), NULL);
-		if (token == -'>')
-			cmd = redirect_command(cmd, q, eq, O_WRONLY | O_CREAT | O_APPEND);
-		else if (token == '>')
-			cmd = redirect_command(cmd, q, eq, O_WRONLY | O_CREAT | O_TRUNC);
-		else if (token == '<')
-			cmd = redirect_command(cmd, q, eq, O_RDONLY);
-		else if (token == -'<')
+		if (!syntax(ps, es, 0, 0))
+			return (free_command(&cmd));
+		get_token(ps, es, &q, &eq);
+		if (token == -'<')
 			cmd = parse_heredoc(cmd, q, eq);
+		else
+		{
+			if (token == '<')
+				cmd = redirection(REDIRECT, cmd, O_RDONLY, 0);
+			if (token == '>')
+				cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_TRUNC, 1);
+			if (token == -'>')
+				cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_APPEND, 1);
+			((t_redirection *)cmd)->buffer = expand_argument(q, eq);
+		}
 	}
 	return (cmd);
 }

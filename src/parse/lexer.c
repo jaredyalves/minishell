@@ -1,71 +1,55 @@
 #include "ft.h"
 #include "minishell.h"
 
-#include <fcntl.h>
-
-t_cmd	*execute_command(void)
+t_cmd	*execute(void)
 {
-	t_execcmd	*cmd;
+	t_execute	*cmd;
 
-	cmd = (t_execcmd *)ft_calloc(1, sizeof(*cmd));
-	if (cmd == NULL)
+	cmd = (t_execute *)ft_calloc(1, sizeof(*cmd));
+	if (!cmd)
 		panic("ft_calloc");
-	cmd->type = TYPE_EXECUTE;
+	cmd->type = EXECUTE;
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*redirect_command(t_cmd *sub, char *file, char *end_file, int mode)
+t_cmd	*redirection(t_subtype subtype, t_cmd *subcmd, int mode, int fd)
 {
-	t_redicmd	*cmd;
+	t_redirection	*cmd;
 
-	cmd = (t_redicmd *)ft_calloc(1, sizeof(*cmd));
-	if (cmd == NULL)
+	cmd = (t_redirection *)ft_calloc(1, sizeof(*cmd));
+	if (!cmd)
 		panic("ft_calloc");
-	cmd->type = TYPE_REDIRECT;
-	cmd->command = sub;
-	cmd->file = file;
-	cmd->end_file = end_file;
+	cmd->type = REDIRECTION;
+	cmd->subtype = subtype;
+	cmd->cmd = subcmd;
 	cmd->mode = mode;
-	if ((mode & O_ACCMODE) == O_RDONLY)
-		cmd->fd = 0;
-	if ((mode & O_ACCMODE) == O_WRONLY)
-		cmd->fd = 1;
+	cmd->fd = fd;
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*heredoc_command(t_cmd *sub)
+t_cmd	*list(t_subtype subtype, t_cmd *left, t_cmd *right)
 {
-	t_herecmd	*cmd;
+	t_list	*cmd;
 
-	cmd = (t_herecmd *)ft_calloc(1, sizeof(*cmd));
-	if (cmd == NULL)
+	cmd = (t_list *)ft_calloc(1, sizeof(*cmd));
+	if (!cmd)
 		panic("ft_calloc");
-	cmd->type = TYPE_HEREDOC;
-	cmd->command = sub;
+	cmd->type = LIST;
+	cmd->subtype = subtype;
+	cmd->left = left;
+	cmd->right = right;
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*background_command(t_cmd *sub)
+t_cmd	*pipeline(t_subtype subtype, t_cmd *left, t_cmd *right)
 {
-	t_backcmd	*cmd;
+	t_pipeline	*cmd;
 
-	cmd = (t_backcmd *)ft_calloc(1, sizeof(*cmd));
-	if (cmd == NULL)
+	cmd = (t_pipeline *)ft_calloc(1, sizeof(*cmd));
+	if (!cmd)
 		panic("ft_calloc");
-	cmd->type = TYPE_BACKGROUND;
-	cmd->command = sub;
-	return ((t_cmd *)cmd);
-}
-
-t_cmd	*logical_command(t_type type, t_cmd *left, t_cmd *right)
-{
-	t_logicmd	*cmd;
-
-	cmd = (t_logicmd *)ft_calloc(1, sizeof(*cmd));
-	if (cmd == NULL)
-		panic("ft_calloc");
-	cmd->type = TYPE_LOGICAL;
-	cmd->sub = type;
+	cmd->type = PIPELINE;
+	cmd->subtype = subtype;
 	cmd->left = left;
 	cmd->right = right;
 	return ((t_cmd *)cmd);

@@ -1,14 +1,14 @@
 #include "minishell.h"
 
-int	execute(t_sh *ms, t_cmd *cmd)
+int	execute_command(t_sh *ms, t_cmd *cmd)
 {
 	if (ms && cmd)
 	{
-		if (cmd->type == TYPE_EXECUTE)
+		if (cmd->type == EXECUTE)
 		{
-			if (is_builtin(ms, (t_execcmd *)cmd))
-				return (execute_builtin(ms, (t_execcmd *)cmd));
-			return (execute_external(ms, (t_execcmd *)cmd));
+			if (is_builtin(ms, (t_execute *)cmd))
+				return (execute_builtin(ms, (t_execute *)cmd));
+			return (execute_external(ms, (t_execute *)cmd));
 		}
 		if (cmd->type == TYPE_REDIRECT)
 			return (execute_redirect(ms, (t_redicmd *)cmd));

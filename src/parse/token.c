@@ -1,7 +1,7 @@
 #include "ft.h"
 #include "minishell.h"
 
-void	parse_quote(char **ps, const char *es)
+static void	parse_quote(char **ps, char *es)
 {
 	char	*s;
 	int		quote;
@@ -15,14 +15,14 @@ void	parse_quote(char **ps, const char *es)
 	*ps = s;
 }
 
-int	parse_token(char **ps, const char *es)
+static int	parse_token(char **ps, char *es)
 {
 	char	*s;
 	int		token;
 
 	s = *ps;
 	token = 0;
-	if (s < es && ft_strchr(SYMBOLS, *s))
+	if (s < es && ft_strchr(TOKENS, *s))
 	{
 		token = *s++;
 		if (*s != '(' && *s != ')' && s < es && *s == *(s - 1))
@@ -31,8 +31,7 @@ int	parse_token(char **ps, const char *es)
 	else if (s < es)
 	{
 		token = 'a';
-		while (s < es && ft_strchr(WHITESPACE, *s) == NULL
-			&& ft_strchr(SYMBOLS, *s) == NULL)
+		while (s < es && !ft_strchr(BLANKS, *s) && !ft_strchr(TOKENS, *s))
 		{
 			if (*s == '\'' || *s == '"')
 				parse_quote(&s, es);
@@ -44,36 +43,36 @@ int	parse_token(char **ps, const char *es)
 	return (token);
 }
 
-int	get_token(char **ps, const char *es, char **q, char **eq)
+int	get_token(char **ps, char *es, char **q, char **eq)
 {
 	char	*s;
 	int		token;
 
 	s = *ps;
-	while (s < es && ft_strchr(WHITESPACE, *s))
+	while (s < es && ft_strchr(BLANKS, *s))
 		s++;
 	if (q)
 		*q = s;
 	token = parse_token(&s, es);
 	if (eq)
 		*eq = s;
-	while (s < es && ft_strchr(WHITESPACE, *s))
+	while (s < es && ft_strchr(BLANKS, *s))
 		s++;
 	*ps = s;
 	return (token);
 }
 
-int	peek(char **ps, const char *es, const char *stoks, const char *dtoks)
+int	peek(char **ps, char *es, char *s_tokens, char *d_tokens)
 {
 	char	*s;
 
 	s = *ps;
-	while (s < es && ft_strchr(WHITESPACE, *s))
+	while (s < es && ft_strchr(BLANKS, *s))
 		s++;
 	*ps = s;
 	if (*s && *s != *(s + 1))
-		return (ft_strchr(stoks, *s) != NULL);
+		return (ft_strchr(s_tokens, *s) != 0);
 	if (*s && *s == *(s + 1))
-		return (ft_strchr(dtoks, *s) != NULL);
+		return (ft_strchr(d_tokens, *s) != 0);
 	return (0);
 }

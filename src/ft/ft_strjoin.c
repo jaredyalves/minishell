@@ -1,7 +1,7 @@
 #include "ft.h"
 #include <stdlib.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*str;
 	size_t	len;
@@ -14,5 +14,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (0);
 	ft_strlcpy(str, s1, (len + 1));
 	ft_strlcat(str, s2, (len + 1));
+	free(s1);
 	return (str);
 }

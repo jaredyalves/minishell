@@ -15,7 +15,7 @@ int execute_heredoc(t_sh *ms, t_herecmd *cmd)
 		close(p[1]);
 		dup2(p[0], 0);
 		close(p[0]);
-		return (execute(ms, cmd->command));
+		return (execute_command(ms, cmd->command));
 	}
 	close(p[0]);
 	write(p[1], cmd->buffer, ft_strlen(cmd->buffer));

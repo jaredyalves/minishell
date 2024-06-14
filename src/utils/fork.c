@@ -1,6 +1,6 @@
-#include <unistd.h>
-
 #include "minishell.h"
+
+#include <unistd.h>
 
 int	fork1(void)
 {

@@ -13,21 +13,21 @@ static void	free_str(void)
 	if (sh->str)
 	{
 		free(sh->str);
-		sh->str = NULL;
+		sh->str = 0;
 	}
 }
 
 int	get_str(void)
 {
-	static char	prompt_ok[] = BOLD_RED "[minishell] " RESET
-		BOLD_GREEN "❯ " RESET;
-	static char	prompt_not_ok[] = BOLD_RED "[minishell] " RESET
-		BOLD_RED "❯ " RESET;
+	static char	prompt_ok[] = B_RED "[minishell] " RESET
+		B_GREEN "❯ " RESET;
+	static char	prompt_not_ok[] = B_RED "[minishell] " RESET
+		B_RED "❯ " RESET;
 	t_sh		*sh;
 
 	sh = get_sh();
 	free_str();
-	if (sh->exit_status != 0 && sh->exit_status != 130)
+	if (sh->exit_status != 0)
 		sh->str = readline(prompt_not_ok);
 	else
 		sh->str = readline(prompt_ok);

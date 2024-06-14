@@ -16,5 +16,5 @@ int	execute_redirect(t_sh *ms, t_redicmd *cmd)
 		ft_dprintf(STDERR_FILENO, "%s\n", strerror(errno));
 		return (1);
 	}
-	return (execute(ms, cmd->command));
+	return (execute_command(ms, cmd->command));
 }

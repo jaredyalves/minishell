@@ -1,72 +1,30 @@
 #include "ft.h"
 #include "minishell.h"
 
-#include <unistd.h>
-
-static t_cmd	*invert_redirections(t_cmd *cmd)
+static void	check_leftovers(char **ps, char *es)
 {
-	t_redicmd	*prev;
-	t_redicmd	*curr;
-	t_redicmd	*next;
+	char	*s;
 
-	prev = NULL;
-	curr = (t_redicmd *)cmd;
-	while (curr != NULL)
+	s = *ps;
+	peek(&s, es, "", "");
+	if (s != es)
 	{
-		next = (t_redicmd *)curr->command;
-		curr->command = (t_cmd *)prev;
-		prev = curr;
-		curr = next;
+		ft_putstr_fd("minishell: leftovers: ", STDERR);
+		ft_putstr_fd(s, STDERR);
+		ft_putstr_fd("\n", STDERR);
 	}
-	return ((t_cmd *)prev);
+	*ps = s;
 }
 
-static t_cmd	*insert_execute(t_cmd *cmd, t_execcmd *ecmd)
+t_cmd	*parse_command(char *s)
 {
-	t_redicmd	*curr;
+	char	*es;
+	t_cmd	*cmd;
 
-	if (cmd == NULL)
-	{
-		return ((t_cmd *)ecmd);
-	}
-	curr = (t_redicmd *)cmd;
-	while (curr->command != NULL)
-	{
-		curr = (t_redicmd *)curr->command;
-	}
-	curr->command = (t_cmd *)ecmd;
-	return (cmd);
-}
-
-t_cmd	*parse_execute(char **ps, const char *es)
-{
-	char		*eq;
-	char		*q;
-	t_cmd		*cmd;
-	t_execcmd	*ecmd;
-	int			token;
-
-	if (peek(ps, es, "(", "("))
-		return (parse_block(ps, es));
-	ecmd = (t_execcmd *)execute_command();
-	cmd = parse_redirection(NULL, ps, es);
-	while (!peek(ps, es, SYMBOLS, SYMBOLS))
-	{
-		token = get_token(ps, es, &q, &eq);
-		if (token == 0)
-			break ;
-		if (token != 'a')
-			return (free_cmd(&cmd), NULL);
-		if (ecmd->argc >= 1024)
-		{
-			ft_dprintf(STDERR_FILENO, "minishell: too many arguments\n");
-			return (free_cmd(&cmd), NULL);
-		}
-		ecmd->argv[ecmd->argc] = q;
-		ecmd->end_argv[ecmd->argc++] = eq;
-		cmd = parse_redirection(cmd, ps, es);
-	}
-	cmd = invert_redirections(cmd);
-	cmd = insert_execute(cmd, ecmd);
+	es = s + ft_strlen(s);
+	cmd = parse_list1(&s, es);
+	if (!cmd)
+		return (0);
+	check_leftovers(&s, es);
 	return (cmd);
 }

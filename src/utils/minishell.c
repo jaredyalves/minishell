@@ -19,7 +19,7 @@ static void	sh_shlvl(t_sh *sh)
 	int		shlvl;
 	int		i;
 
-	env_value = ft_getenv("SHLVL", sh->env);
+	env_value = ft_getenv("SHLVL");
 	if (env_value)
 		shlvl = ft_atoi(env_value);
 	else
@@ -48,7 +48,7 @@ static void	sh_env(t_sh *sh, char *envp[])
 	env_count = 0;
 	while (envp[env_count])
 		env_count++;
-	if (env_count > ENV_MAX)
+	if (env_count >= ENV_MAX)
 		panic("too many environment variables");
 	i = 0;
 	while (i < env_count)
@@ -103,7 +103,10 @@ int	sh_keep_running(void)
 		if (!get_str())
 			sh->keep_running = 0;
 		if (sh->keep_running)
+		{
 			sh->cmd = parse_command(sh->str);
+			free_command(&sh->cmd);
+		}
 	}
 	return (sh->keep_running);
 }

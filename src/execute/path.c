@@ -5,7 +5,7 @@
 
 int	execute_path(const char *name, char **argv, char **envp)
 {
-	const char	*env_path = ft_getenv("PATH", envp);
+	const char	*env_path = ft_getenv("PATH");
 	const char	*start = env_path;
 	char		path[1024];
 	char		*current;

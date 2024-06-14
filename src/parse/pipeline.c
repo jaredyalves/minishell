@@ -1,22 +1,22 @@
 #include "minishell.h"
 
-#include <stddef.h>
-
-t_cmd	*parse_pipeline(char **ps, const char *es)
+t_cmd	*parse_pipeline(char **ps, char *es)
 {
 	t_cmd	*cmd;
 	int		token;
 
 	cmd = parse_execute(ps, es);
-	if (cmd == NULL)
-		return (NULL);
+	if (!cmd)
+		return (0);
 	if (peek(ps, es, "|", ""))
 	{
-		token = get_token(ps, es, NULL, NULL);
-		if (peek(ps, es, "<|>&;", "<|>&;"))
-			return (free_cmd(&cmd), NULL);
+		token = get_token(ps, es, 0, 0);
+		if (!syntax(ps, es, 1, 0))
+			return (free_command(&cmd));
 		if (token == '|')
-			cmd = logical_command(TYPE_PIPE, cmd, parse_pipeline(ps, es));
+			cmd = pipeline(PIPE, cmd, parse_pipeline(ps, es));
+		if (!((t_pipeline *)cmd)->right)
+			return (free_command(&cmd));
 	}
 	return (cmd);
 }

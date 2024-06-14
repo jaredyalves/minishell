@@ -44,31 +44,22 @@ SRCS := \
 	$(SRCDIR)/ft/ft_substr.c \
 	$(SRCDIR)/ft/ft_tolower.c \
 	$(SRCDIR)/ft/ft_toupper.c \
-	$(SRCDIR)/execute/background.c \
-	$(SRCDIR)/execute/builtin.c \
-	$(SRCDIR)/execute/execute.c \
-	$(SRCDIR)/execute/expand.c \
-	$(SRCDIR)/execute/external.c \
-	$(SRCDIR)/execute/heredoc.c \
-	$(SRCDIR)/execute/logical.c \
-	$(SRCDIR)/execute/path.c \
-	$(SRCDIR)/execute/redirect.c \
 	$(SRCDIR)/parse/block.c \
 	$(SRCDIR)/parse/command.c \
+	$(SRCDIR)/parse/execute.c \
+	$(SRCDIR)/parse/expand.c \
 	$(SRCDIR)/parse/lexer.c \
 	$(SRCDIR)/parse/list.c \
-	$(SRCDIR)/parse/parse.c \
 	$(SRCDIR)/parse/pipeline.c \
 	$(SRCDIR)/parse/redirection.c \
-	$(SRCDIR)/parse/tokenizer.c \
+	$(SRCDIR)/parse/token.c \
+	$(SRCDIR)/utils/command.c \
 	$(SRCDIR)/utils/error.c \
-	$(SRCDIR)/utils/fork1.c \
-	$(SRCDIR)/utils/free_cmd.c \
-	$(SRCDIR)/utils/get_str.c \
-	$(SRCDIR)/utils/pipe1.c \
-	$(SRCDIR)/utils/terminate.c \
-	$(SRCDIR)/minishell.c \
-	$(SRCDIR)/signal.c \
+	$(SRCDIR)/utils/fork.c \
+	$(SRCDIR)/utils/minishell.c \
+	$(SRCDIR)/utils/pipe.c \
+	$(SRCDIR)/utils/readline.c \
+	$(SRCDIR)/utils/signal.c \
 	$(SRCDIR)/main.c
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 INCS := $(INCDIR)/minishell.h $(INCDIR)/ft.h

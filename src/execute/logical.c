@@ -30,14 +30,14 @@ int	execute_pipe(t_sh *ms, t_logicmd *cmd)
 		dup2(p[1], 1);
 		close(p[0]);
 		close(p[1]);
-		return (execute(ms, cmd->left));
+		return (execute_command(ms, cmd->left));
 	}
 	if (fork() == 0)
 	{
 		dup2(p[0], 0);
 		close(p[0]);
 		close(p[1]);
-		return (execute(ms, cmd->right));
+		return (execute_command(ms, cmd->right));
 	}
 	close(p[0]);
 	close(p[1]);
@@ -49,9 +49,9 @@ int	execute_pipe(t_sh *ms, t_logicmd *cmd)
 int	execute_sequence(t_sh *ms, t_logicmd *cmd)
 {
 	if (fork1() == 0)
-		return (execute(ms, cmd->left));
+		return (execute_command(ms, cmd->left));
 	wait(0);
-	return (execute(ms, cmd->right));
+	return (execute_command(ms, cmd->right));
 }
 
 int	execute_andif(t_sh *ms, t_logicmd *cmd)
@@ -59,10 +59,10 @@ int	execute_andif(t_sh *ms, t_logicmd *cmd)
 	int	status;
 
 	if (fork1() == 0)
-		return (execute(ms, cmd->left));
+		return (execute_command(ms, cmd->left));
 	waitpid(0, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
-		return (execute(ms, cmd->right));
+		return (execute_command(ms, cmd->right));
 	return (0);
 }
 
@@ -71,9 +71,9 @@ int	execute_orif(t_sh *ms, t_logicmd *cmd)
 	int	status;
 
 	if (fork1() == 0)
-		return (execute(ms, cmd->left));
+		return (execute_command(ms, cmd->left));
 	waitpid(0, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		return (execute(ms, cmd->right));
+		return (execute_command(ms, cmd->right));
 	return (0);
 }

@@ -1,28 +1,47 @@
 #include "minishell.h"
 
-#include <stddef.h>
+t_cmd	*parse_list1(char **ps, char *es)
+{
+	t_cmd	*cmd;
+	int		token;
 
-t_cmd	*parse_list(char **ps, const char *es)
+	cmd = parse_list2(ps, es);
+	if (!cmd)
+		return (0);
+	if (peek(ps, es, "&;", ""))
+	{
+		token = get_token(ps, es, 0, 0);
+		if (!syntax(ps, es, 1, 1))
+			return (free_command(&cmd));
+		if (token == '&')
+			cmd = list(BACKGROUND, cmd, parse_list1(ps, es));
+		if (token == ';')
+			cmd = list(SEQUENCE, cmd, parse_list1(ps, es));
+		if (!((t_list *)cmd)->right)
+			return (free_command(&cmd));
+	}
+	return (cmd);
+}
+
+t_cmd	*parse_list2(char **ps, char *es)
 {
 	t_cmd	*cmd;
 	int		token;
 
 	cmd = parse_pipeline(ps, es);
-	if (cmd == NULL)
-		return (NULL);
-	if (peek(ps, es, "&;", "&|"))
+	if (!cmd)
+		return (0);
+	if (peek(ps, es, "", "|&"))
 	{
-		token = get_token(ps, es, NULL, NULL);
-		if (peek(ps, es, "<|>&;", "<|>&;"))
-			return (free_cmd(&cmd), NULL);
-		if (token == '&')
-			cmd = background_command(cmd);
-		else if (token == - '&')
-			cmd = logical_command(TYPE_AND, cmd, parse_list(ps, es));
-		else if (token == ';')
-			cmd = logical_command(TYPE_SEQUENCE, cmd, parse_list(ps, es));
-		else if (token == - '|')
-			cmd = logical_command(TYPE_OR, cmd, parse_list(ps, es));
+		token = get_token(ps, es, 0, 0);
+		if (!syntax(ps, es, 1, 0))
+			return (free_command(&cmd));
+		if (token == -'&')
+			cmd = list(AND_IF, cmd, parse_list2(ps, es));
+		if (token == -'|')
+			cmd = list(OR_IF, cmd, parse_list2(ps, es));
+		if (!((t_list *)cmd)->right)
+			return (free_command(&cmd));
 	}
 	return (cmd);
 }

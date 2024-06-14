@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "ft.h"
 #include "minishell.h"
 
-char	*expand_variable(const char **arg, char **envp)
+#include <stdio.h>
+#include <stdlib.h>
+
+static char	*expand_variable(char **arg)
 {
 	char	env_name[1024];
 	char	*env_value;
@@ -17,7 +17,7 @@ char	*expand_variable(const char **arg, char **envp)
 		while (*arg && (ft_isalnum(**arg) || **arg == '_'))
 			*current++ = *(*arg)++;
 		*current = '\0';
-		env_value = ft_getenv(env_name, envp);
+		env_value = ft_getenv(env_name);
 		if (env_value)
 			return (env_value);
 		return ("");
@@ -25,7 +25,7 @@ char	*expand_variable(const char **arg, char **envp)
 	return ("$");
 }
 
-char	*expand_variables(const char *arg, char **envp)
+static char	*expand_variables(char *arg)
 {
 	char	expanded[1024];
 	char	*current;
@@ -40,13 +40,13 @@ char	*expand_variables(const char *arg, char **envp)
 		if (*arg == '$')
 		{
 			arg++;
-			ft_strlcat(expanded, expand_variable(&arg, envp), sizeof(expanded));
+			ft_strlcat(expanded, expand_variable(&arg), sizeof(expanded));
 		}
 	}
 	return (ft_strdup(expanded));
 }
 
-char	*remove_quotes(const char *arg)
+static char	*remove_quotes(const char *arg)
 {
 	char	*no_quotes;
 	char	*dest;
@@ -75,40 +75,25 @@ char	*remove_quotes(const char *arg)
 	return (no_quotes);
 }
 
-char	*expand_argument(const char *arg, char **envp)
+char	*expand_argument(char *q, char *eq)
 {
 	char	*no_quotes;
 	char	*expanded;
+	char	c;
 
-	no_quotes = remove_quotes(arg);
-	if (*arg == '\'')
+	c = *eq;
+	*eq = 0;
+	no_quotes = remove_quotes(q);
+	if (*q == '\'')
 		return (no_quotes);
-	if (ft_strchr(arg, '$'))
+	if (ft_strchr(q, '$'))
 	{
 		free(no_quotes);
-		expanded = expand_variables(arg, envp);
+		expanded = expand_variables(q);
 		no_quotes = remove_quotes(expanded);
 		free(expanded);
 		return (no_quotes);
 	}
+	*eq = c;
 	return (no_quotes);
-}
-
-char	**expand_arguments(char **args, char **envp)
-{
-	char	**expanded;
-	size_t	size;
-	size_t	i;
-
-	size = 0;
-	while (args[size])
-		size++;
-	expanded = (char **)malloc((size + 1) * sizeof(char *));
-	if (expanded == NULL)
-		panic("malloc");
-	i = -1;
-	while (++i < size)
-		expanded[i] = expand_argument(args[i], envp);
-	expanded[i] = NULL;
-	return (expanded);
 }

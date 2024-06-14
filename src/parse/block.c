@@ -1,18 +1,18 @@
 #include "minishell.h"
 
-#include <stddef.h>
-
-t_cmd	*parse_block(char **ps, const char *es)
+t_cmd	*parse_block(char **ps, char *es)
 {
 	t_cmd	*cmd;
 
-	get_token(ps, es, NULL, NULL);
-	cmd = parse_list(ps, es);
-	if (cmd == NULL)
-		return (NULL);
+	get_token(ps, es, 0, 0);
+	if (!syntax(ps, es, 0, 0))
+		return (0);
+	cmd = parse_list1(ps, es);
+	if (!cmd)
+		return (0);
 	if (!peek(ps, es, ")", ")"))
-		return (free_cmd(&cmd), NULL);
-	get_token(ps, es, NULL, NULL);
+		return (free_command(&cmd));
+	get_token(ps, es, 0, 0);
 	cmd = parse_redirection(cmd, ps, es);
 	return (cmd);
 }

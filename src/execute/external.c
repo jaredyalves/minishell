@@ -14,43 +14,26 @@ static void	error_message(char *name, const int status)
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", name, strerror(errno));
 }
 
-static void	free_argv(char **argv)
-{
-	int	i;
-
-	if (argv == NULL)
-		return ;
-	i = 0;
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
-	}
-	free(argv);
-}
-
-int	execute_external(t_sh *ms, t_execcmd *cmd)
+int	execute_external(t_sh *ms, t_execute *cmd)
 {
 	char	*name;
 	int		status;
-	char	**argv;
 
-	argv = expand_arguments(cmd->argv, ms->env);
-	name = argv[0];
+	name = cmd->argv[0];
 	if (name == NULL || *name == '\0')
-		return (free_argv(argv), ms->exit_status);
+		return (ms->exit_status);
 	if (ft_strchr(name, '/'))
 	{
 		status = 127;
 		if (access(name, F_OK) == 0)
 		{
 			if (access(name, X_OK) == 0)
-				execve(name, argv, ms->env);
+				execve(name, cmd->argv, ms->env);
 			status = 126;
 		}
 	}
 	else
-		status = execute_path(name, argv, ms->env);
+		status = execute_path(name, cmd->argv, ms->env);
 	error_message(name, status);
-	return (free_argv(argv), status);
+	return (status);
 }
