@@ -1,19 +1,19 @@
+#include "ft.h"
+
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#include "ft.h"
-
-void	panic(const char *err)
+void	panic(char *error)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, err, ft_strlen(err));
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
 	if (strerror(errno))
 	{
-		write(STDERR_FILENO, ": ", 2);
-		write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	}
-	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }

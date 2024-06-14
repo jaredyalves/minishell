@@ -64,13 +64,11 @@ SRCS := \
 	$(SRCDIR)/utils/error.c \
 	$(SRCDIR)/utils/fork1.c \
 	$(SRCDIR)/utils/free_cmd.c \
-	$(SRCDIR)/utils/free_str.c \
 	$(SRCDIR)/utils/get_str.c \
-	$(SRCDIR)/utils/ms_exit.c \
-	$(SRCDIR)/utils/ms_init.c \
 	$(SRCDIR)/utils/pipe1.c \
-	$(SRCDIR)/utils/setup_signal_handlers.c \
 	$(SRCDIR)/utils/terminate.c \
+	$(SRCDIR)/minishell.c \
+	$(SRCDIR)/signal.c \
 	$(SRCDIR)/main.c
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 INCS := $(INCDIR)/minishell.h $(INCDIR)/ft.h

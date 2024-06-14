@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 // Not implemented
-int	is_builtin(t_ms *ms, t_execcmd *cmd)
+int	is_builtin(t_sh *ms, t_execcmd *cmd)
 {
 	(void)ms;
 	(void)cmd;
@@ -9,7 +9,7 @@ int	is_builtin(t_ms *ms, t_execcmd *cmd)
 }
 
 // Not implemented
-int	execute_builtin(t_ms *ms, t_execcmd *cmd)
+int	execute_builtin(t_sh *ms, t_execcmd *cmd)
 {
 	(void)ms;
 	(void)cmd;

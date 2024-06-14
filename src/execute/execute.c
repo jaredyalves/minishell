@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	execute(t_ms *ms, t_cmd *cmd)
+int	execute(t_sh *ms, t_cmd *cmd)
 {
 	if (ms && cmd)
 	{

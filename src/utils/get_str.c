@@ -1,18 +1,39 @@
+#include "minishell.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 
-#include "minishell.h"
-
-char	*get_str(const t_ms *ms, char *str)
+static void	free_str(void)
 {
-	const char	*prompt = "\033[1;31m[minishell]\033[0m \033[1;32m❯\033[0m ";
+	t_sh	*sh;
 
-	free_str(&str);
-	if (ms->exit_status != 0)
-		prompt = "\033[1;31m[minishell]\033[0m \033[1;31m❯\033[0m ";
-	str = readline(prompt);
-	if (str && *str)
-		add_history(str);
-	return (str);
+	sh = get_sh();
+	if (sh->str)
+	{
+		free(sh->str);
+		sh->str = NULL;
+	}
+}
+
+int	get_str(void)
+{
+	static char	prompt_ok[] = BOLD_RED "[minishell] " RESET
+		BOLD_GREEN "❯ " RESET;
+	static char	prompt_not_ok[] = BOLD_RED "[minishell] " RESET
+		BOLD_RED "❯ " RESET;
+	t_sh		*sh;
+
+	sh = get_sh();
+	free_str();
+	if (sh->exit_status != 0 && sh->exit_status != 130)
+		sh->str = readline(prompt_not_ok);
+	else
+		sh->str = readline(prompt_ok);
+	if (!sh->str)
+		return (0);
+	if (sh->str && *sh->str)
+		add_history(sh->str);
+	return (1);
 }

@@ -7,7 +7,7 @@ t_cmd	*parse_pipeline(char **ps, const char *es)
 	t_cmd	*cmd;
 	int		token;
 
-	cmd = parse_command(ps, es);
+	cmd = parse_execute(ps, es);
 	if (cmd == NULL)
 		return (NULL);
 	if (peek(ps, es, "|", ""))

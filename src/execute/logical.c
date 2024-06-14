@@ -3,7 +3,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int	execute_logical(t_ms *ms, t_logicmd *cmd)
+int	execute_logical(t_sh *ms, t_logicmd *cmd)
 {
 	if (ms && cmd)
 	{
@@ -19,7 +19,7 @@ int	execute_logical(t_ms *ms, t_logicmd *cmd)
 	return (1);
 }
 
-int	execute_pipe(t_ms *ms, t_logicmd *cmd)
+int	execute_pipe(t_sh *ms, t_logicmd *cmd)
 {
 	int	p[2];
 
@@ -46,7 +46,7 @@ int	execute_pipe(t_ms *ms, t_logicmd *cmd)
 	return (-1);
 }
 
-int	execute_sequence(t_ms *ms, t_logicmd *cmd)
+int	execute_sequence(t_sh *ms, t_logicmd *cmd)
 {
 	if (fork1() == 0)
 		return (execute(ms, cmd->left));
@@ -54,7 +54,7 @@ int	execute_sequence(t_ms *ms, t_logicmd *cmd)
 	return (execute(ms, cmd->right));
 }
 
-int	execute_andif(t_ms *ms, t_logicmd *cmd)
+int	execute_andif(t_sh *ms, t_logicmd *cmd)
 {
 	int	status;
 
@@ -66,7 +66,7 @@ int	execute_andif(t_ms *ms, t_logicmd *cmd)
 	return (0);
 }
 
-int	execute_orif(t_ms *ms, t_logicmd *cmd)
+int	execute_orif(t_sh *ms, t_logicmd *cmd)
 {
 	int	status;
 

@@ -29,7 +29,7 @@ static void	free_argv(char **argv)
 	free(argv);
 }
 
-int	execute_external(t_ms *ms, t_execcmd *cmd)
+int	execute_external(t_sh *ms, t_execcmd *cmd)
 {
 	char	*name;
 	int		status;

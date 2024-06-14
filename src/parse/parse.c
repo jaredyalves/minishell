@@ -3,19 +3,19 @@
 
 #include <unistd.h>
 
-t_cmd	*parse(char *str)
+t_cmd	*parse_command(char *s)
 {
 	char	*es;
 	t_cmd	*cmd;
 
-	es = str + ft_strlen(str);
-	cmd = parse_list(&str, es);
+	es = s + ft_strlen(s);
+	cmd = parse_list(&s, es);
 	if (cmd == NULL)
 		return (NULL);
-	peek(&str, es, "", "");
-	if (str != es)
+	peek(&s, es, "", "");
+	if (s != es)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", str);
+		ft_dprintf(STDERR_FILENO, "minishell: leftovers: %s\n", s);
 		free_cmd(&cmd);
 		return (NULL);
 	}

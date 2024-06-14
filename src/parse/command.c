@@ -38,7 +38,7 @@ static t_cmd	*insert_execute(t_cmd *cmd, t_execcmd *ecmd)
 	return (cmd);
 }
 
-t_cmd	*parse_command(char **ps, const char *es)
+t_cmd	*parse_execute(char **ps, const char *es)
 {
 	char		*eq;
 	char		*q;

@@ -6,7 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 
-int	execute_redirect(t_ms *ms, t_redicmd *cmd)
+int	execute_redirect(t_sh *ms, t_redicmd *cmd)
 {
 	close(cmd->fd);
 	if (open(cmd->file, cmd->mode, 0664) < 0)
