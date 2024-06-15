@@ -28,6 +28,23 @@ static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 	return ((t_cmd *)rcmd);
 }
 
+t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)
+{
+	t_redirection	*rcmd;
+
+	if (token == - '<')
+		return (parse_heredoc(cmd, q, eq));
+	if (token == '<')
+		cmd = redirection(REDIRECT, cmd, O_RDONLY, 0);
+	if (token == '>')
+		cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_TRUNC, 1);
+	if (token == - '>')
+		cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_APPEND, 1);
+	rcmd = (t_redirection *)cmd;
+	rcmd->buffer = expand_argument(q, eq);
+	return (cmd);
+}
+
 t_cmd	*parse_redirection(t_cmd *cmd, char **ps, char *es)
 {
 	char	*eq;
@@ -36,22 +53,11 @@ t_cmd	*parse_redirection(t_cmd *cmd, char **ps, char *es)
 
 	while (peek(ps, es, "<>", "<>"))
 	{
-		token = get_token(ps, es, NULL, NULL);
+		token = get_token(ps, es, 0, 0);
 		if (!check_syntax(ps, es, 0, 0))
 			return (free_command(&cmd));
 		get_token(ps, es, &q, &eq);
-		if (token == -'<')
-			cmd = parse_heredoc(cmd, q, eq);
-		else
-		{
-			if (token == '<')
-				cmd = redirection(REDIRECT, cmd, O_RDONLY, 0);
-			if (token == '>')
-				cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_TRUNC, 1);
-			if (token == -'>')
-				cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_APPEND, 1);
-			((t_redirection *)cmd)->buffer = expand_argument(q, eq);
-		}
+		cmd = handle_redirection(cmd, token, q, eq);
 	}
 	return (cmd);
 }
