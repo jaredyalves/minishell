@@ -1,99 +1,119 @@
 #include "libft.h"
 #include "minishell.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
-static char	*expand_variable(char **arg)
+char		*concat_strings(char *arg, char *str);
+char		*double_quotes_ext(char **pq, char *eq);
+int			is_valid_env(char *q, int pos);
+
+static char	*single_quotes(char **pq, char *eq)
 {
-	char	env_name[1024];
+	char	*q;
+	char	*str;
+	char	*start;
+	size_t	len;
+
+	q = *pq;
+	start = ++q;
+	while (q < eq && *q != '\'')
+		q++;
+	len = q - start + 1;
+	str = (char *)ft_calloc(len, sizeof(char));
+	if (!str)
+		panic("ft_calloc");
+	ft_strlcpy(str, start, len);
+	if (q < eq)
+		q++;
+	*pq = q;
+	return (str);
+}
+
+static char	*env_variables(char **pq, char *eq)
+{
+	char	*q;
+	char	*env_name;
 	char	*env_value;
-	char	*current;
+	char	*start;
+	size_t	len;
 
-	ft_bzero(env_name, sizeof(env_name));
-	if (*arg && (ft_isalnum(**arg) || **arg == '_'))
-	{
-		current = env_name;
-		while (*arg && (ft_isalnum(**arg) || **arg == '_'))
-			*current++ = *(*arg)++;
-		*current = '\0';
-		env_value = ft_getenv(env_name);
-		if (env_value)
-			return (env_value);
-		return ("");
-	}
-	return ("$");
+	q = *pq;
+	start = ++q;
+	if (!is_valid_env(q, q - start))
+		return (*pq = q, ft_strdup("$"));
+	while (q < eq && is_valid_env(q, q - start))
+		q++;
+	len = q - start + 1;
+	env_name = (char *)ft_calloc(len, sizeof(char));
+	if (!env_name)
+		panic("ft_calloc");
+	ft_strlcpy(env_name, start, len);
+	env_value = ft_getenv(env_name);
+	free(env_name);
+	*pq = q;
+	if (!env_value)
+		return (ft_strdup(""));
+	return (ft_strdup(env_value));
 }
 
-static char	*expand_variables(char *arg)
+static char	*double_quotes(char **pq, char *eq)
 {
-	char	expanded[1024];
-	char	*current;
+	char	*q;
+	char	*tmp;
+	char	*str;
 
-	ft_bzero(expanded, sizeof(expanded));
-	while (arg && *arg)
+	q = *pq;
+	str = 0;
+	q++;
+	while (q < eq && *q != '"')
 	{
-		current = expanded + ft_strlen(expanded);
-		while (*arg && *arg != '$')
-			*current++ = *arg++;
-		*current = '\0';
-		if (*arg == '$')
-		{
-			arg++;
-			ft_strlcat(expanded, expand_variable(&arg), sizeof(expanded));
-		}
-	}
-	return (ft_strdup(expanded));
-}
-
-static char	*remove_quotes(const char *arg)
-{
-	char	*no_quotes;
-	char	*dest;
-	char	quote;
-
-	no_quotes = (char *)malloc(ft_strlen(arg) + 1);
-	if (no_quotes == NULL)
-		panic("malloc");
-	dest = no_quotes;
-	quote = 0;
-	while (*arg)
-	{
-		if (*arg == '\\' && (*(arg + 1) == '"' || *(arg + 1) == '\''))
-			*dest++ = *++arg;
-		else if (!quote && (*arg == '"' || *arg == '\''))
-			quote = *arg++;
-		else if (*arg == quote)
-		{
-			quote = 0;
-			arg++;
-		}
+		if (*q == '$')
+			tmp = env_variables(&q, eq);
 		else
-			*dest++ = *arg++;
+			tmp = double_quotes_ext(&q, eq);
+		str = concat_strings(str, tmp);
 	}
-	*dest = '\0';
-	return (no_quotes);
+	if (q < eq)
+		q++;
+	*pq = q;
+	return (str);
+}
+
+static char	*expand_simple(char **pq, char *eq)
+{
+	char	*q;
+	char	*str;
+	char	*start;
+	size_t	len;
+
+	q = *pq;
+	start = q;
+	while (q < eq && *q != '\'' && *q != '"' && *q != '$')
+		q++;
+	len = q - start + 1;
+	str = (char *)ft_calloc(len, sizeof(char));
+	if (!str)
+		panic("ft_calloc");
+	ft_strlcpy(str, start, len);
+	*pq = q;
+	return (str);
 }
 
 char	*expand_argument(char *q, char *eq)
 {
-	char	*no_quotes;
-	char	*expanded;
-	char	c;
+	char	*arg;
 
-	c = *eq;
-	*eq = 0;
-	no_quotes = remove_quotes(q);
-	if (*q == '\'')
-		return (no_quotes);
-	if (ft_strchr(q, '$'))
+	arg = 0;
+	while (q < eq)
 	{
-		free(no_quotes);
-		expanded = expand_variables(q);
-		no_quotes = remove_quotes(expanded);
-		free(expanded);
-		return (no_quotes);
+		if (*q == '\'')
+			arg = concat_strings(arg, single_quotes(&q, eq));
+		else if (*q == '"')
+			arg = concat_strings(arg, double_quotes(&q, eq));
+		else if (*q == '$')
+			arg = concat_strings(arg, env_variables(&q, eq));
+		else
+			arg = concat_strings(arg, expand_simple(&q, eq));
 	}
-	*eq = c;
-	return (no_quotes);
+	return (arg);
 }

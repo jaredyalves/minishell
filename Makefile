@@ -48,6 +48,7 @@ SRCS := \
 	$(SRCDIR)/parse/command.c \
 	$(SRCDIR)/parse/execute.c \
 	$(SRCDIR)/parse/expand.c \
+	$(SRCDIR)/parse/expand_ext.c \
 	$(SRCDIR)/parse/lexer.c \
 	$(SRCDIR)/parse/list.c \
 	$(SRCDIR)/parse/pipeline.c \
