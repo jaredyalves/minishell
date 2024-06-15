@@ -15,9 +15,12 @@ char	*concat_strings(char *arg, char *str)
 	if (!dst)
 		panic("ft_calloc");
 	ft_strlcpy(dst, arg, len);
-	ft_strlcat(dst, str, len);
+	if (str)
+	{
+		ft_strlcat(dst, str, len);
+		free(str);
+	}
 	free(arg);
-	free(str);
 	return (dst);
 }
 
