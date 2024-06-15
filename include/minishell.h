@@ -12,7 +12,6 @@ typedef struct s_sh
 {
 	int		init;
 	char	*env[ENV_MAX];
-	int		keep_running;
 	char	*str;
 	t_cmd	*cmd;
 	int		exit_status;
@@ -22,6 +21,5 @@ typedef struct s_sh
 t_sh		*get_sh(void);
 void		sh_init(int argc, char *argv[], char *envp[]);
 void		sh_deinit(void);
-int			sh_keep_running(void);
 
 #endif

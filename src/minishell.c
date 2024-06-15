@@ -2,7 +2,9 @@
 
 #include "libft.h"
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <readline/readline.h>
 
 t_sh	*get_sh(void)
 {
@@ -70,7 +72,6 @@ void	sh_init(int argc, char *argv[], char *envp[])
 	{
 		ft_bzero(sh, sizeof(*sh));
 		sh->init = 1;
-		sh->keep_running = 1;
 		sh_env(sh, envp);
 		handle_signals();
 	}
@@ -92,23 +93,6 @@ void	sh_deinit(void)
 		if (sh->cmd)
 			free_command(&sh->cmd);
 		ft_bzero(sh, sizeof(*sh));
+		rl_clear_history();
 	}
-}
-
-int	sh_keep_running(void)
-{
-	t_sh	*sh;
-
-	sh = get_sh();
-	if (sh->keep_running)
-	{
-		if (!get_str())
-			sh->keep_running = 0;
-		if (sh->keep_running)
-		{
-			sh->cmd = parse_command(sh->str);
-			free_command(&sh->cmd);
-		}
-	}
-	return (sh->keep_running);
 }

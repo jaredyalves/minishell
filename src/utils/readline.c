@@ -5,7 +5,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 
-static void	free_str(void)
+void	get_str(void)
 {
 	t_sh	*sh;
 
@@ -15,23 +15,10 @@ static void	free_str(void)
 		free(sh->str);
 		sh->str = 0;
 	}
-}
-
-int	get_str(void)
-{
-	static char	prompt_ok[] = RED_BOLD "[minishell] " RESET GREEN_BOLD "❯ " RESET;
-	static char	prompt_not_ok[] = RED_BOLD "[minishell] " RESET RED_BOLD "❯ " RESET;
-	t_sh		*sh;
-
-	sh = get_sh();
-	free_str();
 	if (sh->exit_status != 0)
-		sh->str = readline(prompt_not_ok);
+		sh->str = readline(RED_BOLD "[minishell] " RESET RED_BOLD "❯ " RESET);
 	else
-		sh->str = readline(prompt_ok);
-	if (!sh->str)
-		return (0);
+		sh->str = readline(RED_BOLD "[minishell] " RESET GREEN_BOLD "❯ " RESET);
 	if (sh->str && *sh->str)
 		add_history(sh->str);
-	return (1);
 }
