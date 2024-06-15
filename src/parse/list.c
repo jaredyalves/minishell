@@ -36,9 +36,9 @@ t_cmd	*parse_list2(char **ps, char *es)
 		token = get_token(ps, es, 0, 0);
 		if (!check_syntax(ps, es, 1, 0))
 			return (free_command(&cmd));
-		if (token == -'&')
+		if (token == - '&')
 			cmd = list(AND_IF, cmd, parse_list2(ps, es));
-		if (token == -'|')
+		if (token == - '|')
 			cmd = list(OR_IF, cmd, parse_list2(ps, es));
 		if (!((t_list *)cmd)->right)
 			return (free_command(&cmd));

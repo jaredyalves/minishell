@@ -1,6 +1,8 @@
 #ifndef PARSE_H
 # define PARSE_H
 
+# include "minishell/limits.h"
+
 # define BLANKS " \t"
 # define TOKENS "<|>()&;"
 

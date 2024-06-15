@@ -44,6 +44,13 @@ SRCS := \
 	$(SRCDIR)/ft/ft_substr.c \
 	$(SRCDIR)/ft/ft_tolower.c \
 	$(SRCDIR)/ft/ft_toupper.c \
+	$(SRCDIR)/execute/builtin.c \
+	$(SRCDIR)/execute/command.c \
+	$(SRCDIR)/execute/execute.c \
+	$(SRCDIR)/execute/external.c \
+	$(SRCDIR)/execute/list.c \
+	$(SRCDIR)/execute/pipeline.c \
+	$(SRCDIR)/execute/redirection.c \
 	$(SRCDIR)/parse/block.c \
 	$(SRCDIR)/parse/command.c \
 	$(SRCDIR)/parse/execute.c \

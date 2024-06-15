@@ -16,7 +16,7 @@ void	panic(char *error)
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	}
 	ft_putstr_fd("\n", STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	sh_deinit(EXIT_FAILURE);
 }
 
 int	check_syntax(char **ps, char *es, int block, int newline)

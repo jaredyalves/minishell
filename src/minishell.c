@@ -21,16 +21,15 @@ static void	sh_shlvl(t_sh *sh)
 	int		shlvl;
 	int		i;
 
+	shlvl = 0;
 	env_value = ft_getenv("SHLVL");
 	if (env_value)
 		shlvl = ft_atoi(env_value);
-	else
-		shlvl = 0;
-	shlvl++;
+	free(env_value);
 	i = 0;
 	while (sh->env[i] && ft_strncmp(sh->env[i], "SHLVL=", 6) != 0)
 		i++;
-	env_value = ft_itoa(shlvl);
+	env_value = ft_itoa(++shlvl);
 	env_len = ft_strlen(env_value) + 7;
 	env = (char *)ft_calloc(env_len, sizeof(char));
 	if (!env)
@@ -68,7 +67,7 @@ void	sh_init(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	sh = get_sh();
-	if (!sh->init)
+	if (sh && !sh->init)
 	{
 		ft_bzero(sh, sizeof(*sh));
 		sh->init = 1;
@@ -77,13 +76,13 @@ void	sh_init(int argc, char *argv[], char *envp[])
 	}
 }
 
-void	sh_deinit(void)
+void	sh_deinit(int status)
 {
 	t_sh	*sh;
 	int		i;
 
 	sh = get_sh();
-	if (sh->init)
+	if (sh && sh->init)
 	{
 		if (sh->str)
 			free(sh->str);
@@ -95,4 +94,5 @@ void	sh_deinit(void)
 		ft_bzero(sh, sizeof(*sh));
 		rl_clear_history();
 	}
+	exit(status);
 }

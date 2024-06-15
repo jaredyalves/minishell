@@ -53,7 +53,7 @@ static char	*env_variables(char **pq, char *eq)
 	*pq = q;
 	if (!env_value)
 		return (ft_strdup(""));
-	return (ft_strdup(env_value));
+	return (env_value);
 }
 
 static char	*double_quotes(char **pq, char *eq)

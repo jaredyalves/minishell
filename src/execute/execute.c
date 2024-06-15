@@ -1,23 +1,14 @@
 #include "minishell.h"
 
-int	execute_command(t_sh *ms, t_cmd *cmd)
+#include <stdlib.h>
+
+void	execute_execute(t_execute *ecmd)
 {
-	if (ms && cmd)
+	if (ecmd)
 	{
-		if (cmd->type == EXECUTE)
-		{
-			if (is_builtin(ms, (t_execute *)cmd))
-				return (execute_builtin(ms, (t_execute *)cmd));
-			return (execute_external(ms, (t_execute *)cmd));
-		}
-		if (cmd->type == TYPE_REDIRECT)
-			return (execute_redirect(ms, (t_redicmd *)cmd));
-		if (cmd->type == TYPE_HEREDOC)
-			return (execute_heredoc(ms, (t_herecmd *)cmd));
-		if (cmd->type == TYPE_BACKGROUND)
-			return (execute_background(ms, (t_backcmd *)cmd));
-		if (cmd->type == TYPE_LOGICAL)
-			return (execute_logical(ms, (t_logicmd *)cmd));
+		// if (is_builtin(ecmd))
+		// 	execute_builtin(ecmd);
+		execute_external(ecmd);
 	}
-	return (1);
+	sh_deinit(EXIT_SUCCESS);
 }

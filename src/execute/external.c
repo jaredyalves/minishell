@@ -1,39 +1,92 @@
 #include "libft.h"
 #include "minishell.h"
-
-#include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
-static void	error_message(char *name, const int status)
+char	*search_in_path(char *name, char *path_env)
 {
-	if (status == 127)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: command not found\n", name);
-	else if (status == 126)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", name, strerror(errno));
+	char	*path;
+	char	*start;
+	size_t	len;
+
+	path = (char *)ft_calloc(PATH_MAX, sizeof(char));
+	if (!path)
+		panic("ft_calloc");
+	while (*path_env)
+	{
+		start = path_env;
+		while (*path_env && *path_env != ':')
+			path_env++;
+		len = path_env - start;
+		ft_strlcpy(path, start, len + 1);
+		path[len] = '/';
+		ft_strlcpy(path + len + 1, name, PATH_MAX);
+		if (access(path, F_OK) == 0)
+			return (path);
+		if (*path_env)
+			path_env++;
+	}
+	free(path);
+	return (0);
 }
 
-int	execute_external(t_sh *ms, t_execute *cmd)
+static void	path(char *name, char *argv[], char *envp[])
 {
-	char	*name;
-	int		status;
+	char	*path;
+	char	*path_env;
 
-	name = cmd->argv[0];
-	if (name == NULL || *name == '\0')
-		return (ms->exit_status);
+	path_env = ft_getenv("PATH");
+	if (path_env)
+	{
+		path = search_in_path(name, path_env);
+		free(path_env);
+		if (path)
+		{
+			if (access(path, X_OK) == 0)
+				execve(path, argv, envp);
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			perror(path);
+			free(path);
+			sh_deinit(126);
+		}
+	}
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(name, STDERR_FILENO);
+	ft_putstr_fd(": command not found...\n", STDERR_FILENO);
+	sh_deinit(127);
+}
+
+static void	exec(char *name, char *argv[])
+{
+	t_sh	*sh;
+
+	sh = get_sh();
 	if (ft_strchr(name, '/'))
 	{
-		status = 127;
 		if (access(name, F_OK) == 0)
 		{
 			if (access(name, X_OK) == 0)
-				execve(name, cmd->argv, ms->env);
-			status = 126;
+				execve(name, argv, sh->env);
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			perror(name);
+			sh_deinit(126);
 		}
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		perror(name);
+		sh_deinit(127);
 	}
-	else
-		status = execute_path(name, cmd->argv, ms->env);
-	error_message(name, status);
-	return (status);
+	path(name, argv, sh->env);
+}
+
+void	execute_external(t_execute *ecmd)
+{
+	t_sh	*sh;
+	char	*name;
+
+	sh = get_sh();
+	name = ecmd->argv[0];
+	if (name && *name)
+		exec(name, ecmd->argv);
+	sh_deinit(sh->exit_status);
 }

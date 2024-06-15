@@ -14,12 +14,13 @@ typedef struct s_sh
 	char	*env[ENV_MAX];
 	char	*str;
 	t_cmd	*cmd;
-	int		exit_status;
 	int		wait_status;
+	int		term_signal;
+	int		exit_status;
 }			t_sh;
 
 t_sh		*get_sh(void);
 void		sh_init(int argc, char *argv[], char *envp[]);
-void		sh_deinit(void);
+void		sh_deinit(int status) __attribute__((noreturn));
 
 #endif
