@@ -1,10 +1,9 @@
-#ifndef FT_H
-# define FT_H
+#ifndef LIBFT_H
+# define LIBFT_H
 
 # include <stddef.h>
 
 char	**ft_split(char const *s, char c);
-char	*ft_getenv(char *name);
 char	*ft_itoa(int n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);

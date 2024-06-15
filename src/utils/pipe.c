@@ -1,6 +1,6 @@
-#include <unistd.h>
-
 #include "minishell.h"
+
+#include <unistd.h>
 
 int	pipe1(int *pipes)
 {

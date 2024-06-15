@@ -1,5 +1,7 @@
-#include "ft.h"
+#include "libft.h"
 #include "minishell.h"
+
+#include <unistd.h>
 
 static void	check_leftovers(char **ps, char *es)
 {
@@ -9,9 +11,9 @@ static void	check_leftovers(char **ps, char *es)
 	peek(&s, es, "", "");
 	if (s != es)
 	{
-		ft_putstr_fd("minishell: leftovers: ", STDERR);
-		ft_putstr_fd(s, STDERR);
-		ft_putstr_fd("\n", STDERR);
+		ft_putstr_fd("minishell: leftovers: ", STDERR_FILENO);
+		ft_putstr_fd(s, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 	}
 	*ps = s;
 }

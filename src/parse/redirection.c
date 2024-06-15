@@ -1,4 +1,4 @@
-#include "ft.h"
+#include "libft.h"
 #include "minishell.h"
 
 #include <fcntl.h>
@@ -14,14 +14,14 @@ static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 
 	rcmd = (t_redirection *)redirection(HEREDOC, subcmd, 0, 0);
 	word = expand_argument(q, eq);
-	line = readline(N_WHITE "∙ " RESET);
+	line = readline(WHITE "∙ " RESET);
 	rcmd->buffer = ft_strdup("");
 	while (!ft_strncmp(word, line, ft_strlen(word) + 1) == 0)
 	{
 		rcmd->buffer = ft_strjoin(rcmd->buffer, line);
 		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
 		free(line);
-		line = readline(N_WHITE "∙ " RESET);
+		line = readline(WHITE "∙ " RESET);
 	}
 	free(line);
 	free(word);
@@ -37,7 +37,7 @@ t_cmd	*parse_redirection(t_cmd *cmd, char **ps, char *es)
 	while (peek(ps, es, "<>", "<>"))
 	{
 		token = get_token(ps, es, NULL, NULL);
-		if (!syntax(ps, es, 0, 0))
+		if (!check_syntax(ps, es, 0, 0))
 			return (free_command(&cmd));
 		get_token(ps, es, &q, &eq);
 		if (token == -'<')

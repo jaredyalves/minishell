@@ -11,7 +11,7 @@ t_cmd	*parse_list1(char **ps, char *es)
 	if (peek(ps, es, "&;", ""))
 	{
 		token = get_token(ps, es, 0, 0);
-		if (!syntax(ps, es, 1, 1))
+		if (!check_syntax(ps, es, 1, 1))
 			return (free_command(&cmd));
 		if (token == '&')
 			cmd = list(BACKGROUND, cmd, parse_list1(ps, es));
@@ -34,7 +34,7 @@ t_cmd	*parse_list2(char **ps, char *es)
 	if (peek(ps, es, "", "|&"))
 	{
 		token = get_token(ps, es, 0, 0);
-		if (!syntax(ps, es, 1, 0))
+		if (!check_syntax(ps, es, 1, 0))
 			return (free_command(&cmd));
 		if (token == -'&')
 			cmd = list(AND_IF, cmd, parse_list2(ps, es));

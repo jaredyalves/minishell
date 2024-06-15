@@ -1,5 +1,4 @@
-#include "ft.h"
-#include <stddef.h>
+#include "libft.h"
 
 static int	ft_abs(int n)
 {

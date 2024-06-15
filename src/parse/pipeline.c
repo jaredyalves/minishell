@@ -11,7 +11,7 @@ t_cmd	*parse_pipeline(char **ps, char *es)
 	if (peek(ps, es, "|", ""))
 	{
 		token = get_token(ps, es, 0, 0);
-		if (!syntax(ps, es, 1, 0))
+		if (!check_syntax(ps, es, 1, 0))
 			return (free_command(&cmd));
 		if (token == '|')
 			cmd = pipeline(PIPE, cmd, parse_pipeline(ps, es));

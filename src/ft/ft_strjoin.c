@@ -1,4 +1,5 @@
-#include "ft.h"
+#include "libft.h"
+
 #include <stdlib.h>
 
 char	*ft_strjoin(char *s1, char const *s2)

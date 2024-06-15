@@ -56,13 +56,21 @@ SRCS := \
 	$(SRCDIR)/utils/command.c \
 	$(SRCDIR)/utils/error.c \
 	$(SRCDIR)/utils/fork.c \
-	$(SRCDIR)/utils/minishell.c \
 	$(SRCDIR)/utils/pipe.c \
 	$(SRCDIR)/utils/readline.c \
 	$(SRCDIR)/utils/signal.c \
+	$(SRCDIR)/minishell.c \
 	$(SRCDIR)/main.c
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
-INCS := $(INCDIR)/minishell.h $(INCDIR)/ft.h
+INCS := \
+	$(INCDIR)/libft.h \
+	$(INCDIR)/minishell/colors.h \
+	$(INCDIR)/minishell/execute.h \
+	$(INCDIR)/minishell/ft.h \
+	$(INCDIR)/minishell/limits.h \
+	$(INCDIR)/minishell/parse.h \
+	$(INCDIR)/minishell/utils.h \
+	$(INCDIR)/minishell.h
 
 # Compiler and flags
 CC := cc

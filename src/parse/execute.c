@@ -1,5 +1,7 @@
-#include "ft.h"
+#include "libft.h"
 #include "minishell.h"
+
+#include <unistd.h>
 
 static t_cmd	*invert_redirections(t_cmd *cmd, t_execute *ecmd)
 {
@@ -36,15 +38,15 @@ static char	*parse_argument(char **ps, char *es)
 		return (0);
 	if (token != 'a')
 	{
-		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd("syntax error near unexpected token `", STDERR);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("syntax error near unexpected token `", STDERR_FILENO);
 		if (token < 0)
 		{
 			token = -token;
-			ft_putchar_fd(token, STDERR);
+			ft_putchar_fd(token, STDERR_FILENO);
 		}
-		ft_putchar_fd(token, STDERR);
-		ft_putstr_fd("'\n", STDERR);
+		ft_putchar_fd(token, STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 		return (0);
 	}
 	return (expand_argument(q, eq));
@@ -66,7 +68,7 @@ t_cmd	*parse_execute(char **ps, char *es)
 	{
 		if (argc >= ARG_MAX)
 		{
-			ft_putstr_fd("minishell: too many arguments\n", STDERR);
+			ft_putstr_fd("minishell: too many arguments\n", STDERR_FILENO);
 			return (free_command(&cmd));
 		}
 		ecmd->argv[argc] = parse_argument(ps, es);

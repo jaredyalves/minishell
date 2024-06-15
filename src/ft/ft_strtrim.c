@@ -1,4 +1,5 @@
-#include "ft.h"
+#include "libft.h"
+
 #include <stdlib.h>
 
 int	ft_isset(char c, char const *set)

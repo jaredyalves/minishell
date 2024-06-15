@@ -1,4 +1,4 @@
-#include "ft.h"
+#include "libft.h"
 #include "minishell.h"
 
 #include <signal.h>
@@ -8,7 +8,7 @@
 
 static void	sigint_handler(int sig)
 {
-	t_sh *sh;
+	t_sh	*sh;
 
 	(void)sig;
 	sh = get_sh();

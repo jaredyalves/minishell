@@ -19,10 +19,8 @@ static void	free_str(void)
 
 int	get_str(void)
 {
-	static char	prompt_ok[] = B_RED "[minishell] " RESET
-		B_GREEN "❯ " RESET;
-	static char	prompt_not_ok[] = B_RED "[minishell] " RESET
-		B_RED "❯ " RESET;
+	static char	prompt_ok[] = RED_BOLD "[minishell] " RESET GREEN_BOLD "❯ " RESET;
+	static char	prompt_not_ok[] = RED_BOLD "[minishell] " RESET RED_BOLD "❯ " RESET;
 	t_sh		*sh;
 
 	sh = get_sh();

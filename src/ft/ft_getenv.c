@@ -6,8 +6,8 @@ char	*ft_getenv(char *name)
 	char	*env;
 	char	*ptr;
 
-	if (name == NULL || *name == '\0')
-		return (NULL);
+	if (!name || !*name)
+		return (0);
 	envp = get_sh()->env;
 	while (*envp)
 	{
@@ -22,5 +22,5 @@ char	*ft_getenv(char *name)
 			return (env + 1);
 		envp++;
 	}
-	return (NULL);
+	return (0);
 }

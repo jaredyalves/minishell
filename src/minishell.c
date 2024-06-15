@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-#include "ft.h"
+#include "libft.h"
 
 #include <stdlib.h>
 

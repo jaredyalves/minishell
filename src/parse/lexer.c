@@ -1,4 +1,4 @@
-#include "ft.h"
+#include "libft.h"
 #include "minishell.h"
 
 t_cmd	*execute(void)
