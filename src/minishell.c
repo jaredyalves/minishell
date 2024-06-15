@@ -89,6 +89,8 @@ void	sh_deinit(void)
 		i = 0;
 		while (sh->env[i])
 			free(sh->env[i++]);
+		if (sh->cmd)
+			free_command(&sh->cmd);
 		ft_bzero(sh, sizeof(*sh));
 	}
 }
