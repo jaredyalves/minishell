@@ -1,6 +1,8 @@
 #include "minishell.h"
 
+#include <fcntl.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/wait.h>
 
 static void	execute_sequence(t_list *lcmd)
@@ -14,7 +16,11 @@ static void	execute_sequence(t_list *lcmd)
 static void	execute_background(t_list *lcmd)
 {
 	if (fork1() == 0)
+	{
+		close(0);
+		open("/dev/null", O_RDONLY);
 		execute_command(lcmd->left);
+	}
 	execute_command(lcmd->right);
 }
 
