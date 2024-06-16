@@ -1,7 +1,6 @@
 #include "minishell.h"
 
 #include <fcntl.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -59,5 +58,5 @@ void	execute_list(t_list *lcmd)
 		if (lcmd->subtype == OR_IF)
 			execute_or_if(lcmd);
 	}
-	sh_deinit(EXIT_SUCCESS);
+	sh_deinit(2);
 }

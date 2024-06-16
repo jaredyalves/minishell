@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -40,5 +39,5 @@ void	execute_pipeline(t_pipeline *pcmd)
 		if (pcmd->subtype == PIPE)
 			execute_pipe(pcmd);
 	}
-	sh_deinit(EXIT_SUCCESS);
+	sh_deinit(2);
 }

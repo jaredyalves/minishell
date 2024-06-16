@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-#include <stdlib.h>
-
 void	execute_command(t_cmd *cmd)
 {
 	if (cmd)
@@ -15,5 +13,5 @@ void	execute_command(t_cmd *cmd)
 		if (cmd->type == PIPELINE)
 			execute_pipeline((t_pipeline *)cmd);
 	}
-	sh_deinit(EXIT_SUCCESS);
+	sh_deinit(2);
 }

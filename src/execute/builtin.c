@@ -51,5 +51,5 @@ void	execute_builtin(t_execute *ecmd)
 		if (ft_strncmp(name, "exit", ft_strlen(name) + 1) == 0)
 			ft_putstr_fd("exit: not implemented\n", STDERR_FILENO);
 	}
-	sh_deinit(EXIT_SUCCESS);
+	sh_deinit(2);
 }

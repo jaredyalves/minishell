@@ -2,7 +2,6 @@
 #include "minishell.h"
 
 #include <fcntl.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -45,5 +44,5 @@ void	execute_redirection(t_redirection *rcmd)
 		if (rcmd->subtype == HEREDOC)
 			execute_heredoc(rcmd);
 	}
-	sh_deinit(EXIT_SUCCESS);
+	sh_deinit(2);
 }

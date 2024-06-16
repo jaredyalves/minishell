@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-#include <stdlib.h>
-
 void	execute_execute(t_execute *ecmd)
 {
 	if (ecmd)
@@ -10,5 +8,5 @@ void	execute_execute(t_execute *ecmd)
 		// 	execute_builtin(ecmd);
 		execute_external(ecmd);
 	}
-	sh_deinit(EXIT_SUCCESS);
+	sh_deinit(2);
 }
