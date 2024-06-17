@@ -15,10 +15,7 @@ void	get_str(void)
 		free(sh->str);
 		sh->str = 0;
 	}
-	if (sh->exit_status != 0)
-		sh->str = readline(RED_BOLD "[minishell] " RESET RED_BOLD "❯ " RESET);
-	else
-		sh->str = readline(RED_BOLD "[minishell] " RESET GREEN_BOLD "❯ " RESET);
+	sh->str = readline("$ ");
 	if (sh->str && *sh->str)
 		add_history(sh->str);
 }

@@ -14,14 +14,14 @@ static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 
 	rcmd = (t_redirection *)redirection(HEREDOC, subcmd, 0, 0);
 	word = expand_argument(q, eq);
-	line = readline(WHITE "∙ " RESET);
+	line = readline("> ");
 	rcmd->buffer = ft_strdup("");
 	while (!ft_strncmp(word, line, ft_strlen(word) + 1) == 0)
 	{
 		rcmd->buffer = ft_strjoin(rcmd->buffer, line);
 		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
 		free(line);
-		line = readline(WHITE "∙ " RESET);
+		line = readline("> ");
 	}
 	free(line);
 	free(word);

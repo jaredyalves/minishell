@@ -1,7 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "minishell/colors.h"
 # include "minishell/execute.h"
 # include "minishell/ft.h"
 # include "minishell/limits.h"

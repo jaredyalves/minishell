@@ -72,7 +72,6 @@ SRCS := \
 OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 INCS := \
 	$(INCDIR)/libft.h \
-	$(INCDIR)/minishell/colors.h \
 	$(INCDIR)/minishell/execute.h \
 	$(INCDIR)/minishell/ft.h \
 	$(INCDIR)/minishell/limits.h \
