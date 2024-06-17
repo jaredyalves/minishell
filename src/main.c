@@ -39,9 +39,11 @@ static int	keep_running(void)
 		return (0);
 	if (*sh->str)
 	{
-		sh->cmd = parse_command(sh->str);
 		if (fork1() == 0)
+		{
+			sh->cmd = parse_command(sh->str);
 			execute_command(sh->cmd);
+		}
 		wait_for_child();
 		free_command(&sh->cmd);
 	}
