@@ -15,7 +15,7 @@ static void	parse_quote(char **ps, char *es)
 	*ps = s;
 }
 
-static int	parse_token(char **ps, char *es)
+int	parse_token(char **ps, char *es)
 {
 	char	*s;
 	int		token;
@@ -74,5 +74,23 @@ int	peek(char **ps, char *es, char *s_tokens, char *d_tokens)
 		return (ft_strchr(s_tokens, *s) != 0);
 	if (*s && *s == *(s + 1))
 		return (ft_strchr(d_tokens, *s) != 0);
+	return (0);
+}
+
+int	peek_next(char **ps, char *es, char *s_tokens, char *d_tokens)
+{
+	char	*s;
+
+	s = *ps;
+	while (s < es && ft_strchr(BLANKS, *s))
+		s++;
+	*ps = s;
+	get_token(&s, es, 0, 0);
+	if (*s && *s != *(s + 1))
+		return (ft_strchr(s_tokens, *s) != 0);
+	if (*s && *s == *(s + 1))
+		return (ft_strchr(d_tokens, *s) != 0);
+	if (!*s)
+		return (1);
 	return (0);
 }

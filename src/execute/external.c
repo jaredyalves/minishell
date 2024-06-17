@@ -81,12 +81,10 @@ static void	exec(char *name, char *argv[])
 
 void	execute_external(t_execute *ecmd)
 {
-	t_sh	*sh;
 	char	*name;
 
-	sh = get_sh();
 	name = ecmd->argv[0];
 	if (name && *name)
 		exec(name, ecmd->argv);
-	sh_deinit(sh->exit_status);
+	sh_deinit(EXIT_SUCCESS);
 }

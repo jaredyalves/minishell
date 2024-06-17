@@ -50,13 +50,16 @@ t_cmd	*parse_redirection(t_cmd *cmd, char **ps, char *es)
 	char	*eq;
 	char	*q;
 	int		token;
+	int		next_token;
 
 	while (peek(ps, es, "<>", "<>"))
 	{
-		token = get_token(ps, es, 0, 0);
-		if (!check_syntax(ps, es, 0, 0))
+		if (peek_next(ps, es, TOKENS, TOKENS))
 			return (free_command(&cmd));
-		get_token(ps, es, &q, &eq);
+		token = get_token(ps, es, 0, 0);
+		next_token = get_token(ps, es, &q, &eq);
+		if (next_token != 'a')
+			return (free_command(&cmd));
 		cmd = handle_redirection(cmd, token, q, eq);
 	}
 	return (cmd);

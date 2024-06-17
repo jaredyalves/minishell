@@ -33,6 +33,7 @@ typedef struct s_cmd
 typedef struct s_execute
 {
 	int			type;
+	int			argc;
 	char		*argv[ARG_MAX];
 }				t_execute;
 
@@ -77,5 +78,6 @@ t_cmd			*parse_redirection(t_cmd *cmd, char **ps, char *es);
 char			*expand_argument(char *q, char *eq);
 int				get_token(char **ps, char *es, char **q, char **eq);
 int				peek(char **ps, char *es, char *s_tokens, char *d_tokens);
+int				peek_next(char **ps, char *es, char *s_tokens, char *d_tokens);
 
 #endif

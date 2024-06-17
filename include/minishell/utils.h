@@ -3,7 +3,6 @@
 
 void	panic(char *error) __attribute__((noreturn));
 
-int		check_syntax(char **ps, char *es, int block, int newline);
 int		fork1(void);
 void	get_str(void);
 int		pipe1(int *pipes);

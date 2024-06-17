@@ -4,9 +4,9 @@ t_cmd	*parse_block(char **ps, char *es)
 {
 	t_cmd	*cmd;
 
-	get_token(ps, es, 0, 0);
-	if (!check_syntax(ps, es, 0, 0))
+	if (peek_next(ps, es, "|)&;", "|)&;"))
 		return (0);
+	get_token(ps, es, 0, 0);
 	cmd = parse_list1(ps, es);
 	if (!cmd)
 		return (0);
