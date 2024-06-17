@@ -76,6 +76,7 @@ t_cmd			*parse_execute(char **ps, char *es);
 t_cmd			*parse_block(char **ps, char *es);
 t_cmd			*parse_redirection(t_cmd *cmd, char **ps, char *es);
 char			*expand_argument(char *q, char *eq);
+char			*concat_strings(char *arg, char *str);
 int				get_token(char **ps, char *es, char **q, char **eq);
 int				peek(char **ps, char *es, char *s_tokens, char *d_tokens);
 int				peek_next(char **ps, char *es, char *s_tokens, char *d_tokens);

@@ -4,7 +4,17 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <readline/readline.h>
+
+static void	heredoc_eof(char *word)
+{
+	ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
+	ft_putstr_fd("here-document delimited by end-of-file ", STDERR_FILENO);
+	ft_putstr_fd("(wanted `", STDERR_FILENO);
+	ft_putstr_fd(word, STDERR_FILENO);
+	ft_putstr_fd("')\n", STDERR_FILENO);
+}
 
 static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 {
@@ -14,18 +24,21 @@ static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 
 	rcmd = (t_redirection *)redirection(HEREDOC, subcmd, 0, 0);
 	word = expand_argument(q, eq);
-	line = readline("> ");
-	rcmd->buffer = ft_strdup("");
-	while (!ft_strncmp(word, line, ft_strlen(word) + 1) == 0)
+	while (1)
 	{
-		rcmd->buffer = ft_strjoin(rcmd->buffer, line);
-		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
-		free(line);
 		line = readline("> ");
+		if (!line)
+		{
+			heredoc_eof(word);
+			break ;
+		}
+		if (ft_strncmp(word, line, ft_strlen(word) + 1) == 0)
+			break ;
+		rcmd->buffer = concat_strings(rcmd->buffer, line);
+		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
 	}
 	free(line);
-	free(word);
-	return ((t_cmd *)rcmd);
+	return (free(word), (t_cmd *)rcmd);
 }
 
 t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)

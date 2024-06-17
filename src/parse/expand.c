@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 
-char		*concat_strings(char *arg, char *str);
 char		*double_quotes_ext(char **pq, char *eq);
 int			is_valid_env(char *q, int pos);
 
