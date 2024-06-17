@@ -102,6 +102,8 @@ char	*expand_argument(char *q, char *eq)
 {
 	char	*arg;
 
+	if (!q)
+		return (0);
 	arg = ft_strdup("");
 	while (q < eq)
 	{

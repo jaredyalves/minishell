@@ -21,23 +21,26 @@ static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
 	t_redirection	*rcmd;
 	char			*word;
 	char			*line;
+	char			*line_expanded;
 
 	rcmd = (t_redirection *)redirection(HEREDOC, subcmd, 0, 0);
 	word = expand_argument(q, eq);
 	while (1)
 	{
 		line = readline("> ");
-		if (!line)
+		line_expanded = expand_argument(line, line + ft_strlen(line));
+		free(line);
+		if (!line_expanded)
 		{
 			heredoc_eof(word);
 			break ;
 		}
-		if (ft_strncmp(word, line, ft_strlen(word) + 1) == 0)
+		if (ft_strncmp(word, line_expanded, ft_strlen(word) + 1) == 0)
 			break ;
-		rcmd->buffer = concat_strings(rcmd->buffer, line);
+		rcmd->buffer = concat_strings(rcmd->buffer, line_expanded);
 		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
 	}
-	free(line);
+	free(line_expanded);
 	return (free(word), (t_cmd *)rcmd);
 }
 
