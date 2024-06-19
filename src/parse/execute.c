@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-#include <stdlib.h>
-
 static t_cmd	*invert_redirections(t_cmd *cmd, t_execute *ecmd)
 {
 	t_redirection	*prev;

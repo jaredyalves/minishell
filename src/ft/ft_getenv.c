@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "minishell.h"
 
 static int	is_special(char *name)

@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "minishell.h"
 
 static void	parse_quote(char **ps, char *es)

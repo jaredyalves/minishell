@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "minishell.h"
 
 t_cmd	*execute(void)
@@ -12,7 +11,7 @@ t_cmd	*execute(void)
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*redirection(t_subtype subtype, t_cmd *subcmd, int mode, int fd)
+t_cmd	*redirection(t_subtype subtype, t_cmd *subcmd, int m, int fd)
 {
 	t_redirection	*cmd;
 
@@ -22,7 +21,7 @@ t_cmd	*redirection(t_subtype subtype, t_cmd *subcmd, int mode, int fd)
 	cmd->type = REDIRECTION;
 	cmd->subtype = subtype;
 	cmd->cmd = subcmd;
-	cmd->mode = mode;
+	cmd->mode = m;
 	cmd->fd = fd;
 	return ((t_cmd *)cmd);
 }

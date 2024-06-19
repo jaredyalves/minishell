@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-#include "libft.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -49,7 +47,7 @@ static void	sh_env(t_sh *sh, char *envp[])
 	env_count = 0;
 	while (envp[env_count])
 		env_count++;
-	if (env_count >= ENV_MAX)
+	if (env_count >= ARG_MAX)
 		panic("too many environment variables");
 	i = 0;
 	while (i < env_count)
