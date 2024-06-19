@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "minishell.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,7 +11,7 @@ char	*search_in_path(char *name, char *path_env)
 	char	*start;
 	size_t	len;
 
-	path = (char *)ft_calloc(PATH_MAX, sizeof(char));
+	path = (char *)ft_calloc(PATH_MAX + 1, sizeof(char));
 	if (!path)
 		panic("ft_calloc");
 	while (*path_env)
@@ -19,6 +20,8 @@ char	*search_in_path(char *name, char *path_env)
 		while (*path_env && *path_env != ':')
 			path_env++;
 		len = path_env - start;
+		if (len + 2 + ft_strlen(name) >= PATH_MAX)
+			break ;
 		ft_strlcpy(path, start, len + 1);
 		path[len] = '/';
 		ft_strlcpy(path + len + 1, name, PATH_MAX);
@@ -27,8 +30,7 @@ char	*search_in_path(char *name, char *path_env)
 		if (*path_env)
 			path_env++;
 	}
-	free(path);
-	return (0);
+	return (free(path), (char *)0);
 }
 
 static void	path(char *name, char *argv[], char *envp[])
