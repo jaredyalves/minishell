@@ -10,7 +10,7 @@ void	panic(char *error)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(error, STDERR_FILENO);
-	if (strerror(errno))
+	if (errno)
 	{
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
