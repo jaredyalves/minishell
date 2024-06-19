@@ -34,7 +34,7 @@ typedef struct s_execute
 {
 	int			type;
 	int			argc;
-	char		*argv[ARG_MAX];
+	char		*argv[ARG_MAX + 1];
 }				t_execute;
 
 typedef struct s_redirection
