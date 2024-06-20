@@ -20,6 +20,7 @@ static void	check_syntax(char **ps, char *es)
 	}
 	ft_putchar_fd(token, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
+	get_sh()->exit_status = 2;
 }
 
 static int	check_leftovers(char **ps, char *es)

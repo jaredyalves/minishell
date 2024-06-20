@@ -1,37 +1,60 @@
 #include "minishell.h"
 
 #include <fcntl.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+
+static pid_t execute_heredoc_left(int *p, t_redirection *rcmd)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == -1)
+		panic("fork");
+	if (pid == 0)
+	{
+		get_sh()->subshell = 1;
+		close(p[1]);
+		dup2(p[0], 0);
+		close(p[0]);
+		execute_command(rcmd->cmd);
+		wait(0);
+	}
+	return (pid);
+}
 
 static void	execute_heredoc(t_redirection *rcmd)
 {
 	int		p[2];
-	t_sh	*sh;
+	int status;
+	pid_t	pid;
 
-	pipe1(p);
-	sh = get_sh();
 	if (fork1() == 0)
 	{
-		dup2(p[0], 0);
+		pipe1(p);
+		pid = execute_heredoc_left(p, rcmd);
+		ft_putstr_fd(rcmd->buffer, p[1]);
 		close(p[0]);
 		close(p[1]);
-		execute_command(rcmd->cmd);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			sh_deinit(WEXITSTATUS(status));
+		sh_deinit(EXIT_FAILURE);
 	}
-	close(p[0]);
-	ft_putstr_fd(rcmd->buffer, p[1]);
-	close(p[1]);
-	waitpid(0, &sh->wait_status, 0);
-	if (WIFEXITED(sh->wait_status))
-		sh_deinit(WEXITSTATUS(sh->wait_status));
+	wait(0);
 }
 
 static void	execute_redirect(t_redirection *rcmd)
 {
-	close(rcmd->fd);
-	if (open(rcmd->buffer, rcmd->mode, 0664) < 0)
-		panic(rcmd->buffer);
-	execute_command(rcmd->cmd);
+	if (fork1() == 0)
+	{
+		close(rcmd->fd);
+		if (open(rcmd->buffer, rcmd->mode, 0664) < 0)
+			panic(rcmd->buffer);
+		execute_command(rcmd->cmd);
+	}
+	wait(0);
 }
 
 void	execute_redirection(t_redirection *rcmd)
@@ -43,5 +66,4 @@ void	execute_redirection(t_redirection *rcmd)
 		if (rcmd->subtype == HEREDOC)
 			execute_heredoc(rcmd);
 	}
-	sh_deinit(2);
 }

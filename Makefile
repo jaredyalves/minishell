@@ -8,6 +8,13 @@ INCDIR := include
 
 # Files
 SRCS := \
+	$(SRCDIR)/builtins/ft_cd.c \
+	$(SRCDIR)/builtins/ft_echo.c \
+	$(SRCDIR)/builtins/ft_env.c \
+	$(SRCDIR)/builtins/ft_exit.c \
+	$(SRCDIR)/builtins/ft_export.c \
+	$(SRCDIR)/builtins/ft_pwd.c \
+	$(SRCDIR)/builtins/ft_unset.c \
 	$(SRCDIR)/execute/builtin.c \
 	$(SRCDIR)/execute/command.c \
 	$(SRCDIR)/execute/execute.c \

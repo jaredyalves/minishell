@@ -13,5 +13,4 @@ void	execute_command(t_cmd *cmd)
 		if (cmd->type == PIPELINE)
 			execute_pipeline((t_pipeline *)cmd);
 	}
-	sh_deinit(2);
 }

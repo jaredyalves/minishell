@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <fcntl.h>
 # include <stddef.h>
 # include <linux/limits.h>
 
@@ -70,9 +71,8 @@ typedef struct s_sh
 	char		*env[ARG_MAX + 1];
 	char		*str;
 	t_cmd		*cmd;
-	int			wait_status;
-	int			term_signal;
 	int			exit_status;
+	int			subshell;
 }				t_sh;
 
 t_sh			*get_sh(void);
@@ -101,14 +101,14 @@ int				peek_next(char **ps, char *es, char *s_tokens, char *d_tokens);
 
 int				is_builtin(t_execute *ecmd);
 void			execute_builtin(t_execute *ecmd);
-void			execute_command(t_cmd *cmd) __attribute__((noreturn));
+void			execute_command(t_cmd *cmd);
 void			execute_execute(t_execute *ecmd);
 void			execute_external(t_execute *ecmd);
 void			execute_list(t_list *lcmd);
 void			execute_pipeline(t_pipeline *pcmd);
 void			execute_redirection(t_redirection *rcmd);
 
-int				fork1(void);
+pid_t			fork1(void);
 int				pipe1(int *pipes);
 t_cmd			*free_command(t_cmd **cmd);
 void			get_str(void);
@@ -132,5 +132,13 @@ size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlen(const char *s);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int				ft_cd(char **args);
+int				ft_echo(char **args);
+int				ft_env(void);
+int				ft_exit(char **args);
+int				ft_export(char **new);
+int				ft_pwd(void);
+int				ft_unset(char **old);
 
 #endif

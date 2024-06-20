@@ -1,8 +1,5 @@
 #include "minishell.h"
 
-#include <stdlib.h>
-#include <unistd.h>
-
 int	is_builtin(t_execute *ecmd)
 {
 	char	*name;
@@ -30,25 +27,26 @@ int	is_builtin(t_execute *ecmd)
 
 void	execute_builtin(t_execute *ecmd)
 {
+	int		exit_status;
 	char	*name;
 
+	exit_status = 0;
 	name = ecmd->argv[0];
-	if (name && *name)
-	{
-		if (ft_strncmp(name, "echo", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("echo: not implemented\n", STDERR_FILENO);
-		if (ft_strncmp(name, "cd", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("cd: not implemented\n", STDERR_FILENO);
-		if (ft_strncmp(name, "pwd", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("pwd: not implemented\n", STDERR_FILENO);
-		if (ft_strncmp(name, "export", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("export: not implemented\n", STDERR_FILENO);
-		if (ft_strncmp(name, "unset", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("unset: not implemented\n", STDERR_FILENO);
-		if (ft_strncmp(name, "env", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("env: not implemented\n", STDERR_FILENO);
-		if (ft_strncmp(name, "exit", ft_strlen(name) + 1) == 0)
-			ft_putstr_fd("exit: not implemented\n", STDERR_FILENO);
-	}
-	sh_deinit(2);
+	if (ft_strncmp(name, "echo", ft_strlen(name) + 1) == 0)
+		exit_status = ft_echo(ecmd->argv);
+	else if (ft_strncmp(name, "cd", ft_strlen(name) + 1) == 0)
+		exit_status = ft_cd(ecmd->argv);
+	else if (ft_strncmp(name, "pwd", ft_strlen(name) + 1) == 0)
+		exit_status = ft_pwd();
+	else if (ft_strncmp(name, "export", ft_strlen(name) + 1) == 0)
+		exit_status = ft_export(ecmd->argv);
+	else if (ft_strncmp(name, "unset", ft_strlen(name) + 1) == 0)
+		exit_status = ft_unset(ecmd->argv);
+	else if (ft_strncmp(name, "env", ft_strlen(name) + 1) == 0)
+		exit_status = ft_env();
+	else if (ft_strncmp(name, "exit", ft_strlen(name) + 1) == 0)
+		exit_status = ft_exit(ecmd->argv);
+	get_sh()->exit_status = exit_status;
+	if (get_sh()->subshell == 1)
+		sh_deinit(exit_status);
 }

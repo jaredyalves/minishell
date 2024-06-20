@@ -1,35 +1,64 @@
 #include "minishell.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
-static void	execute_pipe(t_pipeline *pcmd)
+static pid_t execute_pipe_left(int *p, t_pipeline *pcmd)
 {
-	int		p[2];
-	t_sh	*sh;
+	pid_t pid;
 
-	pipe1(p);
-	sh = get_sh();
-	if (fork1() == 0)
+	pid = fork();
+	if (pid == -1)
+		panic("fork");
+	if (pid == 0)
 	{
-		dup2(p[1], 1);
+		get_sh()->subshell = 1;
 		close(p[0]);
+		dup2(p[1], STDOUT_FILENO);
 		close(p[1]);
 		execute_command(pcmd->left);
+		wait(0);
 	}
-	if (fork() == 0)
+	return (pid);
+}
+
+static pid_t execute_pipe_right(int *p, t_pipeline *pcmd)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == -1)
+		panic("fork");
+	if (pid == 0)
 	{
-		dup2(p[0], 0);
-		close(p[0]);
+		get_sh()->subshell = 1;
 		close(p[1]);
+		dup2(p[0], STDIN_FILENO);
+		close(p[0]);
 		execute_command(pcmd->right);
+		wait(0);
 	}
+	return (pid);
+}
+
+static int	execute_pipe(t_pipeline *pcmd)
+{
+	int p[2];
+	pid_t pid[2];
+	int status;
+
+	pipe1(p);
+	pid[0] = execute_pipe_left(p, pcmd);
+	pid[1] = execute_pipe_right(p, pcmd);
 	close(p[0]);
 	close(p[1]);
-	wait(0);
-	waitpid(0, &sh->wait_status, 0);
-	if (WIFEXITED(sh->wait_status))
-		sh_deinit(WEXITSTATUS(sh->wait_status));
+	waitpid(pid[0], 0, 0);
+	waitpid(pid[1], &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (EXIT_FAILURE);
 }
 
 void	execute_pipeline(t_pipeline *pcmd)
@@ -37,7 +66,10 @@ void	execute_pipeline(t_pipeline *pcmd)
 	if (pcmd)
 	{
 		if (pcmd->subtype == PIPE)
-			execute_pipe(pcmd);
+		{
+			if (fork1() == 0)
+				sh_deinit(execute_pipe(pcmd));
+			wait(0);
+		}
 	}
-	sh_deinit(2);
 }
