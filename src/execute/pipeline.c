@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/21 08:39:06 by jcapistr          #+#    #+#             */
+/*   Updated: 2024/06/21 08:39:06 by jcapistr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
-static pid_t execute_pipe_left(int *p, t_pipeline *pcmd)
+static pid_t	execute_pipe_left(int *p, t_pipeline *pcmd)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -24,9 +35,9 @@ static pid_t execute_pipe_left(int *p, t_pipeline *pcmd)
 	return (pid);
 }
 
-static pid_t execute_pipe_right(int *p, t_pipeline *pcmd)
+static pid_t	execute_pipe_right(int *p, t_pipeline *pcmd)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -45,9 +56,9 @@ static pid_t execute_pipe_right(int *p, t_pipeline *pcmd)
 
 static int	execute_pipe(t_pipeline *pcmd)
 {
-	int p[2];
-	pid_t pid[2];
-	int status;
+	int		p[2];
+	pid_t	pid[2];
+	int		status;
 
 	pipe1(p);
 	pid[0] = execute_pipe_left(p, pcmd);

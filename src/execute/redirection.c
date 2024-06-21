@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/21 08:39:06 by jcapistr          #+#    #+#             */
+/*   Updated: 2024/06/21 08:39:06 by jcapistr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 #include <fcntl.h>
@@ -5,9 +17,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static pid_t execute_heredoc_left(int *p, t_redirection *rcmd)
+static pid_t	execute_heredoc_left(int *p, t_redirection *rcmd)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -27,8 +39,8 @@ static pid_t execute_heredoc_left(int *p, t_redirection *rcmd)
 static void	execute_heredoc(t_redirection *rcmd)
 {
 	int		p[2];
-	int status;
 	pid_t	pid;
+	int		status;
 
 	if (fork1() == 0)
 	{
