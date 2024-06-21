@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joamonte <joamonte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 08:39:06 by jcapistr          #+#    #+#             */
-/*   Updated: 2024/06/21 08:53:52 by jcapistr         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:44:01 by joamonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <linux/limits.h>
 # include <unistd.h>
+#include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <errno.h>
+# include <stdbool.h>
+#include <stddef.h>
+#include <signal.h>
 
 # define BLANKS " \t"
 # define TOKENS "<|>()&;"
@@ -147,10 +154,10 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 int				ft_cd(char **args);
 int				ft_echo(char **args);
-int				ft_env(void);
+int				ft_env(char **args);
 int				ft_exit(char **args);
 int				ft_export(char **new);
-int				ft_pwd(void);
+int				ft_pwd(char **args);
 int				ft_unset(char **old);
 
 #endif

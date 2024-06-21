@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joamonte <joamonte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 08:39:06 by jcapistr          #+#    #+#             */
-/*   Updated: 2024/06/21 08:39:06 by jcapistr         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:43:43 by joamonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	execute_builtin(t_execute *ecmd)
 	else if (ft_strncmp(name, "cd", ft_strlen(name) + 1) == 0)
 		exit_status = ft_cd(ecmd->argv);
 	else if (ft_strncmp(name, "pwd", ft_strlen(name) + 1) == 0)
-		exit_status = ft_pwd();
+		exit_status = ft_pwd(ecmd->argv);
 	else if (ft_strncmp(name, "export", ft_strlen(name) + 1) == 0)
 		exit_status = ft_export(ecmd->argv);
 	else if (ft_strncmp(name, "unset", ft_strlen(name) + 1) == 0)
 		exit_status = ft_unset(ecmd->argv);
 	else if (ft_strncmp(name, "env", ft_strlen(name) + 1) == 0)
-		exit_status = ft_env();
+		exit_status = ft_env(ecmd->argv);
 	else if (ft_strncmp(name, "exit", ft_strlen(name) + 1) == 0)
 		exit_status = ft_exit(ecmd->argv);
 	get_sh()->exit_status = exit_status;
