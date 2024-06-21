@@ -1,9 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <fcntl.h>
-# include <stddef.h>
 # include <linux/limits.h>
+# include <unistd.h>
 
 # define BLANKS " \t"
 # define TOKENS "<|>()&;"
