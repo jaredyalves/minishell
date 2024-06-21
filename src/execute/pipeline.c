@@ -60,6 +60,7 @@ static int	execute_pipe(t_pipeline *pcmd)
 	pid_t	pid[2];
 	int		status;
 
+	status = 0;
 	pipe1(p);
 	pid[0] = execute_pipe_left(p, pcmd);
 	pid[1] = execute_pipe_right(p, pcmd);

@@ -13,54 +13,13 @@
 #include "minishell.h"
 
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-
-static void	heredoc_eof(char *word)
-{
-	ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
-	ft_putstr_fd("here-document delimited by end-of-file ", STDERR_FILENO);
-	ft_putstr_fd("(wanted `", STDERR_FILENO);
-	ft_putstr_fd(word, STDERR_FILENO);
-	ft_putstr_fd("')\n", STDERR_FILENO);
-}
-
-static t_cmd	*parse_heredoc(t_cmd *subcmd, char *q, char *eq)
-{
-	t_redirection	*rcmd;
-	char			*word;
-	char			*line;
-	char			*line_expanded;
-
-	rcmd = (t_redirection *)redirection(HEREDOC, subcmd, 0, 0);
-	word = expand_argument(q, eq);
-	while (1)
-	{
-		line = readline("> ");
-		line_expanded = expand_argument(line, line + ft_strlen(line));
-		free(line);
-		if (!line_expanded)
-		{
-			heredoc_eof(word);
-			break ;
-		}
-		if (ft_strncmp(word, line_expanded, ft_strlen(word) + 1) == 0)
-			break ;
-		rcmd->buffer = concat_strings(rcmd->buffer, line_expanded);
-		rcmd->buffer = ft_strjoin(rcmd->buffer, "\n");
-	}
-	free(line_expanded);
-	return (free(word), (t_cmd *)rcmd);
-}
 
 t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)
 {
 	t_redirection	*rcmd;
 
 	if (token == - '<')
-		return (parse_heredoc(cmd, q, eq));
+		cmd = redirection(HEREDOC, cmd, 0, 0);
 	if (token == '<')
 		cmd = redirection(REDIRECT, cmd, O_RDONLY, 0);
 	if (token == '>')

@@ -19,6 +19,7 @@ SRCS := \
 	$(SRCDIR)/execute/command.c \
 	$(SRCDIR)/execute/execute.c \
 	$(SRCDIR)/execute/external.c \
+	$(SRCDIR)/execute/heredoc.c \
 	$(SRCDIR)/execute/list.c \
 	$(SRCDIR)/execute/pipeline.c \
 	$(SRCDIR)/execute/redirection.c \
