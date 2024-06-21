@@ -53,3 +53,6 @@ dkms.conf
 
 # JetBrain IDEs
 .idea/
+
+# Project
+minishell
