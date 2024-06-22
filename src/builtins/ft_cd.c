@@ -42,11 +42,12 @@ static int	change_to_home(void)
 static void	set_old_pwd()
 {
 	char	directory[4097];
-	char	*old_pwd[2];
+	char	*old_pwd[3];
 
 	getcwd(directory, sizeof(directory));
 	old_pwd[0] = ft_strdup("export");
 	old_pwd[1] = ft_strjoin(ft_strdup("OLDPWD="), directory);
+	old_pwd[2] = NULL;
 	ft_export(old_pwd);
 	free(old_pwd[0]);
 	free(old_pwd[1]);	
