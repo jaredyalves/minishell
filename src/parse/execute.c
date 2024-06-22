@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+static t_cmd	*cleanup(t_cmd *cmd, t_execute *ecmd, char *error)
+{
+	free_command(&cmd);
+	cmd = (t_cmd *)ecmd;
+	free_command(&cmd);
+	if (error)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(error, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+	return (0);
+}
+
 static t_cmd	*invert_redirections(t_cmd *cmd, t_execute *ecmd)
 {
 	t_redirection	*prev;
@@ -36,27 +50,20 @@ static t_cmd	*invert_redirections(t_cmd *cmd, t_execute *ecmd)
 	return ((t_cmd *)prev);
 }
 
-static char	*parse_argument(char **ps, char *es, int *error)
+static int	parse_argument(t_execute *ecmd, char **ps, char *es)
 {
 	char	*q;
 	char	*eq;
 	int		token;
 
+	if (ecmd->argc >= ARG_MAX)
+		return (3);
 	token = get_token(ps, es, &q, &eq);
 	if (token == 0)
-		return (*error = 0, (char *)0);
+		return (1);
 	if (token != 'a')
-		return (*error = 1, (char *)0);
-	return (*error = 0, expand_argument(q, eq));
-}
-
-static t_cmd	*cleanup(t_cmd *cmd, t_execute *ecmd, char *error)
-{
-	free_command(&cmd);
-	cmd = (t_cmd *)ecmd;
-	free_command(&cmd);
-	if (error)
-		panic(error);
+		return (2);
+	ecmd->argv[ecmd->argc++] = expand_argument(q, eq);
 	return (0);
 }
 
@@ -64,8 +71,7 @@ t_cmd	*parse_execute(char **ps, char *es)
 {
 	t_cmd		*cmd;
 	t_execute	*ecmd;
-	char		*arg;
-	int			error;
+	int			status;
 
 	if (peek(ps, es, "(", "("))
 		return (parse_block(ps, es));
@@ -73,14 +79,13 @@ t_cmd	*parse_execute(char **ps, char *es)
 	cmd = parse_redirection(0, ps, es);
 	while (!peek(ps, es, TOKENS, TOKENS))
 	{
-		if (ecmd->argc >= ARG_MAX)
-			return (cleanup(cmd, ecmd, "too many arguments"));
-		arg = parse_argument(ps, es, &error);
-		if (!arg && !error)
+		status = parse_argument(ecmd, ps, es);
+		if (status == 1)
 			break ;
-		if (!arg && error)
+		if (status == 2)
 			return (cleanup(cmd, ecmd, 0));
-		ecmd->argv[ecmd->argc++] = arg;
+		if (status == 3)
+			return (cleanup(cmd, ecmd, "too many arguments"));
 		cmd = parse_redirection(cmd, ps, es);
 	}
 	if (!cmd && peek(ps, es, "<>", "<>"))
