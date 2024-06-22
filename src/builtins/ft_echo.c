@@ -72,6 +72,6 @@ int	ft_echo(char **args)
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	return (0);
 }
