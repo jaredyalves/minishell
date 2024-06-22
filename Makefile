@@ -13,6 +13,7 @@ SRCS := \
 	$(SRCDIR)/builtins/ft_env.c \
 	$(SRCDIR)/builtins/ft_exit.c \
 	$(SRCDIR)/builtins/ft_export.c \
+	$(SRCDIR)/builtins/ft_export_ext.c \
 	$(SRCDIR)/builtins/ft_pwd.c \
 	$(SRCDIR)/builtins/ft_unset.c \
 	$(SRCDIR)/execute/builtin.c \
@@ -28,6 +29,7 @@ SRCS := \
 	$(SRCDIR)/ft/ft_calloc.c \
 	$(SRCDIR)/ft/ft_getenv.c \
 	$(SRCDIR)/ft/ft_isalnum.c \
+	$(SRCDIR)/ft/ft_isalpha.c \
 	$(SRCDIR)/ft/ft_isdigit.c \
 	$(SRCDIR)/ft/ft_itoa.c \
 	$(SRCDIR)/ft/ft_memcpy.c \

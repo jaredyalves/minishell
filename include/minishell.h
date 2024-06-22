@@ -139,6 +139,7 @@ void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t nmemb, size_t size);
 char			*ft_getenv(char *name);
 int				ft_isalnum(int c);
+int				ft_isalpha(int c);
 int				ft_isdigit(int c);
 char			*ft_itoa(int n);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
@@ -156,7 +157,7 @@ int				ft_cd(char **args);
 int				ft_echo(char **args);
 int				ft_env(char **args);
 int				ft_exit(char **args);
-int				ft_export(char **new);
+int				ft_export(char **args);
 int				ft_pwd(char **args);
 int				ft_unset(char **old);
 
