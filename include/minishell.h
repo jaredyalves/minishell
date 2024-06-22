@@ -159,6 +159,6 @@ int				ft_env(char **args);
 int				ft_exit(char **args);
 int				ft_export(char **args);
 int				ft_pwd(char **args);
-int				ft_unset(char **old);
+int				ft_unset(char **args);
 
 #endif

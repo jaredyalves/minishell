@@ -12,31 +12,26 @@
 
 #include "minishell.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
-int	ft_unset(char **old)
+int	ft_unset(char **args)
 {
+	size_t	i;
+	size_t	j;
 	char	**envp;
-	size_t	old_len;
-	char	**next;
 
 	envp = get_sh()->env;
-	old_len = ft_strlen(old[1]);
-	while (*envp)
+	while (*++args)
 	{
-		if (ft_strncmp(*envp, old[1], old_len) == 0 && (*envp)[old_len] == '=')
+		i = 0;
+		while (envp[i] && ft_strncmp(envp[i], *args, ft_strlen(*args)) != 0)
+			i++;
+		if (envp[i])
 		{
-			next = envp;
-			free(*envp);
-			while (*next)
-			{
-				*next = *(next + 1);
-				next++;
-			}
-			return (0);
+			free(envp[i]);
+			j = i + 1;
+			while (envp[j])
+				envp[i++] = envp[j++];
+			envp[i] = 0;
 		}
-		envp++;
 	}
-	return (1);
+	return (0);
 }
