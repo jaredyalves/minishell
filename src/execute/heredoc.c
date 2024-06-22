@@ -82,8 +82,8 @@ void	execute_heredoc(t_redirection *rcmd)
 	{
 		status = 0;
 		pipe1(p);
-		buffer = parse_heredoc(rcmd->buffer);
 		pid = execute_heredoc_left(p, rcmd);
+		buffer = parse_heredoc(rcmd->buffer);
 		ft_putstr_fd(buffer, p[1]);
 		free(buffer);
 		close(p[0]);
