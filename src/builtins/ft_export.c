@@ -71,7 +71,7 @@ static int	update(char **envp, char *env)
 	while (envp[i] && ft_strncmp(envp[i], name, len - 1) != 0)
 		i++;
 	if (!envp[i])
-		return (1);
+		return (free(name), 1);
 	free(envp[i]);
 	envp[i] = ft_strdup(start);
 	free(name);
