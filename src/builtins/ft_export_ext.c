@@ -30,6 +30,20 @@ static char	**copy(char **envp)
 	return (envp_copy);
 }
 
+static int	compare(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] && s1[i] != '=' && s2[i] && s2[i] != '=' && s1[i] == s2[i])
+		i++;
+	if (s1[i] == '=' && s2[i] != '=')
+		return ((unsigned char)0 - (unsigned char)s2[i]);
+	if (s1[i] != '=' && s2[i] == '=')
+		return ((unsigned char)s1[i] - (unsigned char)0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
 char	**sort(char **envp)
 {
 	int		i;
@@ -43,7 +57,7 @@ char	**sort(char **envp)
 	{
 		key = envp_copy[i];
 		j = i - 1;
-		while (j >= 0 && ft_strncmp(envp_copy[j], key, ft_strlen(key)) > 0)
+		while (j >= 0 && compare(envp_copy[j], key) > 0)
 		{
 			envp_copy[j + 1] = envp_copy[j];
 			j = j - 1;
