@@ -6,72 +6,48 @@
 /*   By: joamonte <joamonte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 08:39:06 by joamonte          #+#    #+#             */
-/*   Updated: 2024/06/21 19:39:36 by joamonte         ###   ########.fr       */
+/*   Updated: 2024/06/23 09:11:50 by jcapistr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-static int	ft_op_strchr(char *s, int c)
+static void	print(char **args)
 {
-	while ((char)c == *s)
+	while (*args)
 	{
-		s++;
-		if(!*s)
-			return (0);
+		ft_putstr_fd(*args, STDOUT_FILENO);
+		if (*(args + 1))
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		args++;
 	}
-	return (1);
-}
-
-static int	ft_check_options(char **args, int *i)
-{
-	int	j;
-	int	t;
-
-	t = *i;
-	j = 1;
-	while(args[j] && !ft_strncmp(args[j], "-", 1))
-	{
-		if(ft_op_strchr(&args[j][1], 'n'))
-		{
-			ft_putstr_fd("minishell: echo Error: not compatible options\n", 2);
-			return (1);
-		}
-		j++;
-		t++;
-	}
-	*i = t;
-	return (0);
-}
-
-static bool	ft_new_line(char **args)
-{
-	if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)
-		return (false);
-	return (true);
 }
 
 int	ft_echo(char **args)
 {
-	bool	newline;
-	int		i;
+	int	i;
+	int	newline;
 
-	i = 1;
-	newline = ft_new_line(args);
-	if(ft_check_options(args, &i))
-		return(1);
-	while (args[i])
+	i = 0;
+	newline = 1;
+	while (*++args && (*args)[i] == '-')
 	{
-		ft_putstr_fd(args[i], 1);
-		if (args[i + 1])
-			ft_putstr_fd(" ", 1);
-		i++;
+		while ((*args)[++i])
+		{
+			if ((*args)[i] == 'n')
+				newline = 0;
+			else if ((*args)[i] != '\0')
+			{
+				ft_putstr_fd("minishell: echo: -", STDERR_FILENO);
+				ft_putchar_fd((*args)[i], STDERR_FILENO);
+				ft_putstr_fd(": invalid option\n", STDERR_FILENO);
+				return (2);
+			}
+		}
+		i = 0;
 	}
+	print(args);
 	if (newline)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
