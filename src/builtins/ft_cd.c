@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static int	check_args(char **args)
 {

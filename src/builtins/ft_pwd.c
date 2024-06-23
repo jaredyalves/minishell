@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+#include <errno.h>
+#include <string.h>
+
 int	ft_pwd(char **args)
 {
 	char	buf[PATH_MAX];

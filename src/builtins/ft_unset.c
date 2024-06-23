@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+#include <stdlib.h>
+
 int	ft_unset(char **args)
 {
 	size_t	i;

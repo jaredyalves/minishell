@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+#include <stdlib.h>
+
 static void	print(char *name)
 {
 	char	*value;

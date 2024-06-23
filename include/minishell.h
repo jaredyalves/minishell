@@ -13,15 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <linux/limits.h>
 # include <unistd.h>
-#include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <errno.h>
-# include <stdbool.h>
-#include <stddef.h>
-#include <signal.h>
+# include <linux/limits.h>
 
 # define BLANKS " \t"
 # define TOKENS "<|>()&;"

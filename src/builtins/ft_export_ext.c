@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+#include <stdlib.h>
+
 static char	**copy(char **envp)
 {
 	int		i;

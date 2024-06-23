@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+#include <stdlib.h>
+
 char	**sort(char **envp);
 void	print(char **envp);
 
