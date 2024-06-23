@@ -39,8 +39,8 @@ int	is_builtin(t_execute *ecmd)
 
 static int	has_options(char **args)
 {
-	if(args[1])
-		if(args[0] && args[1][0] == '-' && !args[1][1])
+	if (args[1])
+		if (args[0] && args[1][0] == '-' && !args[1][1])
 			return (0);
 	if (args[1] && args[1][0] == '-')
 	{
@@ -61,7 +61,7 @@ void	execute_builtin(t_execute *ecmd)
 	name = ecmd->argv[0];
 	if (ft_strncmp(name, "echo", ft_strlen(name) + 1) == 0)
 		exit_status = ft_echo(ecmd->argv);
-	else if(!has_options(ecmd->argv))
+	else if (!has_options(ecmd->argv))
 	{
 		if (ft_strncmp(name, "cd", ft_strlen(name) + 1) == 0)
 			exit_status = ft_cd(ecmd->argv);
