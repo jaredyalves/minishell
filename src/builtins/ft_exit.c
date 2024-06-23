@@ -46,12 +46,12 @@ int	ft_exit(char **args)
 			sh_deinit(2);
 		}
 		status = (char)ft_atoi(args[1]);
-	}
-	if (args[2])
-	{
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
-		return (1);
+		if (args[2])
+		{
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+			return (1);
+		}
 	}
 	sh_deinit(status);
 }
