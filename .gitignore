@@ -54,5 +54,8 @@ dkms.conf
 # JetBrain IDEs
 .idea/
 
+# Visual Studio Code
+.vscode/
+
 # Project
 minishell
