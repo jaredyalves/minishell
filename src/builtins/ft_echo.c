@@ -30,7 +30,7 @@ int	ft_echo(char **args)
 
 	i = 0;
 	newline = 1;
-	while (*++args && (*args)[i] == '-')
+	while (*++args && (*args)[i] == '-' && !ft_strchr(*args, ' '))
 	{
 		while ((*args)[++i])
 		{
