@@ -71,7 +71,7 @@ int	ft_cd(char **args)
 
 	old_pwd = ft_getenv("OLDPWD");
 	if (check_args(args) == -1)
-		return (-1);
+		return (free(old_pwd), -1);
 	set_old_pwd();
 	if (!args[1] || (args[1][0] == '~' && !args[1][1]))
 		return (free(old_pwd), change_to_home());

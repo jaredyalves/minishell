@@ -61,6 +61,8 @@ void	execute_builtin(t_execute *ecmd)
 	name = ecmd->argv[0];
 	if (ft_strncmp(name, "echo", ft_strlen(name) + 1) == 0)
 		exit_status = ft_echo(ecmd->argv);
+	else if (ft_strncmp(name, "exit", ft_strlen(name) + 1) == 0)
+		exit_status = ft_exit(ecmd->argv);
 	else if (!has_options(ecmd->argv))
 	{
 		if (ft_strncmp(name, "cd", ft_strlen(name) + 1) == 0)
@@ -73,8 +75,6 @@ void	execute_builtin(t_execute *ecmd)
 			exit_status = ft_unset(ecmd->argv);
 		else if (ft_strncmp(name, "env", ft_strlen(name) + 1) == 0)
 			exit_status = ft_env(ecmd->argv);
-		else if (ft_strncmp(name, "exit", ft_strlen(name) + 1) == 0)
-			exit_status = ft_exit(ecmd->argv);
 	}
 	get_sh()->exit_status = exit_status;
 	if (get_sh()->subshell == 1)
