@@ -55,7 +55,7 @@ t_cmd	*parse_command(char *s)
 	char	*es;
 	t_cmd	*cmd;
 
-	es = s + ft_strlen(s);
+	es = s + ms_strlen(s);
 	if (peek(&s, es, "|&;", "|&;"))
 		cmd = 0;
 	else

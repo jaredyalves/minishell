@@ -14,8 +14,9 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include <unistd.h>
+
 # include <linux/limits.h>
+# include <unistd.h>
 
 # define BLANKS " \t"
 # define TOKENS "<|>()&;"
@@ -129,6 +130,8 @@ void			handle_signals(void);
 void			panic(char *error) __attribute__((noreturn));
 
 char			*ft_getenv(char *name);
+size_t			ms_strlen(const char *string);
+char			*ms_strjoin(char *string1, const char *string2);
 
 int				ft_cd(char **args);
 int				ft_echo(char **args);

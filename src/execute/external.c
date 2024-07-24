@@ -31,7 +31,7 @@ char	*search_in_path(char *name, char *path_env)
 		while (*path_env && *path_env != ':')
 			path_env++;
 		len = path_env - start;
-		if (len + 2 + ft_strlen(name) >= PATH_MAX)
+		if (len + 2 + ms_strlen(name) >= PATH_MAX)
 			break ;
 		ft_strlcpy(path, start, len + 1);
 		path[len] = '/';

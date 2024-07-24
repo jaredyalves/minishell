@@ -24,7 +24,7 @@ int	ft_unset(char **args)
 	while (*++args)
 	{
 		i = 0;
-		while (envp[i] && ft_strncmp(envp[i], *args, ft_strlen(*args)) != 0)
+		while (envp[i] && ft_strncmp(envp[i], *args, ms_strlen(*args)) != 0)
 			i++;
 		if (envp[i])
 		{

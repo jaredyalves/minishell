@@ -36,17 +36,17 @@ static char	*parse_heredoc(char *word)
 	while (1)
 	{
 		line = get_line("> ");
-		line_expanded = expand_argument(line, line + ft_strlen(line));
+		line_expanded = expand_argument(line, line + ms_strlen(line));
 		free(line);
 		if (!line_expanded)
 		{
 			heredoc_eof(word);
 			break ;
 		}
-		if (ft_strncmp(word, line_expanded, ft_strlen(word) + 1) == 0)
+		if (ft_strncmp(word, line_expanded, ms_strlen(word) + 1) == 0)
 			break ;
 		buffer = concat_strings(buffer, line_expanded);
-		buffer = ft_strjoin(buffer, "\n");
+		buffer = ms_strjoin(buffer, "\n");
 	}
 	free(line_expanded);
 	return (buffer);

@@ -45,6 +45,7 @@ SRCS		:= \
 	$(SRCDIR)/utils/pipe.c \
 	$(SRCDIR)/utils/readline.c \
 	$(SRCDIR)/utils/signal.c \
+	$(SRCDIR)/utils/utils.c \
 
 OBJS		:= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 INCS		:= $(INCDIR)/minishell.h

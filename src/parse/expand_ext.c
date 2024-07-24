@@ -21,7 +21,7 @@ char	*concat_strings(char *arg, char *str)
 
 	if (!arg)
 		return (str);
-	len = ft_strlen(arg) + ft_strlen(str) + 1;
+	len = ms_strlen(arg) + ms_strlen(str) + 1;
 	dst = (char *)ft_calloc(len, sizeof(char));
 	if (!dst)
 		panic("ft_calloc");

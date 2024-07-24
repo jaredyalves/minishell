@@ -40,7 +40,7 @@ static void	sh_shlvl(t_sh *sh)
 	while (sh->env[i] && ft_strncmp(sh->env[i], "SHLVL=", 6) != 0)
 		i++;
 	env_value = ft_itoa(++shlvl);
-	env_len = ft_strlen(env_value) + 7;
+	env_len = ms_strlen(env_value) + 7;
 	env = (char *)ft_calloc(env_len, sizeof(char));
 	if (!env)
 		panic("ft_calloc");
