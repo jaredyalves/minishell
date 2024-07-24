@@ -74,8 +74,10 @@ static int	update(char **envp, char *env)
 		i++;
 	if (!envp[i])
 		return (free(name), 1);
-	free(envp[i]);
-	envp[i] = ft_strdup(start);
+	if (*env == '=')
+		free(envp[i]);
+	if (*env == '=')
+		envp[i] = ft_strdup(start);
 	free(name);
 	return (0);
 }
