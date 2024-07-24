@@ -3,24 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joamonte <joamonte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joamonte <joamonte@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 08:39:06 by joamonte          #+#    #+#             */
-/*   Updated: 2024/06/23 09:11:50 by jcapistr         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:51:36 by joamonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print(char **args)
+static int	is_flag(char *str)
 {
-	while (*args)
+	int	i;
+
+	i = 1;
+	if (!str || str[0] != '-')
+		return (0);
+	while (str[i])
 	{
-		ft_putstr_fd(*args, STDOUT_FILENO);
-		if (*(args + 1))
-			ft_putstr_fd(" ", STDOUT_FILENO);
-		args++;
+		if (str[i] != 'n')
+			return (0);
+		i++;
 	}
+	return (1);
 }
 
 int	ft_echo(char **args)
@@ -28,25 +33,25 @@ int	ft_echo(char **args)
 	int	i;
 	int	newline;
 
-	i = 0;
+	i = 1;
 	newline = 1;
-	while (*++args && (*args)[i] == '-' && !ft_strchr(*args, ' '))
+	while (args[i])
 	{
-		while ((*args)[++i])
+		if(is_flag(args[i]) == 0)
+			break;
+		else if(is_flag(args[i]) == 1)
 		{
-			if ((*args)[i] == 'n')
-				newline = 0;
-			else if ((*args)[i] != '\0')
-			{
-				ft_putstr_fd("minishell: echo: -", STDERR_FILENO);
-				ft_putchar_fd((*args)[i], STDERR_FILENO);
-				ft_putstr_fd(": invalid option\n", STDERR_FILENO);
-				return (2);
-			}
+			newline = 0;
+			i++;
 		}
-		i = 0;
 	}
-	print(args);
+	while(args[i])
+	{
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		i++;
+	}
 	if (newline)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
