@@ -29,7 +29,7 @@ t_cmd	*parse_list1(char **ps, char *es)
 			cmd = list(BACKGROUND, cmd, parse_list1(ps, es));
 		if (token == ';')
 			cmd = list(SEQUENCE, cmd, parse_list1(ps, es));
-		if (!((t_list *)cmd)->right)
+		if (!((t_listline *)cmd)->right)
 			return (free_command(&cmd));
 	}
 	return (cmd);
@@ -52,7 +52,7 @@ t_cmd	*parse_list2(char **ps, char *es)
 			cmd = list(AND_IF, cmd, parse_pipeline(ps, es));
 		if (token == - '|')
 			cmd = list(OR_IF, cmd, parse_pipeline(ps, es));
-		if (!((t_list *)cmd)->right)
+		if (!((t_listline *)cmd)->right)
 			return (free_command(&cmd));
 	}
 	return (cmd);

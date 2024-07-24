@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static void	execute_sequence(t_list *lcmd)
+static void	execute_sequence(t_listline *lcmd)
 {
 	execute_command(lcmd->left);
 	wait(0);
@@ -24,7 +24,7 @@ static void	execute_sequence(t_list *lcmd)
 	wait(0);
 }
 
-static void	execute_background(t_list *lcmd)
+static void	execute_background(t_listline *lcmd)
 {
 	if (fork1() == 0)
 	{
@@ -37,7 +37,7 @@ static void	execute_background(t_list *lcmd)
 	execute_command(lcmd->right);
 }
 
-static void	execute_and_if(t_list *lcmd)
+static void	execute_and_if(t_listline *lcmd)
 {
 	execute_command(lcmd->left);
 	wait(0);
@@ -48,7 +48,7 @@ static void	execute_and_if(t_list *lcmd)
 	}
 }
 
-static void	execute_or_if(t_list *lcmd)
+static void	execute_or_if(t_listline *lcmd)
 {
 	execute_command(lcmd->left);
 	wait(0);
@@ -59,7 +59,7 @@ static void	execute_or_if(t_list *lcmd)
 	}
 }
 
-void	execute_list(t_list *lcmd)
+void	execute_list(t_listline *lcmd)
 {
 	if (lcmd)
 	{

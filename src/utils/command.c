@@ -31,7 +31,7 @@ static void	free_redirection(t_redirection *cmd)
 	free(cmd);
 }
 
-static void	free_list(t_list *cmd)
+static void	free_list(t_listline *cmd)
 {
 	free_command(&cmd->left);
 	free_command(&cmd->right);
@@ -54,7 +54,7 @@ t_cmd	*free_command(t_cmd **cmd)
 		else if ((*cmd)->type == REDIRECTION)
 			free_redirection((t_redirection *)*cmd);
 		else if ((*cmd)->type == LIST)
-			free_list((t_list *)*cmd);
+			free_list((t_listline *)*cmd);
 		else if ((*cmd)->type == PIPELINE)
 			free_pipeline((t_pipeline *)*cmd);
 		*cmd = 0;

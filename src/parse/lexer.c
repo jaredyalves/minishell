@@ -40,9 +40,9 @@ t_cmd	*redirection(t_subtype subtype, t_cmd *subcmd, int m, int fd)
 
 t_cmd	*list(t_subtype subtype, t_cmd *left, t_cmd *right)
 {
-	t_list	*cmd;
+	t_listline	*cmd;
 
-	cmd = (t_list *)ft_calloc(1, sizeof(*cmd));
+	cmd = (t_listline *)ft_calloc(1, sizeof(*cmd));
 	if (!cmd)
 		panic("ft_calloc");
 	cmd->type = LIST;

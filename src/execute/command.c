@@ -21,7 +21,7 @@ void	execute_command(t_cmd *cmd)
 		if (cmd->type == REDIRECTION)
 			execute_redirection((t_redirection *)cmd);
 		if (cmd->type == LIST)
-			execute_list((t_list *)cmd);
+			execute_list((t_listline *)cmd);
 		if (cmd->type == PIPELINE)
 			execute_pipeline((t_pipeline *)cmd);
 	}

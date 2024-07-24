@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
 # include <unistd.h>
 # include <linux/limits.h>
 
@@ -60,13 +61,13 @@ typedef struct s_redirection
 	int			fd;
 }				t_redirection;
 
-typedef struct s_list
+typedef struct s_listline
 {
 	t_type		type;
 	t_subtype	subtype;
 	t_cmd		*left;
 	t_cmd		*right;
-}				t_list;
+}				t_listline;
 
 typedef struct s_pipeline
 {
@@ -115,7 +116,7 @@ void			execute_builtin(t_execute *ecmd);
 void			execute_command(t_cmd *cmd);
 void			execute_execute(t_execute *ecmd);
 void			execute_external(t_execute *ecmd);
-void			execute_list(t_list *lcmd);
+void			execute_list(t_listline *lcmd);
 void			execute_pipeline(t_pipeline *pcmd);
 void			execute_redirection(t_redirection *rcmd);
 
@@ -127,24 +128,7 @@ void			get_str(void);
 void			handle_signals(void);
 void			panic(char *error) __attribute__((noreturn));
 
-int				ft_atoi(const char *nptr);
-void			ft_bzero(void *s, size_t n);
-void			*ft_calloc(size_t nmemb, size_t size);
 char			*ft_getenv(char *name);
-int				ft_isalnum(int c);
-int				ft_isalpha(int c);
-int				ft_isdigit(int c);
-char			*ft_itoa(int n);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
-void			ft_putchar_fd(char c, int fd);
-void			ft_putstr_fd(char *s, int fd);
-char			*ft_strchr(const char *s, int c);
-char			*ft_strdup(const char *s);
-char			*ft_strjoin(char *s1, char const *s2);
-size_t			ft_strlcat(char *dst, const char *src, size_t size);
-size_t			ft_strlcpy(char *dst, const char *src, size_t size);
-size_t			ft_strlen(const char *s);
-int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 int				ft_cd(char **args);
 int				ft_echo(char **args);
