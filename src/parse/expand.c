@@ -62,7 +62,7 @@ static char	*env_variables(char **pq, char *eq)
 	free(env_name);
 	*pq = q;
 	if (env_value == NULL || ms_strlen(env_value) == 0)
-		return (NULL);
+		return (free(env_value), NULL);
 	return (env_value);
 }
 
