@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
-
 #include <unistd.h>
 
 static void	check_syntax(char **ps, char *es)
@@ -50,11 +50,41 @@ static int	check_leftovers(char **ps, char *es)
 	return (0);
 }
 
+static int	check_quotes(const char *string)
+{
+	int	single_quotes;
+	int	double_quotes;
+	int	inside_single_quotes;
+	int	inside_double_quotes;
+
+	single_quotes = 0;
+	double_quotes = 0;
+	inside_single_quotes = 0;
+	inside_double_quotes = 0;
+	while (*string)
+	{
+		if (*string == '\'' && !inside_double_quotes)
+		{
+			inside_single_quotes = !inside_single_quotes;
+			single_quotes++;
+		}
+		else if (*string == '\"' && !inside_single_quotes)
+		{
+			inside_double_quotes = !inside_double_quotes;
+			double_quotes++;
+		}
+		string++;
+	}
+	return (single_quotes % 2 == 0 && double_quotes % 2 == 0);
+}
+
 t_cmd	*parse_command(char *s)
 {
 	char	*es;
 	t_cmd	*cmd;
 
+	if (!check_quotes(s))
+		return (ft_putstr_fd("minishell: unclosed quotes\n", 2), NULL);
 	es = s + ms_strlen(s);
 	if (peek(&s, es, "|&;", "|&;"))
 		cmd = 0;
