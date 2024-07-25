@@ -9,6 +9,10 @@ LIBFT_DIR	:= $(LIBDIR)/libft
 LIBFT_NAME	:= libft.a
 LIBFT		:= $(LIBFT_DIR)/$(LIBFT_NAME)
 
+GNL_DIR		:= $(LIBDIR)/get_next_line
+GNL_NAME	:= libgnl.a
+GNL			:= $(GNL_DIR)/$(GNL_NAME)
+
 SRCS		:= \
 	$(SRCDIR)/main.c \
 	$(SRCDIR)/builtins/ft_cd.c \
@@ -23,7 +27,6 @@ SRCS		:= \
 	$(SRCDIR)/execute/command.c \
 	$(SRCDIR)/execute/execute.c \
 	$(SRCDIR)/execute/external.c \
-	$(SRCDIR)/execute/heredoc.c \
 	$(SRCDIR)/execute/list.c \
 	$(SRCDIR)/execute/pipeline.c \
 	$(SRCDIR)/execute/redirection.c \
@@ -32,6 +35,8 @@ SRCS		:= \
 	$(SRCDIR)/parse/execute.c \
 	$(SRCDIR)/parse/expand.c \
 	$(SRCDIR)/parse/expand_ext.c \
+	$(SRCDIR)/parse/heredoc.c \
+	$(SRCDIR)/parse/heredoc_ext.c \
 	$(SRCDIR)/parse/lexer.c \
 	$(SRCDIR)/parse/list.c \
 	$(SRCDIR)/parse/pipeline.c \
@@ -51,9 +56,9 @@ OBJS		:= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 INCS		:= $(INCDIR)/minishell.h
 
 CC			:= cc
-INCLUDES	:= -I$(INCDIR) -I$(LIBFT_DIR)/include
+INCLUDES	:= -I$(INCDIR) -I$(LIBFT_DIR)/include -I$(GNL_DIR)/include
 CFLAGS		:= -O3 -Wall -Werror -Wextra $(INCLUDES)
-LDFLAGS		:= -L$(LIBFT_DIR) -lft -lreadline
+LDFLAGS		:= -L$(LIBFT_DIR) -lft -L$(GNL_DIR) -lgnl -lreadline
 
 RM			:= rm
 RMFLAGS		:= -rf
@@ -62,11 +67,14 @@ RMFLAGS		:= -rf
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) $(GNL)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
+
+$(GNL):
+	make -C $(GNL_DIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS)
 	@mkdir -p $(dir $@)

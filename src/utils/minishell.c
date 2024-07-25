@@ -99,6 +99,8 @@ void	sh_deinit(int status)
 		i = 0;
 		while (sh->env[i])
 			free(sh->env[i++]);
+		if (sh->ecmd)
+			free_execute(sh->ecmd);
 		if (sh->cmd)
 			free_command(&sh->cmd);
 		ft_bzero(sh, sizeof(*sh));

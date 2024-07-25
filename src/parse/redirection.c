@@ -13,8 +13,9 @@
 #include "minishell.h"
 
 #include <fcntl.h>
+#include <stdlib.h>
 
-t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)
+static t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)
 {
 	t_redirection	*rcmd;
 
@@ -27,7 +28,17 @@ t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)
 	if (token == - '>')
 		cmd = redirection(REDIRECT, cmd, O_WRONLY | O_CREAT | O_APPEND, 1);
 	rcmd = (t_redirection *)cmd;
-	rcmd->buffer = expand_argument(q, eq);
+	if (rcmd->subtype == HEREDOC)
+	{
+		get_sh()->heredoc = 1;
+		get_sh()->exit_status = 0;
+		rcmd->buffer = parse_heredoc(q, eq);
+		if (rcmd->buffer == NULL)
+			return (free_command(&cmd));
+		get_sh()->heredoc = 0;
+	}
+	else
+		rcmd->buffer = expand_argument(q, eq);
 	return (cmd);
 }
 
@@ -47,6 +58,11 @@ t_cmd	*parse_redirection(t_cmd *cmd, char **ps, char *es)
 		if (next_token != 'a')
 			return (free_command(&cmd));
 		cmd = handle_redirection(cmd, token, q, eq);
+		if (cmd == NULL && get_sh()->heredoc == 1)
+		{
+			free_command(&cmd);
+			return (NULL);
+		}
 	}
 	return (cmd);
 }

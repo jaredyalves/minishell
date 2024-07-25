@@ -84,8 +84,10 @@ typedef struct s_sh
 	char		*env[ARG_MAX + 1];
 	char		*str;
 	t_cmd		*cmd;
+	t_execute	*ecmd;
 	int			exit_status;
 	int			subshell;
+	int			heredoc;
 }				t_sh;
 
 t_sh			*get_sh(void);
@@ -104,6 +106,7 @@ t_cmd			*parse_list1(char **ps, char *es);
 t_cmd			*parse_list2(char **ps, char *es);
 t_cmd			*parse_pipeline(char **ps, char *es);
 t_cmd			*parse_redirection(t_cmd *cmd, char **ps, char *es);
+char			*parse_heredoc(const char *q, const char *eq);
 
 char			*expand_argument(char *q, char *eq);
 char			*concat_strings(char *arg, char *str);
@@ -124,6 +127,7 @@ void			execute_redirection(t_redirection *rcmd);
 pid_t			fork1(void);
 int				pipe1(int *pipes);
 t_cmd			*free_command(t_cmd **cmd);
+void			free_execute(t_execute *cmd);
 char			*get_line(char *prompt);
 void			get_str(void);
 void			handle_signals(void);

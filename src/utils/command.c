@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 
-static void	free_execute(t_execute *cmd)
+void	free_execute(t_execute *cmd)
 {
 	int	i;
 

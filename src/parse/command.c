@@ -60,11 +60,15 @@ t_cmd	*parse_command(char *s)
 		cmd = 0;
 	else
 		cmd = parse_list1(&s, es);
-	if (!cmd)
+	if (cmd == NULL && get_sh()->heredoc == 1)
 	{
-		check_syntax(&s, es);
-		return (0);
+		if (get_sh()->subshell == 1)
+			sh_deinit(get_sh()->exit_status);
+		get_sh()->heredoc = 0;
+		return (NULL);
 	}
+	if (cmd == NULL)
+		return (check_syntax(&s, es), NULL);
 	if (check_leftovers(&s, es))
 		return (free_command(&cmd));
 	return (cmd);
