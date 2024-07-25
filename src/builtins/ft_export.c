@@ -22,7 +22,7 @@ static int	is_valid(char *env)
 	int		i;
 
 	i = 0;
-	if (env[i] == '=')
+	if (env[i] == '\0' || env[i] == '=')
 		return (0);
 	while (env[i] && env[i] != '=')
 	{
