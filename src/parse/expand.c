@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joamonte <joamonte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:13:19 by jcapistr          #+#    #+#             */
-/*   Updated: 2024/06/19 11:13:19 by jcapistr         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:43:06 by joamonte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,11 @@ char	*expand_argument(char *q, char *eq)
 		else if (*q == '"')
 			arg = concat_strings(arg, double_quotes(&q, eq));
 		else if (*q == '$')
+		{
 			arg = concat_strings(arg, env_variables(&q, eq));
+			if(arg[0] == '\0')
+				return (NULL);
+		}
 		else
 			arg = concat_strings(arg, expand_simple(&q, eq));
 	}
