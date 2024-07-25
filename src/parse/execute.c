@@ -65,7 +65,9 @@ static int	parse_argument(t_execute *ecmd, char **ps, char *es)
 		return (1);
 	if (token != 'a')
 		return (2);
-	ecmd->argv[ecmd->argc++] = expand_argument(q, eq);
+	ecmd->argv[ecmd->argc] = expand_argument(q, eq);
+	if (ecmd->argv[ecmd->argc] != NULL)
+		ecmd->argc++;
 	return (0);
 }
 

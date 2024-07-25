@@ -61,8 +61,8 @@ static char	*env_variables(char **pq, char *eq)
 	env_value = ft_getenv(env_name);
 	free(env_name);
 	*pq = q;
-	if (!env_value)
-		return (ft_strdup(""));
+	if (env_value == NULL || ms_strlen(env_value) == 0)
+		return (NULL);
 	return (env_value);
 }
 
@@ -125,8 +125,8 @@ char	*expand_argument(char *q, char *eq)
 		else if (*q == '$')
 		{
 			arg = concat_strings(arg, env_variables(&q, eq));
-			if(arg[0] == '\0')
-				return (NULL);
+			if (q >= eq && ms_strlen(arg) == 0)
+				return (free(arg), NULL);
 		}
 		else
 			arg = concat_strings(arg, expand_simple(&q, eq));
