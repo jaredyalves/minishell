@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -25,7 +24,6 @@ static int	check_args(char **args)
 	return (0);
 }
 
-
 static void	set_pwd(int flag)
 {
 	char	directory[4097];
@@ -33,9 +31,9 @@ static void	set_pwd(int flag)
 
 	getcwd(directory, sizeof(directory));
 	pwd[0] = ft_strdup("export");
-	if(flag == 2)
+	if (flag == 2)
 		pwd[1] = ft_strjoin(ft_strdup("OLDPWD="), directory);
-	else if(flag == 1)
+	else if (flag == 1)
 		pwd[1] = ft_strjoin(ft_strdup("PWD="), directory);
 	pwd[2] = NULL;
 	ft_export(pwd);

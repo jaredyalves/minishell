@@ -37,15 +37,15 @@ int	ft_echo(char **args)
 	newline = 1;
 	while (args[i])
 	{
-		if(is_flag(args[i]) == 0)
-			break;
-		else if(is_flag(args[i]) == 1)
+		if (is_flag(args[i]) == 0)
+			break ;
+		else if (is_flag(args[i]) == 1)
 		{
 			newline = 0;
 			i++;
 		}
 	}
-	while(args[i])
+	while (args[i])
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1])
