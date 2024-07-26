@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 #include <stdlib.h>
@@ -112,6 +113,7 @@ static char	*expand_simple(char **pq, char *eq)
 char	*expand_argument(char *q, char *eq)
 {
 	char	*arg;
+	char	*tmp;
 
 	if (!q)
 		return (0);
@@ -124,7 +126,8 @@ char	*expand_argument(char *q, char *eq)
 			arg = concat_strings(arg, double_quotes(&q, eq));
 		else if (*q == '$')
 		{
-			arg = concat_strings(arg, env_variables(&q, eq));
+			tmp = ms_strreplace(env_variables(&q, eq), BLANKS, '\1');
+			arg = concat_strings(arg, tmp);
 			if (q >= eq && ms_strlen(arg) == 0)
 				return (free(arg), NULL);
 		}

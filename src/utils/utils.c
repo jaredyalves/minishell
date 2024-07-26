@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "minishell.h"
 
 #include <stdlib.h>
 
@@ -41,4 +42,36 @@ char	*ms_strjoin(char *string1, const char *string2)
 	ft_strlcat(destination, string2, length);
 	free(string1);
 	return (destination);
+}
+
+char	*ms_strreplace(char *string, char *old, char new)
+{
+	int		i;
+	char	*new_string;
+
+	if (string == NULL)
+		return (NULL);
+	new_string = ft_strdup(string);
+	if (new_string == NULL)
+		panic("ft_strdup");
+	i = 0;
+	while (new_string[i])
+	{
+		if (ft_strchr(old, new_string[i]))
+			new_string[i] = new;
+		i++;
+	}
+	return (free(string), new_string);
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	if (split == NULL)
+		return ;
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
 }
