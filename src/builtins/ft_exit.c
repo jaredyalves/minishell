@@ -17,7 +17,7 @@ static int	is_valid(char *arg)
 	int	i;
 
 	i = 0;
-	if (arg[i] == '-')
+	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	if (!arg[i])
 		return (0);
