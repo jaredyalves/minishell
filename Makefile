@@ -15,6 +15,17 @@ GNL			:= $(GNL_DIR)/$(GNL_NAME)
 
 SRCS		:= \
 	$(SRCDIR)/main.c \
+	$(SRCDIR)/minishell/clear.c \
+	$(SRCDIR)/minishell/exit.c \
+	$(SRCDIR)/minishell/get.c \
+	$(SRCDIR)/minishell/init.c \
+	$(SRCDIR)/minishell/run.c \
+	$(SRCDIR)/parser/cmdline.c \
+	$(SRCDIR)/parser/line.c \
+	$(SRCDIR)/utils/cmdline.c \
+	$(SRCDIR)/utils/strtok.c \
+	$(SRCDIR)/error/unclosed_quotes.c \
+	$(SRCDIR)/error/unexpected_token.c \
 	$(SRCDIR)/builtins/ft_cd.c \
 	$(SRCDIR)/builtins/ft_echo.c \
 	$(SRCDIR)/builtins/ft_env.c \
@@ -48,7 +59,6 @@ SRCS		:= \
 	$(SRCDIR)/utils/getenv.c \
 	$(SRCDIR)/utils/minishell.c \
 	$(SRCDIR)/utils/pipe.c \
-	$(SRCDIR)/utils/readline.c \
 	$(SRCDIR)/utils/signal.c \
 	$(SRCDIR)/utils/utils.c \
 

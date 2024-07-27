@@ -11,15 +11,21 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MINISHELL_H
+#define MINISHELL_H
 
-# include "libft.h"
+#include <linux/limits.h>
+#include <stdio.h>
+#include <unistd.h>
 
-# include <linux/limits.h>
-# include <unistd.h>
+#define STDIN STDIN_FILENO
+#define STDOUT STDOUT_FILENO
+#define STDERR STDERR_FILENO
 
-# define BLANKS " \t"
-# define TOKENS "<|>()&;"
+#define TOK_NULL 0
+#define TOK_WORD 97
+
+#define BLANKS " \t"
+#define TOKENS "<|>()&;"
 
 typedef enum e_type
 {
@@ -27,7 +33,7 @@ typedef enum e_type
 	REDIRECTION,
 	LIST,
 	PIPELINE,
-}				t_type;
+} t_type;
 
 typedef enum e_subtype
 {
@@ -38,113 +44,145 @@ typedef enum e_subtype
 	BACKGROUND,
 	AND_IF,
 	OR_IF,
-}				t_subtype;
+} t_subtype;
 
 typedef struct s_cmd
 {
-	t_type		type;
-}				t_cmd;
+	t_type	  type;
+	t_subtype subtype;
+} t_cmd;
 
 typedef struct s_execute
 {
-	int			type;
-	int			argc;
-	char		*argv[ARG_MAX + 1];
-}				t_execute;
+	int		  type;
+	t_subtype subtype;
+	int		  argc;
+	char	 *argv[ARG_MAX + 1];
+} t_execute;
 
 typedef struct s_redirection
 {
-	t_type		type;
-	t_subtype	subtype;
-	t_cmd		*cmd;
-	char		*buffer;
-	int			mode;
-	int			fd;
-}				t_redirection;
+	t_type	  type;
+	t_subtype subtype;
+	t_cmd	 *cmd;
+	char	 *buffer;
+	int		  mode;
+	int		  fd;
+} t_redirection;
 
 typedef struct s_listline
 {
-	t_type		type;
-	t_subtype	subtype;
-	t_cmd		*left;
-	t_cmd		*right;
-}				t_listline;
+	t_type	  type;
+	t_subtype subtype;
+	t_cmd	 *left;
+	t_cmd	 *right;
+} t_listline;
 
 typedef struct s_pipeline
 {
-	t_type		type;
-	t_subtype	subtype;
-	t_cmd		*left;
-	t_cmd		*right;
-}				t_pipeline;
+	t_type	  type;
+	t_subtype subtype;
+	t_cmd	 *left;
+	t_cmd	 *right;
+} t_pipeline;
 
 typedef struct s_sh
 {
-	int			init;
-	char		*env[ARG_MAX + 1];
-	char		*str;
-	t_cmd		*cmd;
-	t_execute	*ecmd;
-	int			exit_status;
-	int			subshell;
-	int			heredoc;
-}				t_sh;
+	int		   init;
+	char	  *env[ARG_MAX + 1];
+	char	  *str;
+	t_cmd	  *cmd;
+	t_execute *ecmd;
+	int		   exit_status;
+	int		   subshell;
+	int		   heredoc;
+} t_sh;
 
-t_sh			*get_sh(void);
-void			sh_init(int argc, char *argv[], char *envp[]);
-void			sh_deinit(int status) __attribute__((noreturn));
+typedef struct s_ms
+{
+	int	   exit;
+	char  *cmdline;
+	char  *environ[ARG_MAX];
+	int	   last_status;
+	t_cmd *cmd;
+} t_ms;
 
-t_cmd			*execute(void);
-t_cmd			*redirection(t_subtype subtype, t_cmd *subcmd, int m, int fd);
-t_cmd			*list(t_subtype subtype, t_cmd *left, t_cmd *right);
-t_cmd			*pipeline(t_subtype subtype, t_cmd *left, t_cmd *right);
+// minishell
+t_ms *ms_get(void);
+t_ms *ms_init(int argc, char **argv, char **envp);
+void  ms_run(t_ms *ms);
+void  ms_exit(t_ms *ms);
+void  ms_clear(t_ms *ms);
 
-t_cmd			*parse_block(char **ps, char *es);
-t_cmd			*parse_command(char *s);
-t_cmd			*parse_execute(char **ps, char *es);
-t_cmd			*parse_list1(char **ps, char *es);
-t_cmd			*parse_list2(char **ps, char *es);
-t_cmd			*parse_pipeline(char **ps, char *es);
-t_cmd			*parse_redirection(t_cmd *cmd, char **ps, char *es);
-char			*parse_heredoc(const char *q, const char *eq);
+// parser
+void parse_cmdline(t_ms *ms);
+void parse_line(t_ms *ms, char **line_ptr, char *line_end);
 
-char			*expand_argument(char *q, char *eq);
-char			*concat_strings(char *arg, char *str);
+// token
+int get_token(char **l_ptr, char *l_end, char **q_ptr, char **q_end);
 
-int				get_token(char **ps, char *es, char **q, char **eq);
-int				peek(char **ps, char *es, char *s_tokens, char *d_tokens);
-int				peek_next(char **ps, char *es, char *s_tokens, char *d_tokens);
+// utils
+char *get_cmdline(t_ms *ms);
+char *ms_strtok(int token);
 
-int				is_builtin(t_execute *ecmd);
-void			execute_builtin(t_execute *ecmd);
-void			execute_command(t_cmd *cmd);
-void			execute_execute(t_execute *ecmd);
-void			execute_external(t_execute *ecmd);
-void			execute_list(t_listline *lcmd);
-void			execute_pipeline(t_pipeline *pcmd);
-void			execute_redirection(t_redirection *rcmd);
+// error
+void unclosed_quotes(void);
+void unexpected_token(int token);
 
-pid_t			fork1(void);
-int				pipe1(int *pipes);
-t_cmd			*free_command(t_cmd **cmd);
-void			free_execute(t_execute *cmd);
-char			*get_line(char *prompt);
-void			get_str(void);
-void			handle_signals(void);
-void			panic(char *error) __attribute__((noreturn));
+// --------------
+t_sh *get_sh(void);
+void  sh_init(int argc, char *argv[], char *envp[]);
+void  sh_deinit(int status) __attribute__((noreturn));
 
-char			*ft_getenv(char *name);
-size_t			ms_strlen(const char *string);
-char			*ms_strjoin(char *string1, const char *string2);
-void			free_split(char **split);
-char			*ms_strreplace(char *string, char *old, char new);
+t_cmd *execute(void);
+t_cmd *redirection(t_subtype subtype, t_cmd *subcmd, int m, int fd);
+t_cmd *list(t_subtype subtype, t_cmd *left, t_cmd *right);
+t_cmd *pipeline(t_subtype subtype, t_cmd *left, t_cmd *right);
 
-int				ft_cd(char **args);
-int				ft_echo(char **args);
-int				ft_env(char **args);
-int				ft_exit(char **args);
-int				ft_export(char **args);
-int				ft_pwd(char **args);
-int				ft_unset(char **args);
+t_cmd *parse_block(char **ps, char *es);
+t_cmd *parse_command(char *s);
+t_cmd *parse_execute(char **ps, char *es);
+t_cmd *parse_list1(char **ps, char *es);
+t_cmd *parse_list2(char **ps, char *es);
+t_cmd *parse_pipeline(char **ps, char *es);
+t_cmd *parse_redirection(t_cmd *cmd, char **ps, char *es);
+char  *parse_heredoc(const char *q, const char *eq);
+
+char *expand_argument(char *q, char *eq);
+char *concat_strings(char *arg, char *str);
+
+// int get_token(char **ps, char *es, char **q, char **eq);
+int peek(char **ps, char *es, char *s_tokens, char *d_tokens);
+int peek_next(char **ps, char *es, char *s_tokens, char *d_tokens);
+
+int	 is_builtin(t_execute *ecmd);
+void execute_builtin(t_execute *ecmd);
+void execute_command(t_cmd *cmd);
+void execute_execute(t_execute *ecmd);
+void execute_external(t_execute *ecmd);
+void execute_list(t_listline *lcmd);
+void execute_pipeline(t_pipeline *pcmd);
+void execute_redirection(t_redirection *rcmd);
+
+pid_t  fork1(void);
+int	   pipe1(int *pipes);
+t_cmd *free_command(t_cmd **cmd);
+void   free_execute(t_execute *cmd);
+void   handle_signals(void);
+void   panic(char *error) __attribute__((noreturn));
+
+char  *ft_getenv(char *name);
+size_t ms_strlen(const char *string);
+char  *ms_strjoin(char *string1, const char *string2);
+void   free_split(char **split);
+char  *ms_strreplace(char *string, char *old, char new);
+
+int ft_cd(char **args);
+int ft_echo(char **args);
+int ft_env(char **args);
+int ft_exit(char **args);
+int ft_export(char **args);
+int ft_pwd(char **args);
+int ft_unset(char **args);
 
 #endif
