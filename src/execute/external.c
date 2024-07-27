@@ -10,13 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
-char	*search_in_path(char *name, char *path_env)
+static int	check_path(char *path, int to_free)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) != 0)
+		panic("stat");
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+		if (to_free)
+			free(path);
+		sh_deinit(126);
+	}
+	if (access(path, X_OK) != 0)
+		return (0);
+	return (1);
+}
+
+static char	*search_in_path(char *name, char *path_env)
 {
 	char	*path;
 	char	*start;
@@ -56,7 +78,7 @@ static void	path(char *name, char *argv[], char *envp[])
 		free(path_env);
 		if (path)
 		{
-			if (access(path, X_OK) == 0)
+			if (check_path(path, 1))
 				execve(path, argv, envp);
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			perror(path);
@@ -66,7 +88,7 @@ static void	path(char *name, char *argv[], char *envp[])
 	}
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(name, STDERR_FILENO);
-	ft_putstr_fd(": command not found...\n", STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	sh_deinit(127);
 }
 
@@ -79,7 +101,7 @@ static void	exec(char *name, char *argv[])
 	{
 		if (access(name, F_OK) == 0)
 		{
-			if (access(name, X_OK) == 0)
+			if (check_path(name, 0))
 				execve(name, argv, sh->env);
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			perror(name);
