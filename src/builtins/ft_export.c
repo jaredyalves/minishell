@@ -10,16 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 #include <stdlib.h>
 
-char	**sort(char **envp);
-void	print(char **envp);
+char		**sort(char **envp);
+void		print(char **envp);
 
 static int	is_valid(char *env)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (env[i] == '\0' || env[i] == '=')
@@ -28,7 +29,9 @@ static int	is_valid(char *env)
 	{
 		if (i == 0 && !(ft_isalpha(env[i]) || env[i] == '_'))
 			return (0);
-		if (!(ft_isalnum(env[i]) || env[i] == '_'))
+		if (!(ft_isalnum(env[i]) || env[i] == '_' || env[i] == '+'))
+			return (0);
+		if (env[i] == '+' && env[i + 1] != '=')
 			return (0);
 		i++;
 	}
@@ -37,54 +40,60 @@ static int	is_valid(char *env)
 
 static int	add(char **envp, char *env)
 {
-	int		i;
+	const char	*start = env;
+	size_t		len;
+	int			i;
 
 	i = 0;
 	while (envp[i])
 		i++;
 	if (i + 1 >= ARG_MAX)
-	{
-		ft_putstr_fd("minishell: export: ", STDERR_FILENO);
-		ft_putstr_fd("too many environment variables\n", STDERR_FILENO);
+		return (ft_putendl_fd("minishell: export: too many env vars", 2), 1);
+	len = ms_strlen(env) + 1;
+	envp[i] = (char *)ft_calloc(sizeof(char), len);
+	if (envp[i] == NULL)
 		return (1);
-	}
-	envp[i] = ft_strdup(env);
-	if (!envp[i])
-		return (1);
+	while (*env && *env != '=')
+		env++;
+	if (*(env - 1) == '+')
+		ft_strlcpy(envp[i], start, (env - 1) - start + 1);
+	else
+		ft_strlcpy(envp[i], start, env - start + 1);
+	ft_strlcat(envp[i], env, len);
 	return (0);
 }
 
 static int	update(char **envp, char *env)
 {
-	size_t	i;
-	size_t	len;
-	char	*name;
-	char	*start;
+	const char	*start = env;
+	size_t		i;
+	size_t		len;
+	char		*name;
 
-	start = env;
-	while (*env && *env != '=')
+	while (*env && *env != '+' && *env != '=')
 		env++;
 	len = env - start + 1;
-	name = (char *) ft_calloc(len, sizeof(char));
-	if (!name)
+	name = (char *)ft_calloc(len, sizeof(char));
+	if (name == NULL)
 		panic("ft_calloc");
 	ft_strlcpy(name, start, len);
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], name, len - 1) != 0)
 		i++;
-	if (!envp[i])
+	if (envp[i] == NULL)
 		return (free(name), 1);
-	if (*env == '=')
+	if ((*env == '+' && *(env + 1) != '=') || (*env == '='))
 		free(envp[i]);
-	if (*env == '=')
+	if (*env == '+' && *(env + 1) == '=')
+		envp[i] = concat_strings(envp[i], ft_strdup(start + len + 1));
+	if ((*env == '+' && *(env + 1) != '=') || (*env == '='))
 		envp[i] = ft_strdup(start);
-	free(name);
-	return (0);
+	return (free(name), 0);
 }
 
 int	ft_export(char **args)
 {
-	int		status;
+	int	status;
 
 	status = 0;
 	if (!args[1])
