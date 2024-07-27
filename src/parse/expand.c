@@ -50,7 +50,7 @@ static char	*env_variables(char **pq, char *eq)
 
 	q = *pq;
 	start = ++q;
-	if (!is_valid_env(q, q - start))
+	if (!is_valid_env(q, q - start) && *q != '"' && *q != '\'')
 		return (*pq = q, ft_strdup("$"));
 	while (q < eq && is_valid_env(q, q - start))
 		q++;
@@ -78,7 +78,9 @@ static char	*double_quotes(char **pq, char *eq)
 	q++;
 	while (q < eq && *q != '"')
 	{
-		if (*q == '$')
+		if (*q == '$' && (*(q + 1) == '"' || *(q + 1) == '\'') && q++)
+			tmp = ft_strdup("$");
+		else if (*q == '$')
 			tmp = env_variables(&q, eq);
 		else
 			tmp = double_quotes_ext(&q, eq);
