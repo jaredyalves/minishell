@@ -121,5 +121,7 @@ void	execute_external(t_execute *ecmd)
 	name = ecmd->argv[0];
 	if (name && *name)
 		exec(name, ecmd->argv);
+	if (name && ms_strlen(name) == 0)
+		sh_deinit(127);
 	sh_deinit(EXIT_SUCCESS);
 }
