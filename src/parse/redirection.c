@@ -38,7 +38,7 @@ static t_cmd	*handle_redirection(t_cmd *cmd, int token, char *q, char *eq)
 		get_sh()->heredoc = 0;
 	}
 	else
-		rcmd->buffer = expand_argument(q, eq, 0);
+		rcmd->buffer = expand_argument(q, eq, 1);
 	return (cmd);
 }
 

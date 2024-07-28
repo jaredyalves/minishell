@@ -21,6 +21,8 @@ static void	execute_redirect(t_redirection *rcmd)
 {
 	if (fork1() == 0)
 	{
+		if (rcmd->buffer == NULL || ft_strchr(rcmd->buffer, '\1'))
+			panic("ambiguous redirect");
 		close(rcmd->fd);
 		if (open(rcmd->buffer, rcmd->mode, 0664) < 0)
 			panic(rcmd->buffer);
