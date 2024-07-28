@@ -13,9 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
-
 # include <linux/limits.h>
+# include <stdio.h>
 # include <unistd.h>
 
 # define BLANKS " \t"

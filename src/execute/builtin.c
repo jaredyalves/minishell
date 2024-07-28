@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 int	is_builtin(t_execute *ecmd)
@@ -46,7 +47,7 @@ static int	has_options(char **args)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(" error: options are not supported\n", 2);
+		ft_putstr_fd(": options are not supported\n", 2);
 		return (1);
 	}
 	return (0);

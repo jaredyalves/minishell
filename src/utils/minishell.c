@@ -12,9 +12,10 @@
 
 #include "minishell.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
+
 #include <readline/readline.h>
+#include <stdlib.h>
 
 t_sh	*get_sh(void)
 {

@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 #include <signal.h>
-#include <unistd.h>
 
 pid_t	fork1(void)
 {

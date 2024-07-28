@@ -12,10 +12,9 @@
 
 #include "minishell.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <stdlib.h>
 
 void	get_str(void)
 {

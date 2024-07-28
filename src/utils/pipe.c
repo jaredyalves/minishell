@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-#include <unistd.h>
-
 int	pipe1(int *pipes)
 {
 	int	status;

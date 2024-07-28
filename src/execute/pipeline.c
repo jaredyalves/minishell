@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <sys/wait.h>
 
 static pid_t	execute_pipe_left(int *p, t_pipeline *pcmd)

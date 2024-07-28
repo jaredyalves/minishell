@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 #include <fcntl.h>
-#include <unistd.h>
 #include <sys/wait.h>
 
 static void	execute_sequence(t_listline *lcmd)

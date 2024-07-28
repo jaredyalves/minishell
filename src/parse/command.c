@@ -12,7 +12,6 @@
 
 #include "libft.h"
 #include "minishell.h"
-#include <unistd.h>
 
 static void	check_syntax(char **ps, char *es)
 {

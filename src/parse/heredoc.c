@@ -13,10 +13,9 @@
 #include "libft.h"
 #include "minishell.h"
 
-#include <stdio.h>
+#include <readline/readline.h>
 #include <stdlib.h>
 #include <sys/wait.h>
-#include <readline/readline.h>
 
 char		*get_delimiter(const char *q, const char *eq, int *is_quoted);
 char		*get_buffer(int fd);

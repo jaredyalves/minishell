@@ -13,10 +13,8 @@
 #include "libft.h"
 #include "minishell.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
 static int	check_path(char *path, int to_free)
 {

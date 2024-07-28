@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
 #include <readline/readline.h>
+#include <signal.h>
 #include <sys/wait.h>
 
 static void	sigint_handler(int sig, siginfo_t *info, void *ucontext)
