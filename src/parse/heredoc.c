@@ -35,7 +35,7 @@ static void	write_expanded(int fd, char *string)
 	char	*string_end;
 
 	string_end = string + ms_strlen(string);
-	expanded = expand_argument(string, string_end);
+	expanded = expand_argument(string, string_end, 0);
 	ft_putstr_fd(expanded, fd);
 	free(expanded);
 }

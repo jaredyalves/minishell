@@ -112,7 +112,7 @@ static char	*expand_simple(char **pq, char *eq)
 	return (str);
 }
 
-char	*expand_argument(char *q, char *eq)
+char	*expand_argument(char *q, char *eq, int replace)
 {
 	char	*arg;
 	char	*tmp;
@@ -128,7 +128,9 @@ char	*expand_argument(char *q, char *eq)
 			arg = concat_strings(arg, double_quotes(&q, eq));
 		else if (*q == '$')
 		{
-			tmp = ms_strreplace(env_variables(&q, eq), BLANKS, '\1');
+			tmp = env_variables(&q, eq);
+			if (replace)
+				tmp = ms_strreplace(tmp, BLANKS, '\1');
 			arg = concat_strings(arg, tmp);
 			if (q >= eq && ms_strlen(arg) == 0)
 				return (free(arg), NULL);

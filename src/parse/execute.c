@@ -55,45 +55,24 @@ static t_cmd	*invert_redirections(t_cmd *cmd, t_execute *ecmd)
 	return ((t_cmd *)prev);
 }
 
-static char	**parse_expanded(char *expanded)
-{
-	char	**split;
-
-	if (expanded == NULL)
-		return (NULL);
-	if (ft_strchr(expanded, '\1') == NULL)
-	{
-		split = (char **)ft_calloc(sizeof(char *), 2);
-		if (split == NULL)
-			panic("ft_calloc");
-		split[0] = expanded;
-		return (split);
-	}
-	split = ft_split(expanded, '\1');
-	return (free(expanded), split);
-}
-
 static int	parse_argument(t_execute *ecmd, char **ps, char *es)
 {
 	char	*q;
 	char	*eq;
 	int		token;
-	char	**parsed;
+	char	*arg;
 
+	if (ecmd->argc >= ARG_MAX)
+		return (3);
 	token = get_token(ps, es, &q, &eq);
 	if (token == 0)
 		return (1);
 	if (token != 'a')
 		return (2);
-	token = -1;
-	parsed = parse_expanded(expand_argument(q, eq));
-	while (parsed && parsed[++token])
-	{
-		if (ecmd->argc >= ARG_MAX)
-			return (free_split(parsed), 3);
-		ecmd->argv[ecmd->argc++] = ft_strdup(parsed[token]);
-	}
-	return (free_split(parsed), 0);
+	arg = (char *)ft_calloc(eq - q + 1, sizeof(char));
+	ft_strlcpy(arg, q, eq - q + 1);
+	ecmd->argv[ecmd->argc++] = arg;
+	return (0);
 }
 
 t_cmd	*parse_execute(char **ps, char *es)

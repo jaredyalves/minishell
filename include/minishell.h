@@ -107,7 +107,7 @@ t_cmd			*parse_pipeline(char **ps, char *es);
 t_cmd			*parse_redirection(t_cmd *cmd, char **ps, char *es);
 char			*parse_heredoc(const char *q, const char *eq);
 
-char			*expand_argument(char *q, char *eq);
+char			*expand_argument(char *q, char *eq, int replace);
 char			*concat_strings(char *arg, char *str);
 
 int				get_token(char **ps, char *es, char **q, char **eq);
