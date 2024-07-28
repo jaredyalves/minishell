@@ -6,7 +6,7 @@
 /*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 08:39:06 by jcapistr          #+#    #+#             */
-/*   Updated: 2024/06/21 08:39:06 by jcapistr         ###   ########.fr       */
+/*   Updated: 2024/07/28 14:50:07 by jcapistr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ static void	move_and_copy(t_execute *ecmd, char **parsed, int *i)
 	*i += count;
 }
 
+static void	remove_null(char **argv, int i)
+{
+	int	j;
+
+	j = i + 1;
+	while (argv[j])
+		argv[i++] = argv[j++];
+	argv[i] = 0;
+}
+
 static void	expand_command(t_execute *ecmd, int i)
 {
 	char	*eargv;
@@ -52,7 +62,7 @@ static void	expand_command(t_execute *ecmd, int i)
 		free(ecmd->argv[i]);
 		if (expanded == NULL)
 		{
-			ecmd->argv[i++] = NULL;
+			remove_null(ecmd->argv, i);
 			ecmd->argc--;
 			continue ;
 		}
