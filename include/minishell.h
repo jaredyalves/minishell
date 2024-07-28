@@ -128,7 +128,6 @@ pid_t			fork1(void);
 int				pipe1(int *pipes);
 t_cmd			*free_command(t_cmd **cmd);
 void			free_execute(t_execute *cmd);
-char			*get_line(char *prompt);
 void			get_str(void);
 void			handle_signals(void);
 void			panic(char *error) __attribute__((noreturn));
