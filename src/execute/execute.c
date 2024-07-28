@@ -20,13 +20,12 @@ static void	move_and_copy(t_execute *ecmd, char **parsed, int *i)
 {
 	int	j;
 	int	count;
-	int argc;
+	int	argc;
 
 	count = 0;
 	while (parsed && parsed[count])
 		count++;
-	argc = ecmd->argc + count + - 1;
-
+	argc = ecmd->argc + count + -1;
 	j = ecmd->argc;
 	while (j >= *i)
 	{
@@ -55,12 +54,12 @@ static void	expand_command(t_execute *ecmd, int i)
 		{
 			ecmd->argv[i++] = NULL;
 			ecmd->argc--;
-			continue;
+			continue ;
 		}
 		if (ft_strchr(expanded, '\1') == NULL)
 		{
 			ecmd->argv[i++] = expanded;
-			continue;
+			continue ;
 		}
 		parsed = ft_split(expanded, '\1');
 		free(expanded);
