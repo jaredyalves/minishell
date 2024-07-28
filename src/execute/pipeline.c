@@ -6,7 +6,7 @@
 /*   By: jcapistr <jcapistr@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 08:39:06 by jcapistr          #+#    #+#             */
-/*   Updated: 2024/06/21 08:39:06 by jcapistr         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:29:06 by jcapistr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static pid_t	execute_pipe_left(int *p, t_pipeline *pcmd)
 		get_sh()->subshell = 1;
 		close(p[0]);
 		dup2(p[1], STDOUT_FILENO);
-		close(p[1]);
 		execute_command(pcmd->left);
+		close(p[1]);
 		wait(0);
 	}
 	return (pid);
@@ -46,8 +46,8 @@ static pid_t	execute_pipe_right(int *p, t_pipeline *pcmd)
 		get_sh()->subshell = 1;
 		close(p[1]);
 		dup2(p[0], STDIN_FILENO);
-		close(p[0]);
 		execute_command(pcmd->right);
+		close(p[0]);
 		wait(0);
 	}
 	return (pid);
