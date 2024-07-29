@@ -83,9 +83,11 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS)
 clean:
 	$(RM) $(RMFLAGS) $(OBJDIR)
 	make -C $(LIBFT_DIR) clean
+	make -C $(GNL_DIR) clean
 
 fclean: clean
 	$(RM) $(RMFLAGS) $(NAME)
 	make -C $(LIBFT_DIR) fclean
+	make -C $(GNL_DIR) fclean
 
 re: fclean all
