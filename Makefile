@@ -1,93 +1,111 @@
-NAME		:= minishell
+NAME			:=	minishell
+NAME_BONUS		:=
 
-LIBDIR		:= lib
-SRCDIR		:= src
-OBJDIR		:= obj
-INCDIR		:= include
+SRCDIR			:=	src
+OBJDIR			:=	obj
+LIBDIR			:=	lib
+INCDIR			:=	include
 
-LIBFT_DIR	:= $(LIBDIR)/libft
-LIBFT_NAME	:= libft.a
-LIBFT		:= $(LIBFT_DIR)/$(LIBFT_NAME)
+LIBFT_DIR		:=	$(LIBDIR)/libft
+LIBFT_NAME		:=	libft.a
+LIBFT			:=	$(LIBFT_DIR)/$(LIBFT_NAME)
 
-GNL_DIR		:= $(LIBDIR)/get_next_line
-GNL_NAME	:= libgnl.a
-GNL			:= $(GNL_DIR)/$(GNL_NAME)
+GNL_DIR			:=	$(LIBDIR)/get_next_line
+GNL_NAME		:=	libgnl.a
+GNL				:=	$(GNL_DIR)/$(GNL_NAME)
 
-SRCS		:= \
-	$(SRCDIR)/main.c \
-	$(SRCDIR)/builtins/ft_cd.c \
-	$(SRCDIR)/builtins/ft_echo.c \
-	$(SRCDIR)/builtins/ft_env.c \
-	$(SRCDIR)/builtins/ft_exit.c \
-	$(SRCDIR)/builtins/ft_export.c \
-	$(SRCDIR)/builtins/ft_export_ext.c \
-	$(SRCDIR)/builtins/ft_pwd.c \
-	$(SRCDIR)/builtins/ft_unset.c \
-	$(SRCDIR)/execute/builtin.c \
-	$(SRCDIR)/execute/command.c \
-	$(SRCDIR)/execute/execute.c \
-	$(SRCDIR)/execute/external.c \
-	$(SRCDIR)/execute/list.c \
-	$(SRCDIR)/execute/pipeline.c \
-	$(SRCDIR)/execute/redirection.c \
-	$(SRCDIR)/parse/block.c \
-	$(SRCDIR)/parse/command.c \
-	$(SRCDIR)/parse/execute.c \
-	$(SRCDIR)/parse/expand.c \
-	$(SRCDIR)/parse/expand_ext.c \
-	$(SRCDIR)/parse/heredoc.c \
-	$(SRCDIR)/parse/heredoc_ext.c \
-	$(SRCDIR)/parse/lexer.c \
-	$(SRCDIR)/parse/list.c \
-	$(SRCDIR)/parse/pipeline.c \
-	$(SRCDIR)/parse/redirection.c \
-	$(SRCDIR)/parse/token.c \
-	$(SRCDIR)/utils/command.c \
-	$(SRCDIR)/utils/error.c \
-	$(SRCDIR)/utils/fork.c \
-	$(SRCDIR)/utils/getenv.c \
-	$(SRCDIR)/utils/minishell.c \
-	$(SRCDIR)/utils/pipe.c \
-	$(SRCDIR)/utils/readline.c \
-	$(SRCDIR)/utils/signal.c \
-	$(SRCDIR)/utils/utils.c \
+SRCS			:=	$(SRCDIR)/main.c
+SRCS			+=	$(SRCDIR)/builtins/ft_cd.c
+SRCS			+=	$(SRCDIR)/builtins/ft_echo.c
+SRCS			+=	$(SRCDIR)/builtins/ft_env.c
+SRCS			+=	$(SRCDIR)/builtins/ft_exit.c
+SRCS			+=	$(SRCDIR)/builtins/ft_export.c
+SRCS			+=	$(SRCDIR)/builtins/ft_export_ext.c
+SRCS			+=	$(SRCDIR)/builtins/ft_pwd.c
+SRCS			+=	$(SRCDIR)/builtins/ft_unset.c
+SRCS			+=	$(SRCDIR)/execute/builtin.c
+SRCS			+=	$(SRCDIR)/execute/command.c
+SRCS			+=	$(SRCDIR)/execute/execute.c
+SRCS			+=	$(SRCDIR)/execute/external.c
+SRCS			+=	$(SRCDIR)/execute/list.c
+SRCS			+=	$(SRCDIR)/execute/pipeline.c
+SRCS			+=	$(SRCDIR)/execute/redirection.c
+SRCS			+=	$(SRCDIR)/parse/block.c
+SRCS			+=	$(SRCDIR)/parse/command.c
+SRCS			+=	$(SRCDIR)/parse/execute.c
+SRCS			+=	$(SRCDIR)/parse/expand.c
+SRCS			+=	$(SRCDIR)/parse/expand_ext.c
+SRCS			+=	$(SRCDIR)/parse/heredoc.c
+SRCS			+=	$(SRCDIR)/parse/heredoc_ext.c
+SRCS			+=	$(SRCDIR)/parse/lexer.c
+SRCS			+=	$(SRCDIR)/parse/list.c
+SRCS			+=	$(SRCDIR)/parse/pipeline.c
+SRCS			+=	$(SRCDIR)/parse/redirection.c
+SRCS			+=	$(SRCDIR)/parse/token.c
+SRCS			+=	$(SRCDIR)/utils/command.c
+SRCS			+=	$(SRCDIR)/utils/error.c
+SRCS			+=	$(SRCDIR)/utils/fork.c
+SRCS			+=	$(SRCDIR)/utils/getenv.c
+SRCS			+=	$(SRCDIR)/utils/minishell.c
+SRCS			+=	$(SRCDIR)/utils/pipe.c
+SRCS			+=	$(SRCDIR)/utils/readline.c
+SRCS			+=	$(SRCDIR)/utils/signal.c
+SRCS			+=	$(SRCDIR)/utils/utils.c
+SRCS_BONUS		:=
+OBJS			:=	$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+OBJS_BONUS		:=	$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS_BONUS))
+INCS			:=	$(INCDIR)/minishell.h
+INCS_BONUS		:=
 
-OBJS		:= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
-INCS		:= $(INCDIR)/minishell.h
+CC				:=	/bin/cc
+INCLUDES		:=	-I$(INCDIR) -I$(LIBFT_DIR)/include -I$(GNL_DIR)/include
+CFLAGS			:=	-O3 -Wall -Werror -Wextra $(INCLUDES)
+LDFLAGS			:=	-lreadline -L$(LIBFT_DIR) -lft -L$(GNL_DIR) -lgnl
 
-CC			:= cc
-INCLUDES	:= -I$(INCDIR) -I$(LIBFT_DIR)/include -I$(GNL_DIR)/include
-CFLAGS		:= -O3 -Wall -Werror -Wextra $(INCLUDES)
-LDFLAGS		:= -L$(LIBFT_DIR) -lft -L$(GNL_DIR) -lgnl -lreadline
+AR				:=	/bin/ar
+ARFLAGS			:=	-rcs
 
-RM			:= rm
-RMFLAGS		:= -rf
+RM				:=	/bin/rm
+RMFLAGS			:=	-rf
 
-.PHONY: all clean fclean re
+COLOR_RESET		:=	\033[0m
+COLOR_CLEAN		:=	\033[0;33m
+COLOR_COMPILE	:=	\033[0;32m
+COLOR_LINK		:=	\033[0;34m
+
+.PHONY: all bonus clean fclean re
 
 all: $(NAME)
 
+# bonus: $(NAME_BONUS)
+
 $(NAME): $(OBJS) $(LIBFT) $(GNL)
-	$(CC) -o $@ $(OBJS) $(LDFLAGS)
+	@printf "$(COLOR_LINK)Linking $@...$(COLOR_RESET)\n"
+	@$(CC) -o $@ $(OBJS) $(LDFLAGS)
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	@printf "$(COLOR_COMPILE)Building $(LIBFT_NAME)...$(COLOR_RESET)\n"
+	@make -C $(LIBFT_DIR)
 
 $(GNL):
-	make -C $(GNL_DIR)
+	@printf "$(COLOR_COMPILE)Building $(GNL_NAME)...$(COLOR_RESET)\n"
+	@make -C $(GNL_DIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@printf "$(COLOR_COMPILE)Compiling $<...$(COLOR_RESET)\n"
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	$(RM) $(RMFLAGS) $(OBJDIR)
-	make -C $(LIBFT_DIR) clean
-	make -C $(GNL_DIR) clean
+	@printf "$(COLOR_CLEAN)Cleaning up...$(COLOR_RESET)\n"
+	@$(RM) $(RMFLAGS) $(OBJDIR)
+	@make -C $(LIBFT_DIR) clean
+	@make -C $(GNL_DIR) clean
 
 fclean: clean
-	$(RM) $(RMFLAGS) $(NAME)
-	make -C $(LIBFT_DIR) fclean
-	make -C $(GNL_DIR) fclean
+	@printf "$(COLOR_CLEAN)Removing $(NAME)...$(COLOR_RESET)\n"
+	@$(RM) $(RMFLAGS) $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	@make -C $(GNL_DIR) fclean
 
 re: fclean all
