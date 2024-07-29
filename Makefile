@@ -77,7 +77,7 @@ COLOR_LINK		:=	\033[0;34m
 
 all: $(NAME)
 
-# bonus: $(NAME_BONUS)
+bonus: $(NAME_BONUS)
 
 $(NAME): $(OBJS) $(LIBFT) $(GNL)
 	@printf "$(COLOR_LINK)Linking $@...$(COLOR_RESET)\n"
