@@ -85,11 +85,11 @@ $(NAME): $(OBJS) $(LIBFT) $(GNL)
 
 $(LIBFT):
 	@printf "$(COLOR_COMPILE)Building $(LIBFT_NAME)...$(COLOR_RESET)\n"
-	@make -C $(LIBFT_DIR)
+	@make -sC $(LIBFT_DIR)
 
 $(GNL):
 	@printf "$(COLOR_COMPILE)Building $(GNL_NAME)...$(COLOR_RESET)\n"
-	@make -C $(GNL_DIR)
+	@make -sC $(GNL_DIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS)
 	@mkdir -p $(dir $@)
@@ -99,13 +99,13 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS)
 clean:
 	@printf "$(COLOR_CLEAN)Cleaning up...$(COLOR_RESET)\n"
 	@$(RM) $(RMFLAGS) $(OBJDIR)
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(GNL_DIR) clean
+	@make -sC $(LIBFT_DIR) clean
+	@make -sC $(GNL_DIR) clean
 
 fclean: clean
 	@printf "$(COLOR_CLEAN)Removing $(NAME)...$(COLOR_RESET)\n"
 	@$(RM) $(RMFLAGS) $(NAME)
-	@make -C $(LIBFT_DIR) fclean
-	@make -C $(GNL_DIR) fclean
+	@make -sC $(LIBFT_DIR) fclean
+	@make -sC $(GNL_DIR) fclean
 
 re: fclean all
